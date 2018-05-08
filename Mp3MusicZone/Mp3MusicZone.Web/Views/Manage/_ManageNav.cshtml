@@ -1,7 +1,7 @@
 ﻿@using Mp3MusicZone.Web.Views.Manage
-@inject SignInManager<User> SignInManager
+@inject ISignInService SignInService
 @{
-    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+    var hasExternalLogins = (await SignInService.GetExternalAuthenticationSchemesAsync()).Any();
 }
 
 <ul class="nav nav-pills nav-stacked">

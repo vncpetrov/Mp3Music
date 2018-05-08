@@ -3,18 +3,17 @@
     using System;
     using System.Linq;
 
-    public interface IEfRepository<T>
-        where T : class
+    public interface IEfRepository<TDomain>
+        where TDomain : class
     {
-        IQueryable<T> All();
+        IQueryable<TDomain> All { get; }
 
-        T GetById(int id);
+        TDomain GetById(int id);
 
-        void Add(T entity);
+        void Add(TDomain item);
 
-        void Update(T entity);
+        void Update(TDomain item);
 
-        void Delete(T entity);
-
+        void Delete(TDomain item); 
     }
 }

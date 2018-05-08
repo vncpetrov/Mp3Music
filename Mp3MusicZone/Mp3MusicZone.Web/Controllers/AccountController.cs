@@ -1,6 +1,9 @@
 ﻿namespace Mp3MusicZone.Web.Controllers
 {
-    using Domain;
+    using Auth.Contracts;
+    using AutoMapper;
+    using Domain.Contracts;
+    using EfDataAccess.Models;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -11,34 +14,41 @@
     using System;
     using System.Security.Claims;
     using System.Threading.Tasks;
+    using Web.Infrastructure.Extensions;
 
     [Authorize]
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
-        private readonly UserManager<User> userManager;
-        private readonly SignInManager<User> signInManager;
-        private readonly IEmailSender emailSender;
+        private readonly IUserService userService;
+        private readonly ISignInService signInService;
+        private readonly IEmailSenderService emailSender;
         private readonly ILogger logger;
 
+
         public AccountController(
-            UserManager<User> userManager,
-            SignInManager<User> signInManager,
-            IEmailSender emailSender,
+            IUserService userService,
+            ISignInService signInService,
+            IEmailSenderService emailSender,
             ILogger<AccountController> logger)
         {
-            if (userManager is null)
+            if (userService is null)
             {
-                throw new ArgumentNullException(nameof(userManager));
+                throw new ArgumentNullException(nameof(userService));
             }
 
-            if (signInManager is null)
+            if (signInService is null)
             {
-                throw new ArgumentNullException(nameof(signInManager));
+                throw new ArgumentNullException(nameof(signInService));
             }
 
-            this.userManager = userManager;
-            this.signInManager = signInManager;
+            if (emailSender is null)
+            {
+                throw new ArgumentNullException(nameof(emailSender));
+            }
+
+            this.userService = userService;
+            this.signInService = signInService;
             this.emailSender = emailSender;
             this.logger = logger;
         }
@@ -67,11 +77,11 @@
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await this.signInService.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     logger.LogInformation("User logged in.");
-                    return RedirectToLocal(returnUrl);
+                    return this.RedirectToLocal(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -98,7 +108,7 @@
         public async Task<IActionResult> LoginWith2fa(bool rememberMe, string returnUrl = null)
         {
             // Ensure the user has gone through the username & password screen first
-            var user = await signInManager.GetTwoFactorAuthenticationUserAsync();
+            var user = await this.signInService.GetTwoFactorAuthenticationUserAsync();
 
             if (user == null)
             {
@@ -121,20 +131,20 @@
                 return View(model);
             }
 
-            var user = await signInManager.GetTwoFactorAuthenticationUserAsync();
+            var user = await this.signInService.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
-                throw new ApplicationException($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
+                throw new ApplicationException($"Unable to load user with ID '{this.userService.GetUserId(User)}'.");
             }
 
             var authenticatorCode = model.TwoFactorCode.Replace(" ", string.Empty).Replace("-", string.Empty);
 
-            var result = await signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, rememberMe, model.RememberMachine);
+            var result = await this.signInService.TwoFactorAuthenticatorSignInAsync(authenticatorCode, rememberMe, model.RememberMachine);
 
             if (result.Succeeded)
             {
                 logger.LogInformation("User with ID {UserId} logged in with 2fa.", user.Id);
-                return RedirectToLocal(returnUrl);
+                return this.RedirectToLocal(returnUrl);
             }
             else if (result.IsLockedOut)
             {
@@ -154,7 +164,7 @@
         public async Task<IActionResult> LoginWithRecoveryCode(string returnUrl = null)
         {
             // Ensure the user has gone through the username & password screen first
-            var user = await signInManager.GetTwoFactorAuthenticationUserAsync();
+            var user = await this.signInService.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load two-factor authentication user.");
@@ -175,7 +185,7 @@
                 return View(model);
             }
 
-            var user = await signInManager.GetTwoFactorAuthenticationUserAsync();
+            var user = await this.signInService.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load two-factor authentication user.");
@@ -183,12 +193,12 @@
 
             var recoveryCode = model.RecoveryCode.Replace(" ", string.Empty);
 
-            var result = await signInManager.TwoFactorRecoveryCodeSignInAsync(recoveryCode);
+            var result = await this.signInService.TwoFactorRecoveryCodeSignInAsync(recoveryCode);
 
             if (result.Succeeded)
             {
                 logger.LogInformation("User with ID {UserId} logged in with a recovery code.", user.Id);
-                return RedirectToLocal(returnUrl);
+                return this.RedirectToLocal(returnUrl);
             }
             if (result.IsLockedOut)
             {
@@ -220,28 +230,49 @@
 
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Register(
+            RegisterViewModel model,
+            string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
-            if (ModelState.IsValid)
+
+            UserEf user = await this.userService.FindByEmailAsync(model.Email);
+
+            if (user != null)
             {
-                var user = new User { UserName = model.Email, Email = model.Email };
-                var result = await userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    logger.LogInformation("User created a new account with password.");
+                this.TempData.AddErrorMessage(
+                    $"E-mail address '{model.Email}' is already taken.");
 
-                    var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-                    await emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
-
-                    await signInManager.SignInAsync(user, isPersistent: false);
-                    logger.LogInformation("User created a new account with password.");
-                    return RedirectToLocal(returnUrl);
-                }
-                AddErrors(result);
+                return View(model);
             }
+
+            user = Mapper.Map<UserEf>(model);
+
+            IdentityResult result = await this.userService.CreateAsync(user, model.Password);
+
+            if (result.Succeeded)
+            {
+                logger.LogInformation("User created a new account with password.");
+
+                string code = await this.userService.GenerateEmailConfirmationTokenAsync(user);
+                string callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+
+                await emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+
+                //await signInManager.SignInAsync(user, isPersistent: false);
+                logger.LogInformation("User created a new account with password.");
+
+                if (returnUrl is null)
+                {
+                    TempData.AddSuccessMessage($"The registration is successfull. Please, verify your e-mail address {model.Email} before proceeding.");
+
+                    return View(model);
+                }
+
+                return this.RedirectToLocal(returnUrl);
+            }
+
+            this.AddErrors(result);
 
             // If we got this far, something failed, redisplay form
             return View(model);
@@ -251,7 +282,7 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
-            await signInManager.SignOutAsync();
+            await this.signInService.SignOutAsync();
             logger.LogInformation("User logged out.");
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
@@ -263,7 +294,7 @@
         {
             // Request a redirect to the external login provider.
             var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account", new { returnUrl });
-            var properties = signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+            var properties = this.signInService.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             return Challenge(properties, provider);
         }
 
@@ -276,18 +307,18 @@
                 ErrorMessage = $"Error from external provider: {remoteError}";
                 return RedirectToAction(nameof(Login));
             }
-            var info = await signInManager.GetExternalLoginInfoAsync();
+            var info = await this.signInService.GetExternalLoginInfoAsync();
             if (info == null)
             {
                 return RedirectToAction(nameof(Login));
             }
 
             // Sign in the user with this external login provider if the user already has a login.
-            var result = await signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
+            var result = await this.signInService.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
             if (result.Succeeded)
             {
                 logger.LogInformation("User logged in with {Name} provider.", info.LoginProvider);
-                return RedirectToLocal(returnUrl);
+                return this.RedirectToLocal(returnUrl);
             }
             if (result.IsLockedOut)
             {
@@ -311,24 +342,24 @@
             if (ModelState.IsValid)
             {
                 // Get the information about the user from the external login provider
-                var info = await signInManager.GetExternalLoginInfoAsync();
+                var info = await this.signInService.GetExternalLoginInfoAsync();
                 if (info == null)
                 {
                     throw new ApplicationException("Error loading external login information during confirmation.");
                 }
-                var user = new User { UserName = model.Email, Email = model.Email };
-                var result = await userManager.CreateAsync(user);
+                var user = new UserEf { UserName = model.Email, Email = model.Email };
+                var result = await this.userService.CreateAsync(user);
                 if (result.Succeeded)
                 {
-                    result = await userManager.AddLoginAsync(user, info);
+                    result = await this.userService.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {
-                        await signInManager.SignInAsync(user, isPersistent: false);
+                        await this.signInService.SignInAsync(user, isPersistent: false);
                         logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
-                        return RedirectToLocal(returnUrl);
+                        return this.RedirectToLocal(returnUrl);
                     }
                 }
-                AddErrors(result);
+                this.AddErrors(result);
             }
 
             ViewData["ReturnUrl"] = returnUrl;
@@ -343,12 +374,12 @@
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
-            var user = await userManager.FindByIdAsync(userId);
+            var user = await this.userService.FindByIdAsync(userId);
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{userId}'.");
             }
-            var result = await userManager.ConfirmEmailAsync(user, code);
+            var result = await this.userService.ConfirmEmailAsync(user, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
@@ -366,8 +397,8 @@
         {
             if (ModelState.IsValid)
             {
-                var user = await userManager.FindByEmailAsync(model.Email);
-                if (user == null || !(await userManager.IsEmailConfirmedAsync(user)))
+                var user = await this.userService.FindByEmailAsync(model.Email);
+                if (user == null || !(await this.userService.IsEmailConfirmedAsync(user)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     return RedirectToAction(nameof(ForgotPasswordConfirmation));
@@ -375,7 +406,7 @@
 
                 // For more information on how to enable account confirmation and password reset please
                 // visit https://go.microsoft.com/fwlink/?LinkID=532713
-                var code = await userManager.GeneratePasswordResetTokenAsync(user);
+                var code = await this.userService.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
                 await emailSender.SendEmailAsync(model.Email, "Reset Password",
                    $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
@@ -414,18 +445,18 @@
             {
                 return View(model);
             }
-            var user = await userManager.FindByEmailAsync(model.Email);
+            var user = await this.userService.FindByEmailAsync(model.Email);
             if (user == null)
             {
                 // Don't reveal that the user does not exist
                 return RedirectToAction(nameof(ResetPasswordConfirmation));
             }
-            var result = await userManager.ResetPasswordAsync(user, model.Code, model.Password);
+            var result = await this.userService.ResetPasswordAsync(user, model.Code, model.Password);
             if (result.Succeeded)
             {
                 return RedirectToAction(nameof(ResetPasswordConfirmation));
             }
-            AddErrors(result);
+            this.AddErrors(result);
             return View();
         }
 
@@ -442,29 +473,5 @@
         {
             return View();
         }
-
-        #region Helpers
-
-        private void AddErrors(IdentityResult result)
-        {
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
-        }
-
-        private IActionResult RedirectToLocal(string returnUrl)
-        {
-            if (Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
-            else
-            {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
-            }
-        }
-
-        #endregion
     }
 }

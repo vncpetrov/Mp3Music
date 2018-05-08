@@ -39,7 +39,22 @@
         </div>
     </nav>
     <div class="container body-content">
+        @if (TempData.ContainsKey(TempDataSuccessMessageKey))
+        {
+            <div class="alert alert-success text-center">
+                @TempData[TempDataSuccessMessageKey]
+            </div>
+        }
+
+        @if (TempData.ContainsKey(TempDataErrorMessageKey))
+        {
+            <div class="alert alert-danger text-center">
+                @TempData[TempDataErrorMessageKey]
+            </div>
+        }
+
         @RenderBody()
+
         <hr />
         <footer>
             <p>&copy; 2018 - Mp3MusicZone.Web</p>

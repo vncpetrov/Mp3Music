@@ -4,5 +4,10 @@
 
     public interface IFileProvider
     {
+        void WriteAllBytes(string filePath, byte[] file);
+
+        void Rename(string oldFileName, string newFileName);
+
+        void Delete(string fileName);
     }
 }

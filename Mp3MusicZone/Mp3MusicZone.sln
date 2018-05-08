@@ -13,13 +13,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mp3MusicZone.EfDataAccess",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mp3MusicZone.Common", "Mp3MusicZone.Common\Mp3MusicZone.Common.csproj", "{300C3F07-8E72-4BF2-9189-11545FF08520}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mp3MusicZone.Web.Infrastructure", "Mp3MusicZone.Web.Infrastructure\Mp3MusicZone.Web.Infrastructure.csproj", "{4E5BCD17-7F29-4CB7-BE9C-F451F051D6DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mp3MusicZone.Web.Infrastructure", "Mp3MusicZone.Web.Infrastructure\Mp3MusicZone.Web.Infrastructure.csproj", "{4E5BCD17-7F29-4CB7-BE9C-F451F051D6DF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{97C97E7C-4B57-429B-B272-5796E0537333}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mp3MusicZone.DataServices", "Mp3MusicZone.DataServices\Mp3MusicZone.DataServices.csproj", "{AAD1AB08-4A5A-4640-9C20-F17CC3D684F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mp3MusicZone.DataServices", "Mp3MusicZone.DataServices\Mp3MusicZone.DataServices.csproj", "{AAD1AB08-4A5A-4640-9C20-F17CC3D684F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mp3MusicZone.Auth", "Mp3MusicZone.Auth\Mp3MusicZone.Auth.csproj", "{6FD67E53-5107-486B-88A9-ADD95DC0D908}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mp3MusicZone.Auth", "Mp3MusicZone.Auth\Mp3MusicZone.Auth.csproj", "{6FD67E53-5107-486B-88A9-ADD95DC0D908}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

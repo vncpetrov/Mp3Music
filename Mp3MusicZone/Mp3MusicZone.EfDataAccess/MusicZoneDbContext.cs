@@ -1,17 +1,22 @@
 ﻿namespace Mp3MusicZone.EfDataAccess
 {
-    using System;
+    using Domain.Contracts;
+    using EfDataAccess.Models;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
-    using Mp3MusicZone.Domain.Contracts;
-    using Mp3MusicZone.EfDataAccess.Models;
+    using System;
 
-    public class Mp3MusicZoneDbContext : IdentityDbContext<UserEf>, IEfDbContextSaveChanges
+    public class MusicZoneDbContext : IdentityDbContext<UserEf>, IEfDbContextSaveChanges
     {
         private readonly string connectionString;
 
-        public Mp3MusicZoneDbContext(DbContextOptions<Mp3MusicZoneDbContext> options, string connectionString)
-            : base(options)
+        public MusicZoneDbContext(DbContextOptions<MusicZoneDbContext> options)
+             : base(options)
+        {
+        }
+
+        public MusicZoneDbContext(string connectionString)
+            : base()
         {
             if (connectionString is null)
             {
@@ -29,7 +34,10 @@
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(this.connectionString);
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(this.connectionString);
+            }
 
             base.OnConfiguring(optionsBuilder);
         }

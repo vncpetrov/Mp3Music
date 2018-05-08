@@ -1,13 +1,20 @@
 ﻿namespace Mp3MusicZone.Web
 {
+    using Auth.Contracts;
+    using Auth.Identity;
     using AutoMapper;
+    using EfDataAccess;
+    using EfDataAccess.Models;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Controllers;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Mp3MusicZone.Domain;
+    using System;
 
     public class Startup
     {
@@ -21,14 +28,27 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<MusicZoneDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString(
+                    "Mp3MusicZoneConnectionString")));
 
-            services.AddIdentity<User, IdentityRole>()
+            //services.AddScoped<Mp3MusicZoneDbContext>(c => new Mp3MusicZoneDbContext(Configuration.GetConnectionString("Mp3MusicZoneConnectionString")));
+
+            services.AddIdentity<UserEf, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+
+                options.SignIn.RequireConfirmedEmail = true;
+            })
+                .AddEntityFrameworkStores<MusicZoneDbContext>()
                 .AddDefaultTokenProviders();
 
-            // Add application services.
-            //services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<ISignInService, SignInService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IRoleService, RoleService>();
 
             services.AddAutoMapper();
 
@@ -38,6 +58,12 @@
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             });
+
+            IControllerActivator activator = new Mp3MusicZoneControllerActivator(
+                    this.Configuration.GetConnectionString("Mp3MusicZoneConnectionString"),
+                    new HttpContextAccessor());
+
+            services.AddSingleton<IControllerActivator>(activator);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
