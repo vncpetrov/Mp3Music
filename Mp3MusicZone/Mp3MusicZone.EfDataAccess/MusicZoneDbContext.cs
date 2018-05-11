@@ -19,15 +19,11 @@
             : base()
         {
             if (connectionString is null)
-            {
-                throw new ArgumentNullException(nameof(connectionString));
-            }
+                throw new ArgumentNullException(nameof(connectionString)); 
 
-            if (string.IsNullOrWhiteSpace(connectionString))
-            {
+            if (string.IsNullOrWhiteSpace(connectionString)) 
                 throw new ArgumentException("Value should not be empty.",
-                    nameof(connectionString));
-            }
+                    nameof(connectionString)); 
 
             this.connectionString = connectionString;
         }

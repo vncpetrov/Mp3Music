@@ -17,18 +17,14 @@
         private readonly string connectionString;
         private readonly IHttpContextAccessor accessor;
 
-        public Mp3MusicZoneControllerActivator(string connectionString,
-        IHttpContextAccessor accessor)
+        public Mp3MusicZoneControllerActivator(
+            string connectionString,
+            IHttpContextAccessor accessor)
         {
             if (connectionString is null)
-            {
                 throw new ArgumentNullException(nameof(connectionString));
-            }
 
-            if (accessor is null)
-            {
-                throw new ArgumentNullException(nameof(accessor));
-            }
+            if (accessor is null) throw new ArgumentNullException(nameof(accessor));
 
             this.connectionString = connectionString;
             this.accessor = accessor;
@@ -85,7 +81,8 @@
             }
         }
 
-        private ManageController CreateManageController(IUserService userService,
+        private ManageController CreateManageController(
+            IUserService userService,
             ISignInService signInService,
             IEmailSenderService emailSender)
         { 

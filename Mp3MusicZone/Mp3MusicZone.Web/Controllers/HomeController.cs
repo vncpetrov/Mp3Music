@@ -1,9 +1,9 @@
 ﻿namespace Mp3MusicZone.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    using Mp3MusicZone.Web.ViewModels;
     using System;
     using System.Diagnostics;
+    using Web.ViewModels;
 
     public class HomeController : Controller
     {

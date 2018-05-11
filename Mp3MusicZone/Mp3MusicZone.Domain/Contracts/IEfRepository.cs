@@ -1,10 +1,11 @@
 ﻿namespace Mp3MusicZone.Domain.Contracts
 {
+    using Mp3MusicZone.Domain.Models.Contracts;
     using System;
     using System.Linq;
 
     public interface IEfRepository<TDomain>
-        where TDomain : class
+        where TDomain : IDomainModel
     {
         IQueryable<TDomain> All { get; }
 
@@ -14,6 +15,6 @@
 
         void Update(TDomain item);
 
-        void Delete(TDomain item); 
+        void Delete(TDomain item);
     }
 }

@@ -21,7 +21,7 @@
                 .Build();
 
             string connectionString =
-                configuration.GetConnectionString("Mp3MusicZoneConnectionString");
+                configuration.GetConnectionString("MusicZoneConnectionString");
             
             using (IServiceScope scope = webHost.Services.CreateScope())
             {

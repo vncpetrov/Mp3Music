@@ -1,20 +1,23 @@
 ﻿namespace Mp3MusicZone.EfDataAccess.EfRepository
 {
+    using AutoMapper;
     using AutoMapper.QueryableExtensions;
+    using Contracts;
+    using Domain.Contracts;
+    using Domain.Models.Contracts;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.ChangeTracking;
-    using Mp3MusicZone.Domain.Contracts;
     using System;
     using System.Linq;
 
-    public class EfRepository<TDomain, TEntity> : IEfRepository<TDomain>
-        where TDomain : class
-        where TEntity: class
+    public abstract class EfRepository<TDomain, TEntity> : IEfRepository<TDomain>
+        where TDomain : class, IDomainModel, new()
+        where TEntity : class, IEntityModel, new()
     {
-        private readonly MusicZoneDbContext context;
-        private readonly DbSet<TEntity> dbSet;
+        private MusicZoneDbContext context;
+        private DbSet<TEntity> dbSet;
 
-        public EfRepository(MusicZoneDbContext context)
+        protected EfRepository(MusicZoneDbContext context)
         {
             if (context is null) throw new ArgumentNullException(nameof(context));
 
@@ -24,11 +27,9 @@
 
         public IQueryable<TDomain> All => this.dbSet.ProjectTo<TDomain>();
 
-        public TDomain GetById(int id)
-            => this.dbSet.Find(id);
-
-        public void Add(TDomain entity)
+        public void Add(TDomain item)
         {
+            TEntity entity = Mapper.Map<TEntity>(item);
             EntityEntry entry = this.context.Entry(entity);
 
             if (entry.State != EntityState.Detached)
@@ -41,20 +42,9 @@
             }
         }
 
-        public void Update(T entity)
+        public void Delete(TDomain item)
         {
-            EntityEntry entry = this.context.Entry(entity);
-
-            if (entry.State == EntityState.Detached)
-            {
-                this.dbSet.Add(entity);
-            }
-
-            entry.State = EntityState.Modified;
-        }
-
-        public void Delete(T entity)
-        {
+            TEntity entity = this.dbSet.Find(item.Id);
             EntityEntry entry = this.context.Entry(entity);
 
             if (entry.State != EntityState.Deleted)
@@ -66,6 +56,29 @@
                 this.dbSet.Attach(entity);
                 this.dbSet.Remove(entity);
             }
+        }
+
+        public TDomain GetById(int id)
+        {
+            TEntity entity = this.dbSet.Find(id);
+            TDomain domainModel = Mapper.Map<TDomain>(entity);
+
+            return domainModel;
+        }
+
+        public void Update(TDomain item)
+        {
+            TEntity entity = this.dbSet.Find(item.Id);
+            entity = Mapper.Map<TDomain, TEntity>(item, entity);
+
+            EntityEntry entry = this.context.Entry(entity);
+
+            if (entry.State == EntityState.Detached)
+            {
+                this.dbSet.Add(entity);
+            }
+
+            entry.State = EntityState.Modified;
         }
     }
 }

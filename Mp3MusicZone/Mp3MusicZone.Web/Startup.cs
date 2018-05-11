@@ -30,7 +30,7 @@
         {
             services.AddDbContext<MusicZoneDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString(
-                    "Mp3MusicZoneConnectionString")));
+                    "MusicZoneConnectionString")));
 
             //services.AddScoped<Mp3MusicZoneDbContext>(c => new Mp3MusicZoneDbContext(Configuration.GetConnectionString("Mp3MusicZoneConnectionString")));
 

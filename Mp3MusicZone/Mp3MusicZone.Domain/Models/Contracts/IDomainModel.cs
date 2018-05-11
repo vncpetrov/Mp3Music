@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Mp3MusicZone.Domain.Models.Contracts
+﻿namespace Mp3MusicZone.Domain.Models.Contracts
 {
-    class IDomainModel
+    using System;
+
+    public interface IDomainModel : IModel
     {
     }
 }
