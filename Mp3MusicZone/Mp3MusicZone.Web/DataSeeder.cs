@@ -14,7 +14,7 @@
             if (roleService is null) throw new ArgumentNullException(nameof(roleService));
 
             SeedRoles(roleService);
-            SeedAdministrator(userService, roleService);
+            SeedAdministrator(userService);
         }
 
         private static void SeedRoles(IRoleService roleService)
@@ -37,7 +37,7 @@
             .GetResult();
         }
 
-        private static void SeedAdministrator(IUserService userService, IRoleService roleService)
+        private static void SeedAdministrator(IUserService userService)
         {
             Task.Run(async () =>
             {

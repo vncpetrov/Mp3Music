@@ -33,3 +33,67 @@
         display: none;
     }
 }
+
+.heading {
+    margin-bottom: 15px;
+}
+
+div.form-group,
+input.form-control {
+    font-size: 15px;
+}
+
+form div.form-group input.form-control { 
+    /*height: 35px;*/
+    padding: 15px 20px;
+    border: 1px solid #cfcfcf;
+    outline: none;
+}
+
+/*form div input.form-control { 
+    border-radius: 5px;
+    border: none;
+    border: 1px solid #cfcfcf;
+    padding: 10px 20px;
+    margin-bottom: 15px;
+    outline: none;
+}
+
+.form-group label {
+    margin-bottom: 10px;
+}*/
+
+hr {
+    border-top: 3px solid #eee;
+}
+
+h2.main-heading {
+    font-weight: bold;
+}
+
+.field-validation-error {
+    display: block;
+    width: 100%;
+    margin: 2px 0px;
+    border: 1px solid #ffcacd;
+    background-color: #ffeeef;
+    padding: 5px 10px;
+    padding-left: 15px;     
+    color: #000000;
+    border-radius: 4px;
+}
+
+form button.btn {
+    font-size: 15px;
+    padding: 10px 50px;
+    background-color: #F0F0F0;
+    border: 1px solid #D0D0D0;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+    box-shadow: 3px 3px 5px #f0f0f0;
+    outline: none !important;
+}
+
+

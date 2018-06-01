@@ -14,7 +14,10 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Mp3MusicZone.Auth;
     using System;
+
+    using static Common.Constants.WebConstants;
 
     public class Startup
     {
@@ -28,9 +31,11 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<MusicZoneDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString(
-                    "MusicZoneConnectionString")));
+            string connectionString = 
+                Configuration.GetConnectionString(ConnectionStringSectionName);
+
+            services.AddDbContext<MusicZoneDbContext>(
+                options => options.UseSqlServer(connectionString));
 
             //services.AddScoped<Mp3MusicZoneDbContext>(c => new Mp3MusicZoneDbContext(Configuration.GetConnectionString("Mp3MusicZoneConnectionString")));
 
@@ -59,9 +64,12 @@
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             });
 
+            var emailSettings = Configuration.GetSection("EmailSettings").Get<EmailSettings>();
+
             IControllerActivator activator = new Mp3MusicZoneControllerActivator(
-                    this.Configuration.GetConnectionString("Mp3MusicZoneConnectionString"),
-                    new HttpContextAccessor());
+                    connectionString,
+                    new HttpContextAccessor(),
+                    emailSettings);
 
             services.AddSingleton<IControllerActivator>(activator);
         }

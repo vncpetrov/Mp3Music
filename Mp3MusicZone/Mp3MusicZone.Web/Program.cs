@@ -8,6 +8,8 @@
     using Microsoft.Extensions.DependencyInjection;
     using System;
 
+    using static Common.Constants.WebConstants;
+
     public class Program
     {
         public static void Main(string[] args)
@@ -21,7 +23,7 @@
                 .Build();
 
             string connectionString =
-                configuration.GetConnectionString("MusicZoneConnectionString");
+                configuration.GetConnectionString(ConnectionStringSectionName);
             
             using (IServiceScope scope = webHost.Services.CreateScope())
             {

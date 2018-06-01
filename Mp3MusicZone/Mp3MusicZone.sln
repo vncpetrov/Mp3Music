@@ -21,7 +21,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mp3MusicZone.DataServices",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mp3MusicZone.Auth", "Mp3MusicZone.Auth\Mp3MusicZone.Auth.csproj", "{6FD67E53-5107-486B-88A9-ADD95DC0D908}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mp3MusicZone.FileAccess", "Mp3MusicZone.FIleAccess\Mp3MusicZone.FileAccess.csproj", "{510743CF-CF2F-4D24-8716-ACED88336FE9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mp3MusicZone.FileAccess", "Mp3MusicZone.FIleAccess\Mp3MusicZone.FileAccess.csproj", "{510743CF-CF2F-4D24-8716-ACED88336FE9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{4298C10A-2344-49A9-A9A2-6907AA2CFB1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mp3MusicZone.UnitTests", "Mp3MusicZone.UnitTests\Mp3MusicZone.UnitTests.csproj", "{9273AAD3-FB9D-4DCC-8309-841C49C3308E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +65,10 @@ Global
 		{510743CF-CF2F-4D24-8716-ACED88336FE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{510743CF-CF2F-4D24-8716-ACED88336FE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{510743CF-CF2F-4D24-8716-ACED88336FE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9273AAD3-FB9D-4DCC-8309-841C49C3308E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9273AAD3-FB9D-4DCC-8309-841C49C3308E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9273AAD3-FB9D-4DCC-8309-841C49C3308E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9273AAD3-FB9D-4DCC-8309-841C49C3308E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,6 +78,7 @@ Global
 		{4E5BCD17-7F29-4CB7-BE9C-F451F051D6DF} = {616DBEC2-C857-4EDC-85C7-4A65CE6EDD75}
 		{AAD1AB08-4A5A-4640-9C20-F17CC3D684F1} = {97C97E7C-4B57-429B-B272-5796E0537333}
 		{6FD67E53-5107-486B-88A9-ADD95DC0D908} = {97C97E7C-4B57-429B-B272-5796E0537333}
+		{9273AAD3-FB9D-4DCC-8309-841C49C3308E} = {4298C10A-2344-49A9-A9A2-6907AA2CFB1D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B6BBAC18-0B13-4AB6-9F7E-B1BCD06C3DBC}

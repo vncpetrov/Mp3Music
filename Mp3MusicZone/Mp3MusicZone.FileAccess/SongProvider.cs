@@ -48,7 +48,7 @@
 
         }
 
-        public async Task Write(string songName, byte[] song)
+        public async Task WriteAsync(string songName, byte[] song)
         {
             string songFullPath = string.Format(this.songPath, songName);
 

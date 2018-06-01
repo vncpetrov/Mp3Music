@@ -16,18 +16,25 @@
     {
         private readonly string connectionString;
         private readonly IHttpContextAccessor accessor;
+        private readonly EmailSettings emailSettings;        
 
         public Mp3MusicZoneControllerActivator(
             string connectionString,
-            IHttpContextAccessor accessor)
+            IHttpContextAccessor accessor,
+            EmailSettings emailSettings)
         {
             if (connectionString is null)
                 throw new ArgumentNullException(nameof(connectionString));
 
-            if (accessor is null) throw new ArgumentNullException(nameof(accessor));
+            if (accessor is null)
+                throw new ArgumentNullException(nameof(accessor));
+
+            if (emailSettings is null)
+                throw new ArgumentNullException(nameof(emailSettings));
 
             this.connectionString = connectionString;
             this.accessor = accessor;
+            this.emailSettings = emailSettings;
         }
 
         public object Create(ControllerContext controllerContext)
@@ -56,8 +63,7 @@
                 .RequestServices
                 .GetService(typeof(ISignInService));
 
-            IEmailSenderService emailSender = new EmailSenderService(
-                new EmailSettings());
+            IEmailSenderService emailSender = new EmailSenderService(this.emailSettings);
 
             switch (type.Name)
             {

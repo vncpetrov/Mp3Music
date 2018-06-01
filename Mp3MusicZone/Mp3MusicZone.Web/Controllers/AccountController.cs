@@ -246,7 +246,16 @@
                 return View(model);
             }
 
-            user = Mapper.Map<UserEf>(model);
+            //user = Mapper.Map<UserEf>(model);
+            user = new UserEf()
+            {
+                Email = model.Email,
+                UserName = "Test1",
+                Birthdate = new DateTime(2001,11,22),
+                FirstName = "Test1",
+                Genre = Domain.Models.Enums.GenreType.Male,
+                LastName = "Testov1"
+            };
 
             IdentityResult result = await this.userService.CreateAsync(user, model.Password);
 
