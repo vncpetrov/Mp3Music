@@ -1,5 +1,6 @@
 ﻿namespace Mp3MusicZone.Web
 {
+    using Auth;
     using Auth.Contracts;
     using Auth.Identity;
     using AutoMapper;
@@ -14,7 +15,6 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Mp3MusicZone.Auth;
     using System;
 
     using static Common.Constants.WebConstants;
@@ -31,7 +31,14 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connectionString = 
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
+            string connectionString =
                 Configuration.GetConnectionString(ConnectionStringSectionName);
 
             services.AddDbContext<MusicZoneDbContext>(
@@ -62,7 +69,8 @@
             services.AddMvc(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-            });
+            })
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             var emailSettings = Configuration.GetSection("EmailSettings").Get<EmailSettings>();
 
@@ -79,16 +87,17 @@
         {
             if (env.IsDevelopment())
             {
-                app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
             }
 
             app.UseStaticFiles();
+            app.UseCookiePolicy();
 
             app.UseAuthentication();
 

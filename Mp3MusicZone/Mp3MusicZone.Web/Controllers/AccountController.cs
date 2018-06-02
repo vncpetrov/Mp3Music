@@ -9,8 +9,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
-    using Models.Account;
-    using Services;
+    using Models.Account; 
     using System;
     using System.Security.Claims;
     using System.Threading.Tasks;

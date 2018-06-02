@@ -8,8 +8,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
-    using Models.Manage;
-    using Services;
+    using Models.Manage; 
     using System;
     using System.Linq;
     using System.Text;

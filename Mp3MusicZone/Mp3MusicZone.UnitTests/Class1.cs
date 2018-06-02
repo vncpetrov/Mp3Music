@@ -8,7 +8,8 @@ namespace Mp3MusicZone.UnitTests
     {
         [Test]
         public void Test1()
-        { 
+        {
+
         }
     }
 }

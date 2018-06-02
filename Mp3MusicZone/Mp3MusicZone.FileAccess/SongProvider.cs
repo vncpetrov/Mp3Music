@@ -1,4 +1,4 @@
-﻿namespace Mp3MusicZone.FIleAccess
+﻿namespace Mp3MusicZone.FileAccess
 {
     using Domain.Contracts;
     using System;

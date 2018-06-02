@@ -1,4 +1,4 @@
-namespace Mp3MusicZone.Web.Services
+namespace Mp3MusicZone.Web.Infrastructure.Extensions
 {
     using Domain.Contracts;
     using System;

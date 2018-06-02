@@ -1,28 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
-    <UserSecretsId>aspnet-Mp3MusicZone.Web-F27A9CFE-2D1F-4AD5-AA93-CB648411B23E</UserSecretsId>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <UserSecretsId>aspnet-Mp3MusicZone.Web-91AD226C-812B-4BD9-90FA-B7D44C3C6D33</UserSecretsId>
   </PropertyGroup>
-
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.2.2" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.2" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" PrivateAssets="All" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.1" />
-    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
-    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Mp3MusicZone.Auth\Mp3MusicZone.Auth.csproj" />
-    <ProjectReference Include="..\Mp3MusicZone.Domain\Mp3MusicZone.Domain.csproj" />
     <ProjectReference Include="..\Mp3MusicZone.EfDataAccess\Mp3MusicZone.EfDataAccess.csproj" />
     <ProjectReference Include="..\Mp3MusicZone.Web.Infrastructure\Mp3MusicZone.Web.Infrastructure.csproj" />
   </ItemGroup>
