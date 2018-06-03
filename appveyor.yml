@@ -3,5 +3,5 @@ image: Visual Studio 2017 Preview
 before_build:
 - cmd: dotnet restore
 build:
-  project: C:\projects\Mp3Music\Mp3MusicZone\Mp3MusicZone.sln
+  project: Mp3MusicZone.sln
   verbosity: minimal
