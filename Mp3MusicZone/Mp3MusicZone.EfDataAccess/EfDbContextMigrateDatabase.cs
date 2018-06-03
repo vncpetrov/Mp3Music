@@ -7,7 +7,6 @@
     {
         public static void UseDatabaseMigration(DbContext context)
         {
-
             context.Database.Migrate();
         }
     }
