@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Mp3MusicZone.Auth;
+using NUnit.Framework;
 using System;
 
 namespace Mp3MusicZone.UnitTests
@@ -7,9 +8,11 @@ namespace Mp3MusicZone.UnitTests
     public class Class1
     {
         [Test]
-        public void Test1()
+        public void EmailSenderDummyTest()
         {
+            EmailSenderService emailSender = new EmailSenderService(new EmailSettings());
 
+            Assert.IsTrue(true); 
         }
     }
 }
