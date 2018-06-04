@@ -8,7 +8,7 @@ build:
 build_script:
  - msbuild /verbosity:quiet "Mp3MusicZone.sln"
 test_script:
- - ..\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:"nunit3-console.exe" -targetargs:"Mp3MusicZone.UnitTests.dll -noshadow" -output:"coverage.xml" -filter:"+[Mp3MusicZone*]* -[Tests*]*"
+ - packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:"nunit3-console.exe" -targetargs:"Mp3MusicZone.UnitTests.dll -noshadow" -output:"coverage.xml" -filter:"+[Mp3MusicZone*]* -[Tests*]*"
 after_test:
   - ps: |
       $env:PATH = 'C:\msys64\usr\bin;' + $env:PATH
