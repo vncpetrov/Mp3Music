@@ -9,7 +9,7 @@ build:
 build_script:
  - msbuild /verbosity:quiet "Mp3MusicZone.sln"
 test_script:
- - OpenCover.Console.exe -register:user -target:"dotnet.exe" -targetargs:"Mp3MusicZone.UnitTests.dll -noshadow" -output:"coverage.xml" -filter:"+[Mp3MusicZone*]* -[*Tests]*" -oldStyle 
+ - OpenCover.Console.exe -target:"c:\Program Files\dotnet\dotnet.exe" -targetargs:"test Mp3MusicZone.UnitTests.csproj" -output:"coverage.xml" -oldStyle -filter:"+[Mp3MusicZone*]* -[*Tests*]*" -register:user
 after_test:
   - ps: |
       $env:PATH = 'C:\msys64\usr\bin;' + $env:PATH
