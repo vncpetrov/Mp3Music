@@ -7,6 +7,12 @@ namespace Mp3MusicZone.UnitTests
     [TestFixture]
     public class EmailSenderTests
     {
+        [Test]
+        public void EmailSenderDummyTest()
+        {
+            EmailSenderService emailSender = new EmailSenderService(new EmailSettings());
 
+            Assert.IsTrue(true); 
+        }
     }
 }
