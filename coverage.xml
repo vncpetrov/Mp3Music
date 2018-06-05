@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CoverageSession xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Summary numSequencePoints="0" visitedSequencePoints="0" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="0" minCyclomaticComplexity="0" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="0" />
+  <Summary numSequencePoints="54" visitedSequencePoints="4" numBranchPoints="32" visitedBranchPoints="1" sequenceCoverage="7.41" branchCoverage="3.12" maxCyclomaticComplexity="6" minCyclomaticComplexity="1" visitedClasses="1" numClasses="7" visitedMethods="1" numMethods="30" />
   <Modules>
     <Module skippedDueTo="Filter" hash="B2-E7-C6-75-5A-8F-45-0B-CA-A7-A6-86-F2-5E-94-26-D2-45-2F-3F">
       <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Private.CoreLib.dll</ModulePath>
@@ -314,28 +314,22 @@
       <ModuleName>System.IO.Compression</ModuleName>
       <Classes />
     </Module>
-    <Module skippedDueTo="Filter" hash="41-4A-9A-A2-E1-F8-6E-7D-B4-28-4D-C5-7A-5F-EF-78-9E-E6-46-F4">
-      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\Microsoft.Build.Framework.dll</ModulePath>
-      <ModuleTime>2018-05-22T13:00:08Z</ModuleTime>
-      <ModuleName>Microsoft.Build.Framework</ModuleName>
-      <Classes />
-    </Module>
     <Module skippedDueTo="Filter" hash="66-30-70-85-91-ED-55-B3-0B-E6-B9-A6-64-9D-CC-CC-94-0A-EE-C8">
       <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Net.Http.dll</ModulePath>
       <ModuleTime>2018-05-15T11:03:36Z</ModuleTime>
       <ModuleName>System.Net.Http</ModuleName>
       <Classes />
     </Module>
+    <Module skippedDueTo="Filter" hash="41-4A-9A-A2-E1-F8-6E-7D-B4-28-4D-C5-7A-5F-EF-78-9E-E6-46-F4">
+      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\Microsoft.Build.Framework.dll</ModulePath>
+      <ModuleTime>2018-05-22T13:00:08Z</ModuleTime>
+      <ModuleName>Microsoft.Build.Framework</ModuleName>
+      <Classes />
+    </Module>
     <Module skippedDueTo="Filter" hash="B1-C8-79-68-C3-E4-96-D6-C7-EB-75-26-AC-CE-24-90-57-2E-90-BA">
       <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Net.Primitives.dll</ModulePath>
       <ModuleTime>2018-05-15T11:03:36Z</ModuleTime>
       <ModuleName>System.Net.Primitives</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="F9-67-FE-2B-96-8A-EC-95-FB-27-2A-27-AA-B3-38-DC-99-35-B9-A1">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.ComponentModel.Primitives.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
-      <ModuleName>System.ComponentModel.Primitives</ModuleName>
       <Classes />
     </Module>
     <Module skippedDueTo="Filter" hash="CB-26-D8-B4-F5-C0-85-70-AA-9F-52-97-F5-68-EC-32-9B-2D-73-B3">
@@ -348,6 +342,12 @@
       <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Security.Cryptography.X509Certificates.dll</ModulePath>
       <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
       <ModuleName>System.Security.Cryptography.X509Certificates</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="F9-67-FE-2B-96-8A-EC-95-FB-27-2A-27-AA-B3-38-DC-99-35-B9-A1">
+      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.ComponentModel.Primitives.dll</ModulePath>
+      <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
+      <ModuleName>System.ComponentModel.Primitives</ModuleName>
       <Classes />
     </Module>
     <Module skippedDueTo="Filter" hash="0F-17-E9-42-47-D4-6C-92-50-FA-03-31-93-DC-B9-61-95-E3-80-A2">
@@ -404,24 +404,6 @@
       <ModuleName>System.Net.NameResolution</ModuleName>
       <Classes />
     </Module>
-    <Module skippedDueTo="Filter" hash="FE-78-53-9B-1A-13-3F-2F-ED-91-53-E1-AA-73-FA-63-EF-04-D3-99">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Security.Principal.Windows.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
-      <ModuleName>System.Security.Principal.Windows</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="D3-0C-F6-3D-A6-F7-83-3E-1E-46-C2-F3-6F-5E-E8-35-37-73-4B-30">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Security.Claims.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
-      <ModuleName>System.Security.Claims</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="12-B7-51-68-45-5A-41-43-72-AB-32-1D-14-F1-4B-C8-FE-3E-0C-95">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Security.Principal.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
-      <ModuleName>System.Security.Principal</ModuleName>
-      <Classes />
-    </Module>
     <Module skippedDueTo="Filter" hash="0B-00-63-62-08-97-52-5E-F9-8B-EB-3C-D1-A6-54-CE-C0-73-A7-B0">
       <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\MSBuild.dll</ModulePath>
       <ModuleTime>2018-05-22T13:04:42Z</ModuleTime>
@@ -474,12 +456,6 @@
       <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Collections.dll</ModulePath>
       <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
       <ModuleName>System.Collections</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="06-17-26-DD-65-DD-EF-6E-2E-D9-3B-5F-6B-34-E5-D7-6D-F3-F7-E0">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Security.Cryptography.Encoding.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
-      <ModuleName>System.Security.Cryptography.Encoding</ModuleName>
       <Classes />
     </Module>
     <Module skippedDueTo="Filter" hash="0A-4E-6E-9A-77-64-F6-77-BF-DB-19-83-60-08-67-E6-59-D4-B5-89">
@@ -590,16 +566,34 @@
       <ModuleName>System.IO.FileSystem.Primitives</ModuleName>
       <Classes />
     </Module>
-    <Module skippedDueTo="Filter" hash="0D-0F-7D-34-CA-A6-65-47-7B-9A-11-AC-9B-85-8D-E3-52-ED-44-21">
-      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\Microsoft.ApplicationInsights.dll</ModulePath>
-      <ModuleTime>2018-05-22T13:00:08Z</ModuleTime>
-      <ModuleName>Microsoft.ApplicationInsights</ModuleName>
+    <Module skippedDueTo="Filter" hash="FE-78-53-9B-1A-13-3F-2F-ED-91-53-E1-AA-73-FA-63-EF-04-D3-99">
+      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Security.Principal.Windows.dll</ModulePath>
+      <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
+      <ModuleName>System.Security.Principal.Windows</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="D3-0C-F6-3D-A6-F7-83-3E-1E-46-C2-F3-6F-5E-E8-35-37-73-4B-30">
+      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Security.Claims.dll</ModulePath>
+      <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
+      <ModuleName>System.Security.Claims</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="12-B7-51-68-45-5A-41-43-72-AB-32-1D-14-F1-4B-C8-FE-3E-0C-95">
+      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Security.Principal.dll</ModulePath>
+      <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
+      <ModuleName>System.Security.Principal</ModuleName>
       <Classes />
     </Module>
     <Module skippedDueTo="Filter" hash="4B-C9-61-40-58-3E-0C-63-D9-7B-DD-60-9F-00-0F-85-73-7E-F7-06">
       <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Text.Encoding.Extensions.dll</ModulePath>
       <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
       <ModuleName>System.Text.Encoding.Extensions</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="0D-0F-7D-34-CA-A6-65-47-7B-9A-11-AC-9B-85-8D-E3-52-ED-44-21">
+      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\Microsoft.ApplicationInsights.dll</ModulePath>
+      <ModuleTime>2018-05-22T13:00:08Z</ModuleTime>
+      <ModuleName>Microsoft.ApplicationInsights</ModuleName>
       <Classes />
     </Module>
     <Module skippedDueTo="Filter" hash="25-FE-65-CF-8D-DE-90-81-68-78-51-35-16-D5-62-62-94-42-F1-2D">
@@ -650,6 +644,12 @@
       <ModuleName>System.Diagnostics.Tracing</ModuleName>
       <Classes />
     </Module>
+    <Module skippedDueTo="Filter" hash="06-17-26-DD-65-DD-EF-6E-2E-D9-3B-5F-6B-34-E5-D7-6D-F3-F7-E0">
+      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Security.Cryptography.Encoding.dll</ModulePath>
+      <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
+      <ModuleName>System.Security.Cryptography.Encoding</ModuleName>
+      <Classes />
+    </Module>
     <Module skippedDueTo="Filter" hash="9D-16-07-1F-E6-AE-43-F8-08-7D-77-2C-41-30-DA-C0-55-6C-5D-B8">
       <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Private.Uri.dll</ModulePath>
       <ModuleTime>2018-05-15T11:03:36Z</ModuleTime>
@@ -662,16 +662,16 @@
       <ModuleName>System.Threading.Tasks</ModuleName>
       <Classes />
     </Module>
-    <Module skippedDueTo="Filter" hash="90-9A-ED-47-04-2B-8A-42-2C-26-2D-AC-58-1F-41-AA-7C-AB-DA-48">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Threading.ThreadPool.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
-      <ModuleName>System.Threading.ThreadPool</ModuleName>
-      <Classes />
-    </Module>
     <Module skippedDueTo="Filter" hash="42-A9-56-1E-D9-D8-E5-61-4B-B5-2A-4C-CA-8E-A6-DE-FB-9F-B4-71">
       <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Globalization.dll</ModulePath>
       <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
       <ModuleName>System.Globalization</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="90-9A-ED-47-04-2B-8A-42-2C-26-2D-AC-58-1F-41-AA-7C-AB-DA-48">
+      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Threading.ThreadPool.dll</ModulePath>
+      <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
+      <ModuleName>System.Threading.ThreadPool</ModuleName>
       <Classes />
     </Module>
     <Module skippedDueTo="Filter" hash="2B-15-19-D9-E6-56-DC-AC-E0-43-94-94-4C-00-47-20-93-31-C3-E5">
@@ -1286,12 +1286,6 @@
       <ModuleName>System.Text.Encoding</ModuleName>
       <Classes />
     </Module>
-    <Module skippedDueTo="Filter" hash="3C-1A-D1-7D-BD-42-C9-7D-FE-CD-90-2F-00-88-4C-15-52-1E-4E-0F">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.IO.FileSystem.Primitives.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
-      <ModuleName>System.IO.FileSystem.Primitives</ModuleName>
-      <Classes />
-    </Module>
     <Module skippedDueTo="Filter" hash="3E-25-59-81-49-B6-49-57-56-FF-D9-5C-4B-08-B7-27-B7-81-A7-8F">
       <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\NuGet.ProjectModel.dll</ModulePath>
       <ModuleTime>2018-05-22T13:03:40Z</ModuleTime>
@@ -1302,6 +1296,12 @@
       <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\NuGet.Versioning.dll</ModulePath>
       <ModuleTime>2018-05-22T13:04:12Z</ModuleTime>
       <ModuleName>NuGet.Versioning</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="3C-1A-D1-7D-BD-42-C9-7D-FE-CD-90-2F-00-88-4C-15-52-1E-4E-0F">
+      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.IO.FileSystem.Primitives.dll</ModulePath>
+      <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
+      <ModuleName>System.IO.FileSystem.Primitives</ModuleName>
       <Classes />
     </Module>
     <Module skippedDueTo="Filter" hash="3E-25-59-81-49-B6-49-57-56-FF-D9-5C-4B-08-B7-27-B7-81-A7-8F">
@@ -1406,24 +1406,6 @@
       <ModuleName>mscorlib</ModuleName>
       <Classes />
     </Module>
-    <Module skippedDueTo="Filter" hash="B2-5D-47-CA-28-5B-B0-0E-FC-29-D9-01-B2-8D-36-88-65-61-54-0E">
-      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\Newtonsoft.Json.dll</ModulePath>
-      <ModuleTime>2018-05-22T13:05:00Z</ModuleTime>
-      <ModuleName>Newtonsoft.Json</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="E2-DD-41-07-A9-AC-5B-84-49-B7-E1-85-68-3D-69-DC-84-4B-3D-06">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Dynamic.Runtime.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
-      <ModuleName>System.Dynamic.Runtime</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="CF-C6-6D-CD-52-19-4F-3F-36-51-5E-56-26-3A-93-A5-02-E2-58-2A">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Linq.Expressions.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:36Z</ModuleTime>
-      <ModuleName>System.Linq.Expressions</ModuleName>
-      <Classes />
-    </Module>
     <Module skippedDueTo="Filter" hash="CB-39-E5-B1-B4-D2-03-F7-BD-8B-F2-1B-FF-A9-EA-6F-4B-61-93-6D">
       <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Diagnostics.Tools.dll</ModulePath>
       <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
@@ -1448,12 +1430,6 @@
       <ModuleName>System.Net.Http</ModuleName>
       <Classes />
     </Module>
-    <Module skippedDueTo="Filter" hash="78-5F-43-09-56-00-5D-EE-14-3C-FD-1E-43-95-CE-09-20-8A-AB-90">
-      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\NuGet.Packaging.Core.dll</ModulePath>
-      <ModuleTime>2018-05-22T13:03:36Z</ModuleTime>
-      <ModuleName>NuGet.Packaging.Core</ModuleName>
-      <Classes />
-    </Module>
     <Module skippedDueTo="Filter" hash="B1-C8-79-68-C3-E4-96-D6-C7-EB-75-26-AC-CE-24-90-57-2E-90-BA">
       <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Net.Primitives.dll</ModulePath>
       <ModuleTime>2018-05-15T11:03:36Z</ModuleTime>
@@ -1472,22 +1448,10 @@
       <ModuleName>System.Security.Cryptography.X509Certificates</ModuleName>
       <Classes />
     </Module>
-    <Module skippedDueTo="Filter" hash="B4-5A-77-C2-C0-65-10-A3-89-5F-99-44-14-C7-A5-80-D0-90-02-8E">
-      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\NuGet.LibraryModel.dll</ModulePath>
-      <ModuleTime>2018-05-22T13:03:30Z</ModuleTime>
-      <ModuleName>NuGet.LibraryModel</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="8E-3C-D3-59-57-AC-63-41-38-8B-D3-5F-74-49-A4-8A-CC-5B-52-6C">
-      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\NuGet.Packaging.dll</ModulePath>
-      <ModuleTime>2018-05-22T13:04:10Z</ModuleTime>
-      <ModuleName>NuGet.Packaging</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="0C-56-98-AE-50-0E-32-FC-94-AE-26-B2-60-30-BD-89-B1-8D-D3-D4">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Runtime.Serialization.Primitives.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
-      <ModuleName>System.Runtime.Serialization.Primitives</ModuleName>
+    <Module skippedDueTo="Filter" hash="B2-E7-C6-75-5A-8F-45-0B-CA-A7-A6-86-F2-5E-94-26-D2-45-2F-3F">
+      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Private.CoreLib.dll</ModulePath>
+      <ModuleTime>2018-05-15T11:03:40Z</ModuleTime>
+      <ModuleName>System.Private.CoreLib</ModuleName>
       <Classes />
     </Module>
     <Module skippedDueTo="Filter" hash="0F-DB-A7-E6-AA-F8-E5-3E-DE-54-3D-EA-49-AC-84-46-97-51-FA-C2">
@@ -1518,18 +1482,6 @@
       <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Net.NameResolution.dll</ModulePath>
       <ModuleTime>2018-05-15T11:03:36Z</ModuleTime>
       <ModuleName>System.Net.NameResolution</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="06-17-26-DD-65-DD-EF-6E-2E-D9-3B-5F-6B-34-E5-D7-6D-F3-F7-E0">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Security.Cryptography.Encoding.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
-      <ModuleName>System.Security.Cryptography.Encoding</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="B2-E7-C6-75-5A-8F-45-0B-CA-A7-A6-86-F2-5E-94-26-D2-45-2F-3F">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Private.CoreLib.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:40Z</ModuleTime>
-      <ModuleName>System.Private.CoreLib</ModuleName>
       <Classes />
     </Module>
     <Module skippedDueTo="Filter" hash="0B-00-63-62-08-97-52-5E-F9-8B-EB-3C-D1-A6-54-CE-C0-73-A7-B0">
@@ -1584,6 +1536,12 @@
       <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Collections.dll</ModulePath>
       <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
       <ModuleName>System.Collections</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="06-17-26-DD-65-DD-EF-6E-2E-D9-3B-5F-6B-34-E5-D7-6D-F3-F7-E0">
+      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Security.Cryptography.Encoding.dll</ModulePath>
+      <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
+      <ModuleName>System.Security.Cryptography.Encoding</ModuleName>
       <Classes />
     </Module>
     <Module skippedDueTo="Filter" hash="0A-4E-6E-9A-77-64-F6-77-BF-DB-19-83-60-08-67-E6-59-D4-B5-89">
@@ -1784,6 +1742,12 @@
       <ModuleName>NuGet.Frameworks</ModuleName>
       <Classes />
     </Module>
+    <Module skippedDueTo="Filter" hash="B1-14-2E-2B-2D-74-A8-39-95-C9-CD-C4-2D-7C-86-6D-97-7E-30-39">
+      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Resources.ResourceManager.dll</ModulePath>
+      <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
+      <ModuleName>System.Resources.ResourceManager</ModuleName>
+      <Classes />
+    </Module>
     <Module skippedDueTo="Filter" hash="25-50-01-7A-06-31-FD-01-25-66-B3-FF-54-A1-13-10-BF-28-EA-43">
       <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.IO.FileSystem.dll</ModulePath>
       <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
@@ -1812,12 +1776,6 @@
       <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Collections.dll</ModulePath>
       <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
       <ModuleName>System.Collections</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="B1-14-2E-2B-2D-74-A8-39-95-C9-CD-C4-2D-7C-86-6D-97-7E-30-39">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Resources.ResourceManager.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
-      <ModuleName>System.Resources.ResourceManager</ModuleName>
       <Classes />
     </Module>
     <Module skippedDueTo="Filter" hash="0A-4E-6E-9A-77-64-F6-77-BF-DB-19-83-60-08-67-E6-59-D4-B5-89">
@@ -2048,16 +2006,16 @@
       <ModuleName>System.Security.Cryptography.Algorithms</ModuleName>
       <Classes />
     </Module>
-    <Module skippedDueTo="Filter" hash="9D-16-07-1F-E6-AE-43-F8-08-7D-77-2C-41-30-DA-C0-55-6C-5D-B8">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Private.Uri.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:36Z</ModuleTime>
-      <ModuleName>System.Private.Uri</ModuleName>
-      <Classes />
-    </Module>
     <Module skippedDueTo="Filter" hash="DC-EE-C1-38-F2-18-91-33-F1-C3-BD-36-22-CF-EB-CB-64-37-AA-32">
       <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Threading.Tasks.Parallel.dll</ModulePath>
       <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
       <ModuleName>System.Threading.Tasks.Parallel</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="9D-16-07-1F-E6-AE-43-F8-08-7D-77-2C-41-30-DA-C0-55-6C-5D-B8">
+      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Private.Uri.dll</ModulePath>
+      <ModuleTime>2018-05-15T11:03:36Z</ModuleTime>
+      <ModuleName>System.Private.Uri</ModuleName>
       <Classes />
     </Module>
     <Module skippedDueTo="Filter" hash="9A-D5-0C-A3-5D-58-2D-DE-6A-31-89-EE-94-D7-1F-CA-8E-4A-4A-3A">
@@ -2282,16 +2240,88 @@
       <ModuleName>NuGet.Versioning</ModuleName>
       <Classes />
     </Module>
+    <Module skippedDueTo="Filter" hash="F4-D8-E0-A0-9C-AC-8C-F5-17-7F-8B-73-82-22-9E-44-19-4E-87-E8">
+      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Core.dll</ModulePath>
+      <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
+      <ModuleName>System.Core</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="04-EE-21-3D-50-7D-5E-CE-12-10-F6-9C-5E-AA-EE-24-C1-E0-FD-B3">
+      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Reflection.Metadata.dll</ModulePath>
+      <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
+      <ModuleName>System.Reflection.Metadata</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="24-37-77-64-7F-CD-CB-B2-42-EB-60-6C-A9-B6-FE-20-8E-F3-AF-01">
+      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.IO.MemoryMappedFiles.dll</ModulePath>
+      <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
+      <ModuleName>System.IO.MemoryMappedFiles</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="81-A4-25-B6-D3-88-DA-45-70-D0-3A-2D-05-DE-62-CD-FB-83-91-B1">
+      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Diagnostics.FileVersionInfo.dll</ModulePath>
+      <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
+      <ModuleName>System.Diagnostics.FileVersionInfo</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="67-F3-8D-FF-58-30-5E-3A-00-E2-F7-7A-6C-29-19-0F-81-5F-8A-FB">
+      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.ComponentModel.dll</ModulePath>
+      <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
+      <ModuleName>System.ComponentModel</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="F4-D8-E0-A0-9C-AC-8C-F5-17-7F-8B-73-82-22-9E-44-19-4E-87-E8">
+      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Core.dll</ModulePath>
+      <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
+      <ModuleName>System.Core</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="7B-69-F4-1E-A3-58-9E-D6-28-EB-77-F1-9D-13-F7-D8-20-E7-06-CC">
+      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Xml.XDocument.dll</ModulePath>
+      <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
+      <ModuleName>System.Xml.XDocument</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="21-08-D5-0F-67-C7-B3-A5-F0-0B-F9-E9-57-C9-65-4E-BD-60-05-42">
+      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Private.Xml.Linq.dll</ModulePath>
+      <ModuleTime>2018-05-15T11:03:36Z</ModuleTime>
+      <ModuleName>System.Private.Xml.Linq</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="20-7F-00-FC-3F-E3-AB-6E-61-FC-BD-E1-3D-E4-4F-9D-FE-09-D7-CB">
+      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\NuGet.Versioning.dll</ModulePath>
+      <ModuleTime>2018-05-22T13:04:12Z</ModuleTime>
+      <ModuleName>NuGet.Versioning</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="04-EE-21-3D-50-7D-5E-CE-12-10-F6-9C-5E-AA-EE-24-C1-E0-FD-B3">
+      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Reflection.Metadata.dll</ModulePath>
+      <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
+      <ModuleName>System.Reflection.Metadata</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="24-37-77-64-7F-CD-CB-B2-42-EB-60-6C-A9-B6-FE-20-8E-F3-AF-01">
+      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.IO.MemoryMappedFiles.dll</ModulePath>
+      <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
+      <ModuleName>System.IO.MemoryMappedFiles</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="81-A4-25-B6-D3-88-DA-45-70-D0-3A-2D-05-DE-62-CD-FB-83-91-B1">
+      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Diagnostics.FileVersionInfo.dll</ModulePath>
+      <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
+      <ModuleName>System.Diagnostics.FileVersionInfo</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="F4-D8-E0-A0-9C-AC-8C-F5-17-7F-8B-73-82-22-9E-44-19-4E-87-E8">
+      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Core.dll</ModulePath>
+      <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
+      <ModuleName>System.Core</ModuleName>
+      <Classes />
+    </Module>
     <Module skippedDueTo="Filter" hash="31-AE-C3-DD-05-1A-34-79-6F-17-E0-EA-5E-CB-34-00-80-3B-4A-07">
       <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\Roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll</ModulePath>
       <ModuleTime>2018-05-22T13:00:34Z</ModuleTime>
       <ModuleName>Microsoft.Build.Tasks.CodeAnalysis</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="0F-17-E9-42-47-D4-6C-92-50-FA-03-31-93-DC-B9-61-95-E3-80-A2">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\Microsoft.Win32.Primitives.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:32Z</ModuleTime>
-      <ModuleName>Microsoft.Win32.Primitives</ModuleName>
       <Classes />
     </Module>
     <Module skippedDueTo="Filter" hash="CA-72-7D-28-BC-0B-40-56-77-FE-1A-07-BD-F9-CC-18-8A-58-5E-9F">
@@ -2486,6 +2516,24 @@
       <ModuleName>System.Security.Cryptography.Algorithms</ModuleName>
       <Classes />
     </Module>
+    <Module skippedDueTo="Filter" hash="77-96-31-F0-CF-D4-3E-FC-4C-DD-D5-57-CE-F5-B3-91-B1-67-09-50">
+      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.0.7\System.IO.FileSystem.Primitives.dll</ModulePath>
+      <ModuleTime>2018-04-06T13:34:44Z</ModuleTime>
+      <ModuleName>System.IO.FileSystem.Primitives</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="CB-9E-1D-50-7C-A0-F4-A4-6D-E4-95-5C-A6-8C-F1-27-80-17-97-A1">
+      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.0.7\System.Text.Encoding.Extensions.dll</ModulePath>
+      <ModuleTime>2018-04-06T13:34:46Z</ModuleTime>
+      <ModuleName>System.Text.Encoding.Extensions</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="48-80-BB-BC-44-87-85-EA-1B-62-D5-BC-A7-0F-76-9A-2E-23-F7-CB">
+      <ModulePath>C:\Users\Venci\AppData\Local\Temp\VBCSCompiler\AnalyzerAssemblyLoader\bfd901bd305945f3be6ea9373faee1cd\0\Microsoft.EntityFrameworkCore.Analyzers.dll</ModulePath>
+      <ModuleTime>2018-05-16T17:18:02Z</ModuleTime>
+      <ModuleName>Microsoft.EntityFrameworkCore.Analyzers</ModuleName>
+      <Classes />
+    </Module>
     <Module skippedDueTo="Filter" hash="42-D7-A5-B1-4A-37-BE-7D-A3-3A-9F-1B-69-17-E1-B3-5D-C7-52-56">
       <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.0.7\System.Resources.ResourceManager.dll</ModulePath>
       <ModuleTime>2018-04-06T13:34:46Z</ModuleTime>
@@ -2504,12 +2552,6 @@
       <ModuleName>System.ValueTuple</ModuleName>
       <Classes />
     </Module>
-    <Module skippedDueTo="Filter" hash="77-96-31-F0-CF-D4-3E-FC-4C-DD-D5-57-CE-F5-B3-91-B1-67-09-50">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.0.7\System.IO.FileSystem.Primitives.dll</ModulePath>
-      <ModuleTime>2018-04-06T13:34:44Z</ModuleTime>
-      <ModuleName>System.IO.FileSystem.Primitives</ModuleName>
-      <Classes />
-    </Module>
     <Module skippedDueTo="Filter" hash="2B-62-F7-CD-DE-BE-DC-3C-B8-A1-E0-97-F4-28-14-1D-62-43-48-32">
       <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.0.7\System.Threading.Tasks.Parallel.dll</ModulePath>
       <ModuleTime>2018-04-06T13:34:46Z</ModuleTime>
@@ -2520,12 +2562,6 @@
       <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.0.7\System.Diagnostics.Tracing.dll</ModulePath>
       <ModuleTime>2018-04-06T13:34:42Z</ModuleTime>
       <ModuleName>System.Diagnostics.Tracing</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="CB-9E-1D-50-7C-A0-F4-A4-6D-E4-95-5C-A6-8C-F1-27-80-17-97-A1">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.0.7\System.Text.Encoding.Extensions.dll</ModulePath>
-      <ModuleTime>2018-04-06T13:34:46Z</ModuleTime>
-      <ModuleName>System.Text.Encoding.Extensions</ModuleName>
       <Classes />
     </Module>
     <Module skippedDueTo="Filter" hash="E0-E4-EF-FF-57-76-C7-B9-36-83-EF-BE-FE-88-88-C3-67-70-A3-FF">
@@ -2556,354 +2592,6 @@
       <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.0.7\System.Private.Xml.dll</ModulePath>
       <ModuleTime>2018-04-06T13:34:44Z</ModuleTime>
       <ModuleName>System.Private.Xml</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="67-7A-21-E4-50-15-94-7B-EC-EE-53-EA-50-95-06-E9-6E-CE-14-BD">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.0.7\System.Diagnostics.Debug.dll</ModulePath>
-      <ModuleTime>2018-04-06T13:34:42Z</ModuleTime>
-      <ModuleName>System.Diagnostics.Debug</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="0D-38-3A-DA-1E-A2-9A-26-05-79-C2-77-39-AE-12-DB-84-55-BF-6B">
-      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\Microsoft.Extensions.DependencyModel.dll</ModulePath>
-      <ModuleTime>2018-05-22T13:00:18Z</ModuleTime>
-      <ModuleName>Microsoft.Extensions.DependencyModel</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="78-5F-43-09-56-00-5D-EE-14-3C-FD-1E-43-95-CE-09-20-8A-AB-90">
-      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\NuGet.Packaging.Core.dll</ModulePath>
-      <ModuleTime>2018-05-22T13:03:36Z</ModuleTime>
-      <ModuleName>NuGet.Packaging.Core</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="93-AD-CD-25-C3-0E-A0-A6-7A-07-9E-D5-7A-CB-BF-3D-90-A1-F9-C5">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.IO.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:36Z</ModuleTime>
-      <ModuleName>System.IO</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="2C-A4-74-D9-53-AC-74-18-35-67-84-A6-39-4E-8C-96-9E-71-6B-DD">
-      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\NuGet.Common.dll</ModulePath>
-      <ModuleTime>2018-05-22T13:03:32Z</ModuleTime>
-      <ModuleName>NuGet.Common</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="3C-1A-D1-7D-BD-42-C9-7D-FE-CD-90-2F-00-88-4C-15-52-1E-4E-0F">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.IO.FileSystem.Primitives.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
-      <ModuleName>System.IO.FileSystem.Primitives</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="B2-5D-47-CA-28-5B-B0-0E-FC-29-D9-01-B2-8D-36-88-65-61-54-0E">
-      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\Newtonsoft.Json.dll</ModulePath>
-      <ModuleTime>2018-05-22T13:05:00Z</ModuleTime>
-      <ModuleName>Newtonsoft.Json</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="E2-DD-41-07-A9-AC-5B-84-49-B7-E1-85-68-3D-69-DC-84-4B-3D-06">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Dynamic.Runtime.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
-      <ModuleName>System.Dynamic.Runtime</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="CF-C6-6D-CD-52-19-4F-3F-36-51-5E-56-26-3A-93-A5-02-E2-58-2A">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Linq.Expressions.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:36Z</ModuleTime>
-      <ModuleName>System.Linq.Expressions</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="42-A9-56-1E-D9-D8-E5-61-4B-B5-2A-4C-CA-8E-A6-DE-FB-9F-B4-71">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Globalization.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
-      <ModuleName>System.Globalization</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="1E-3D-7F-D9-96-A2-6B-1F-8A-00-47-08-B1-B4-3D-4B-FC-82-C0-E0">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Reflection.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
-      <ModuleName>System.Reflection</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="B4-5A-77-C2-C0-65-10-A3-89-5F-99-44-14-C7-A5-80-D0-90-02-8E">
-      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\NuGet.LibraryModel.dll</ModulePath>
-      <ModuleTime>2018-05-22T13:03:30Z</ModuleTime>
-      <ModuleName>NuGet.LibraryModel</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="8E-3C-D3-59-57-AC-63-41-38-8B-D3-5F-74-49-A4-8A-CC-5B-52-6C">
-      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\NuGet.Packaging.dll</ModulePath>
-      <ModuleTime>2018-05-22T13:04:10Z</ModuleTime>
-      <ModuleName>NuGet.Packaging</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="0C-56-98-AE-50-0E-32-FC-94-AE-26-B2-60-30-BD-89-B1-8D-D3-D4">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Runtime.Serialization.Primitives.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
-      <ModuleName>System.Runtime.Serialization.Primitives</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="23-3A-A4-7A-36-EC-A3-70-6E-B5-09-91-2C-F4-8E-8F-AA-2F-DE-A9">
-      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\NuGet.Configuration.dll</ModulePath>
-      <ModuleTime>2018-05-22T13:03:30Z</ModuleTime>
-      <ModuleName>NuGet.Configuration</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="25-FE-65-CF-8D-DE-90-81-68-78-51-35-16-D5-62-62-94-42-F1-2D">
-      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\Microsoft.DotNet.PlatformAbstractions.dll</ModulePath>
-      <ModuleTime>2018-05-22T13:00:08Z</ModuleTime>
-      <ModuleName>Microsoft.DotNet.PlatformAbstractions</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="81-A4-25-B6-D3-88-DA-45-70-D0-3A-2D-05-DE-62-CD-FB-83-91-B1">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Diagnostics.FileVersionInfo.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
-      <ModuleName>System.Diagnostics.FileVersionInfo</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="04-EE-21-3D-50-7D-5E-CE-12-10-F6-9C-5E-AA-EE-24-C1-E0-FD-B3">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Reflection.Metadata.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
-      <ModuleName>System.Reflection.Metadata</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="24-37-77-64-7F-CD-CB-B2-42-EB-60-6C-A9-B6-FE-20-8E-F3-AF-01">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.IO.MemoryMappedFiles.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
-      <ModuleName>System.IO.MemoryMappedFiles</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="F4-D8-E0-A0-9C-AC-8C-F5-17-7F-8B-73-82-22-9E-44-19-4E-87-E8">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Core.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
-      <ModuleName>System.Core</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="04-EE-21-3D-50-7D-5E-CE-12-10-F6-9C-5E-AA-EE-24-C1-E0-FD-B3">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Reflection.Metadata.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
-      <ModuleName>System.Reflection.Metadata</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="31-AE-C3-DD-05-1A-34-79-6F-17-E0-EA-5E-CB-34-00-80-3B-4A-07">
-      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\Roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll</ModulePath>
-      <ModuleTime>2018-05-22T13:00:34Z</ModuleTime>
-      <ModuleName>Microsoft.Build.Tasks.CodeAnalysis</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="9B-B6-C8-91-E4-D7-75-59-E7-4D-8E-D5-A8-88-24-62-CE-88-8C-E5">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.IO.Pipes.AccessControl.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:36Z</ModuleTime>
-      <ModuleName>System.IO.Pipes.AccessControl</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="0D-38-3A-DA-1E-A2-9A-26-05-79-C2-77-39-AE-12-DB-84-55-BF-6B">
-      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\Microsoft.Extensions.DependencyModel.dll</ModulePath>
-      <ModuleTime>2018-05-22T13:00:18Z</ModuleTime>
-      <ModuleName>Microsoft.Extensions.DependencyModel</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="24-37-77-64-7F-CD-CB-B2-42-EB-60-6C-A9-B6-FE-20-8E-F3-AF-01">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.IO.MemoryMappedFiles.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
-      <ModuleName>System.IO.MemoryMappedFiles</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="04-EE-21-3D-50-7D-5E-CE-12-10-F6-9C-5E-AA-EE-24-C1-E0-FD-B3">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Reflection.Metadata.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
-      <ModuleName>System.Reflection.Metadata</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="24-37-77-64-7F-CD-CB-B2-42-EB-60-6C-A9-B6-FE-20-8E-F3-AF-01">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.IO.MemoryMappedFiles.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
-      <ModuleName>System.IO.MemoryMappedFiles</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="81-A4-25-B6-D3-88-DA-45-70-D0-3A-2D-05-DE-62-CD-FB-83-91-B1">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Diagnostics.FileVersionInfo.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
-      <ModuleName>System.Diagnostics.FileVersionInfo</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="67-F3-8D-FF-58-30-5E-3A-00-E2-F7-7A-6C-29-19-0F-81-5F-8A-FB">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.ComponentModel.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
-      <ModuleName>System.ComponentModel</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="F4-D8-E0-A0-9C-AC-8C-F5-17-7F-8B-73-82-22-9E-44-19-4E-87-E8">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Core.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
-      <ModuleName>System.Core</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="7B-69-F4-1E-A3-58-9E-D6-28-EB-77-F1-9D-13-F7-D8-20-E7-06-CC">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Xml.XDocument.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
-      <ModuleName>System.Xml.XDocument</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="21-08-D5-0F-67-C7-B3-A5-F0-0B-F9-E9-57-C9-65-4E-BD-60-05-42">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Private.Xml.Linq.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:36Z</ModuleTime>
-      <ModuleName>System.Private.Xml.Linq</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="20-7F-00-FC-3F-E3-AB-6E-61-FC-BD-E1-3D-E4-4F-9D-FE-09-D7-CB">
-      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\NuGet.Versioning.dll</ModulePath>
-      <ModuleTime>2018-05-22T13:04:12Z</ModuleTime>
-      <ModuleName>NuGet.Versioning</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="31-AE-C3-DD-05-1A-34-79-6F-17-E0-EA-5E-CB-34-00-80-3B-4A-07">
-      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\Roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll</ModulePath>
-      <ModuleTime>2018-05-22T13:00:34Z</ModuleTime>
-      <ModuleName>Microsoft.Build.Tasks.CodeAnalysis</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="9B-B6-C8-91-E4-D7-75-59-E7-4D-8E-D5-A8-88-24-62-CE-88-8C-E5">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.IO.Pipes.AccessControl.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:36Z</ModuleTime>
-      <ModuleName>System.IO.Pipes.AccessControl</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="48-80-BB-BC-44-87-85-EA-1B-62-D5-BC-A7-0F-76-9A-2E-23-F7-CB">
-      <ModulePath>C:\Users\Venci\AppData\Local\Temp\VBCSCompiler\AnalyzerAssemblyLoader\ac7c173711b64597bcef8085f17e9b76\0\Microsoft.EntityFrameworkCore.Analyzers.dll</ModulePath>
-      <ModuleTime>2018-05-16T17:18:02Z</ModuleTime>
-      <ModuleName>Microsoft.EntityFrameworkCore.Analyzers</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="0D-38-3A-DA-1E-A2-9A-26-05-79-C2-77-39-AE-12-DB-84-55-BF-6B">
-      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\Microsoft.Extensions.DependencyModel.dll</ModulePath>
-      <ModuleTime>2018-05-22T13:00:18Z</ModuleTime>
-      <ModuleName>Microsoft.Extensions.DependencyModel</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="78-5F-43-09-56-00-5D-EE-14-3C-FD-1E-43-95-CE-09-20-8A-AB-90">
-      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\NuGet.Packaging.Core.dll</ModulePath>
-      <ModuleTime>2018-05-22T13:03:36Z</ModuleTime>
-      <ModuleName>NuGet.Packaging.Core</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="93-AD-CD-25-C3-0E-A0-A6-7A-07-9E-D5-7A-CB-BF-3D-90-A1-F9-C5">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.IO.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:36Z</ModuleTime>
-      <ModuleName>System.IO</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="3C-1A-D1-7D-BD-42-C9-7D-FE-CD-90-2F-00-88-4C-15-52-1E-4E-0F">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.IO.FileSystem.Primitives.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
-      <ModuleName>System.IO.FileSystem.Primitives</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="B2-5D-47-CA-28-5B-B0-0E-FC-29-D9-01-B2-8D-36-88-65-61-54-0E">
-      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\Newtonsoft.Json.dll</ModulePath>
-      <ModuleTime>2018-05-22T13:05:00Z</ModuleTime>
-      <ModuleName>Newtonsoft.Json</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="E2-DD-41-07-A9-AC-5B-84-49-B7-E1-85-68-3D-69-DC-84-4B-3D-06">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Dynamic.Runtime.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
-      <ModuleName>System.Dynamic.Runtime</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="CF-C6-6D-CD-52-19-4F-3F-36-51-5E-56-26-3A-93-A5-02-E2-58-2A">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Linq.Expressions.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:36Z</ModuleTime>
-      <ModuleName>System.Linq.Expressions</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="B4-5A-77-C2-C0-65-10-A3-89-5F-99-44-14-C7-A5-80-D0-90-02-8E">
-      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\NuGet.LibraryModel.dll</ModulePath>
-      <ModuleTime>2018-05-22T13:03:30Z</ModuleTime>
-      <ModuleName>NuGet.LibraryModel</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="8E-3C-D3-59-57-AC-63-41-38-8B-D3-5F-74-49-A4-8A-CC-5B-52-6C">
-      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\NuGet.Packaging.dll</ModulePath>
-      <ModuleTime>2018-05-22T13:04:10Z</ModuleTime>
-      <ModuleName>NuGet.Packaging</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="0C-56-98-AE-50-0E-32-FC-94-AE-26-B2-60-30-BD-89-B1-8D-D3-D4">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Runtime.Serialization.Primitives.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
-      <ModuleName>System.Runtime.Serialization.Primitives</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="23-3A-A4-7A-36-EC-A3-70-6E-B5-09-91-2C-F4-8E-8F-AA-2F-DE-A9">
-      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\NuGet.Configuration.dll</ModulePath>
-      <ModuleTime>2018-05-22T13:03:30Z</ModuleTime>
-      <ModuleName>NuGet.Configuration</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="25-FE-65-CF-8D-DE-90-81-68-78-51-35-16-D5-62-62-94-42-F1-2D">
-      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\Microsoft.DotNet.PlatformAbstractions.dll</ModulePath>
-      <ModuleTime>2018-05-22T13:00:08Z</ModuleTime>
-      <ModuleName>Microsoft.DotNet.PlatformAbstractions</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="04-EE-21-3D-50-7D-5E-CE-12-10-F6-9C-5E-AA-EE-24-C1-E0-FD-B3">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Reflection.Metadata.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
-      <ModuleName>System.Reflection.Metadata</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="24-37-77-64-7F-CD-CB-B2-42-EB-60-6C-A9-B6-FE-20-8E-F3-AF-01">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.IO.MemoryMappedFiles.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
-      <ModuleName>System.IO.MemoryMappedFiles</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="81-A4-25-B6-D3-88-DA-45-70-D0-3A-2D-05-DE-62-CD-FB-83-91-B1">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Diagnostics.FileVersionInfo.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
-      <ModuleName>System.Diagnostics.FileVersionInfo</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="F4-D8-E0-A0-9C-AC-8C-F5-17-7F-8B-73-82-22-9E-44-19-4E-87-E8">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Core.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
-      <ModuleName>System.Core</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="31-AE-C3-DD-05-1A-34-79-6F-17-E0-EA-5E-CB-34-00-80-3B-4A-07">
-      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\Roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll</ModulePath>
-      <ModuleTime>2018-05-22T13:00:34Z</ModuleTime>
-      <ModuleName>Microsoft.Build.Tasks.CodeAnalysis</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="9B-B6-C8-91-E4-D7-75-59-E7-4D-8E-D5-A8-88-24-62-CE-88-8C-E5">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.IO.Pipes.AccessControl.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:36Z</ModuleTime>
-      <ModuleName>System.IO.Pipes.AccessControl</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="0D-38-3A-DA-1E-A2-9A-26-05-79-C2-77-39-AE-12-DB-84-55-BF-6B">
-      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\Microsoft.Extensions.DependencyModel.dll</ModulePath>
-      <ModuleTime>2018-05-22T13:00:18Z</ModuleTime>
-      <ModuleName>Microsoft.Extensions.DependencyModel</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="25-FE-65-CF-8D-DE-90-81-68-78-51-35-16-D5-62-62-94-42-F1-2D">
-      <ModulePath>c:\Program Files\dotnet\sdk\2.1.300\Microsoft.DotNet.PlatformAbstractions.dll</ModulePath>
-      <ModuleTime>2018-05-22T13:00:08Z</ModuleTime>
-      <ModuleName>Microsoft.DotNet.PlatformAbstractions</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="99-CC-76-16-41-8D-C7-16-82-C9-39-01-13-46-6B-62-39-B8-7E-32">
-      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Reflection.Extensions.dll</ModulePath>
-      <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
-      <ModuleName>System.Reflection.Extensions</ModuleName>
-      <Classes />
-    </Module>
-    <Module skippedDueTo="Filter" hash="">
-      <ModulePath>RefEmit_InMemoryManifestModule</ModulePath>
-      <ModuleTime>0001-01-01T00:00:00</ModuleTime>
-      <ModuleName>Anonymously Hosted DynamicMethods Assembly</ModuleName>
       <Classes />
     </Module>
     <Module skippedDueTo="Filter" hash="B2-E7-C6-75-5A-8F-45-0B-CA-A7-A6-86-F2-5E-94-26-D2-45-2F-3F">
@@ -3746,9 +3434,9 @@
       <ModuleName>Mono.Cecil</ModuleName>
       <Classes />
     </Module>
-    <Module skippedDueTo="Filter" hash="C9-2A-A2-BE-27-0C-A6-5C-31-CA-A8-66-DD-5C-B6-E0-30-BB-82-A7">
+    <Module skippedDueTo="Filter" hash="CC-9D-CD-13-09-F1-4C-90-F4-5C-33-88-83-60-6A-A4-B5-41-B6-30">
       <ModulePath>E:\Programming\ASP.NETCore-MVC\Mp3MusicZone\Mp3MusicZone.UnitTests\bin\Debug\netcoreapp2.1\Mp3MusicZone.UnitTests.dll</ModulePath>
-      <ModuleTime>2018-06-05T13:41:41.702644Z</ModuleTime>
+      <ModuleTime>2018-06-05T14:02:03.9965426Z</ModuleTime>
       <ModuleName>Mp3MusicZone.UnitTests</ModuleName>
       <Classes />
     </Module>
@@ -3804,6 +3492,495 @@
       <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Collections.Concurrent.dll</ModulePath>
       <ModuleTime>2018-05-15T11:03:34Z</ModuleTime>
       <ModuleName>System.Collections.Concurrent</ModuleName>
+      <Classes />
+    </Module>
+    <Module hash="91-A8-7B-03-EC-B0-B9-6F-A1-F3-69-7D-E8-09-73-D8-F9-95-35-56">
+      <Summary numSequencePoints="38" visitedSequencePoints="4" numBranchPoints="16" visitedBranchPoints="1" sequenceCoverage="10.53" branchCoverage="6.25" maxCyclomaticComplexity="6" minCyclomaticComplexity="1" visitedClasses="1" numClasses="6" visitedMethods="1" numMethods="14" />
+      <ModulePath>E:\Programming\ASP.NETCore-MVC\Mp3MusicZone\Mp3MusicZone.UnitTests\bin\Debug\netcoreapp2.1\Mp3MusicZone.Auth.dll</ModulePath>
+      <ModuleTime>2018-06-05T13:41:40.8167592Z</ModuleTime>
+      <ModuleName>Mp3MusicZone.Auth</ModuleName>
+      <Files>
+        <File uid="1" fullPath="E:\Programming\ASP.NETCore-MVC\Mp3MusicZone\Mp3MusicZone.Auth\EmailSenderService.cs" />
+        <File uid="3" fullPath="E:\Programming\ASP.NETCore-MVC\Mp3MusicZone\Mp3MusicZone.Auth\EmailSettings.cs" />
+        <File uid="4" fullPath="E:\Programming\ASP.NETCore-MVC\Mp3MusicZone\Mp3MusicZone.Auth\Identity\RoleService.cs" />
+        <File uid="5" fullPath="E:\Programming\ASP.NETCore-MVC\Mp3MusicZone\Mp3MusicZone.Auth\Identity\SignInService.cs" />
+        <File uid="6" fullPath="E:\Programming\ASP.NETCore-MVC\Mp3MusicZone\Mp3MusicZone.Auth\Identity\UserService.cs" />
+      </Files>
+      <Classes>
+        <Class>
+          <Summary numSequencePoints="0" visitedSequencePoints="0" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="0" minCyclomaticComplexity="0" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="0" />
+          <FullName>&lt;Module&gt;</FullName>
+          <Methods />
+        </Class>
+        <Class>
+          <Summary numSequencePoints="4" visitedSequencePoints="4" numBranchPoints="1" visitedBranchPoints="1" sequenceCoverage="100" branchCoverage="100" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="1" numClasses="1" visitedMethods="1" numMethods="1" />
+          <FullName>Mp3MusicZone.Auth.EmailSenderService</FullName>
+          <Methods>
+            <Method visited="true" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="100" branchCoverage="100" isConstructor="true" isStatic="false" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="4" visitedSequencePoints="4" numBranchPoints="1" visitedBranchPoints="1" sequenceCoverage="100" branchCoverage="100" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="1" numMethods="1" />
+              <MetadataToken>100663297</MetadataToken>
+              <Name>System.Void Mp3MusicZone.Auth.EmailSenderService::.ctor(Mp3MusicZone.Auth.EmailSettings)</Name>
+              <FileRef uid="1" />
+              <SequencePoints>
+                <SequencePoint vc="1" uspid="1" ordinal="0" offset="0" sl="14" sc="9" el="14" ec="63" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="2" ordinal="1" offset="7" sl="15" sc="9" el="15" ec="10" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="3" ordinal="2" offset="8" sl="16" sc="13" el="16" ec="48" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="4" ordinal="3" offset="15" sl="17" sc="9" el="17" ec="10" bec="0" bev="0" fileid="1" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="1" uspid="1" ordinal="0" offset="0" sl="14" sc="9" el="14" ec="63" bec="0" bev="0" fileid="1" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="0" visitedSequencePoints="0" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="0" />
+              <MetadataToken>100663298</MetadataToken>
+              <Name>System.Threading.Tasks.Task Mp3MusicZone.Auth.EmailSenderService::SendEmailAsync(System.String,System.String,System.String)</Name>
+              <SequencePoints />
+              <BranchPoints />
+              <MethodPoint vc="0" uspid="5" ordinal="0" offset="0" />
+            </Method>
+          </Methods>
+        </Class>
+        <Class>
+          <Summary numSequencePoints="14" visitedSequencePoints="0" numBranchPoints="3" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="6" minCyclomaticComplexity="1" visitedClasses="0" numClasses="1" visitedMethods="0" numMethods="1" />
+          <FullName>Mp3MusicZone.Auth.EmailSenderService/&lt;SendEmailAsync&gt;d__2</FullName>
+          <Methods>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="true" isStatic="false" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="0" visitedSequencePoints="0" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="0" />
+              <MetadataToken>100663354</MetadataToken>
+              <Name>System.Void Mp3MusicZone.Auth.EmailSenderService/&lt;SendEmailAsync&gt;d__2::.ctor()</Name>
+              <SequencePoints />
+              <BranchPoints />
+              <MethodPoint vc="0" uspid="6" ordinal="0" offset="0" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="6" nPathComplexity="2" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="14" visitedSequencePoints="0" numBranchPoints="3" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="6" minCyclomaticComplexity="6" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663355</MetadataToken>
+              <Name>System.Void Mp3MusicZone.Auth.EmailSenderService/&lt;SendEmailAsync&gt;d__2::MoveNext()</Name>
+              <FileRef uid="1" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="7" ordinal="0" offset="17" sl="20" sc="9" el="20" ec="10" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="0" uspid="8" ordinal="1" offset="18" sl="21" sc="13" el="21" ec="50" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="0" uspid="9" ordinal="2" offset="29" sl="23" sc="13" el="23" ec="75" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="0" uspid="10" ordinal="3" offset="62" sl="24" sc="13" el="24" ec="49" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="0" uspid="11" ordinal="4" offset="90" sl="25" sc="13" el="25" ec="36" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="0" uspid="12" ordinal="5" offset="108" sl="26" sc="13" el="26" ec="33" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="0" uspid="13" ordinal="6" offset="126" sl="27" sc="13" el="27" ec="36" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="0" uspid="14" ordinal="7" offset="139" sl="28" sc="13" el="28" ec="47" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="0" uspid="15" ordinal="8" offset="152" sl="30" sc="20" el="31" ec="83" bec="2" bev="0" fileid="1" />
+                <SequencePoint vc="0" uspid="16" ordinal="9" offset="206" sl="32" sc="13" el="32" ec="14" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="0" uspid="17" ordinal="10" offset="207" sl="33" sc="17" el="33" ec="45" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="0" uspid="18" ordinal="11" offset="220" sl="34" sc="17" el="35" ec="92" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="0" uspid="19" ordinal="12" offset="269" sl="37" sc="17" el="37" ec="54" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="0" uspid="21" ordinal="14" offset="408" sl="40" sc="13" el="40" ec="20" bec="0" bev="0" fileid="1" />
+              </SequencePoints>
+              <BranchPoints>
+                <BranchPoint vc="0" uspid="23" ordinal="0" offset="197" sl="30" path="0" offsetchain="199" offsetend="206" fileid="1" />
+                <BranchPoint vc="0" uspid="24" ordinal="1" offset="197" sl="30" path="1" offsetchain="201" offsetend="337" fileid="1" />
+              </BranchPoints>
+              <MethodPoint vc="0" uspid="27" ordinal="0" offset="0" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="0" visitedSequencePoints="0" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="0" />
+              <MetadataToken>100663356</MetadataToken>
+              <Name>System.Void Mp3MusicZone.Auth.EmailSenderService/&lt;SendEmailAsync&gt;d__2::SetStateMachine(System.Runtime.CompilerServices.IAsyncStateMachine)</Name>
+              <SequencePoints />
+              <BranchPoints />
+              <MethodPoint vc="0" uspid="28" ordinal="0" offset="0" />
+            </Method>
+          </Methods>
+        </Class>
+        <Class>
+          <Summary numSequencePoints="8" visitedSequencePoints="0" numBranchPoints="8" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="1" visitedMethods="0" numMethods="8" />
+          <FullName>Mp3MusicZone.Auth.EmailSettings</FullName>
+          <Methods>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="true" isSetter="false">
+              <Summary numSequencePoints="1" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663299</MetadataToken>
+              <Name>System.String Mp3MusicZone.Auth.EmailSettings::get_Domain()</Name>
+              <FileRef uid="3" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="29" ordinal="0" offset="0" sl="7" sc="32" el="7" ec="36" bec="0" bev="0" fileid="3" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="29" ordinal="0" offset="0" sl="7" sc="32" el="7" ec="36" bec="0" bev="0" fileid="3" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="false" isSetter="true">
+              <Summary numSequencePoints="1" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663300</MetadataToken>
+              <Name>System.Void Mp3MusicZone.Auth.EmailSettings::set_Domain(System.String)</Name>
+              <FileRef uid="3" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="30" ordinal="0" offset="0" sl="7" sc="37" el="7" ec="41" bec="0" bev="0" fileid="3" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="30" ordinal="0" offset="0" sl="7" sc="37" el="7" ec="41" bec="0" bev="0" fileid="3" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="true" isSetter="false">
+              <Summary numSequencePoints="1" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663301</MetadataToken>
+              <Name>System.Int32 Mp3MusicZone.Auth.EmailSettings::get_Port()</Name>
+              <FileRef uid="3" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="31" ordinal="0" offset="0" sl="9" sc="27" el="9" ec="31" bec="0" bev="0" fileid="3" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="31" ordinal="0" offset="0" sl="9" sc="27" el="9" ec="31" bec="0" bev="0" fileid="3" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="false" isSetter="true">
+              <Summary numSequencePoints="1" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663302</MetadataToken>
+              <Name>System.Void Mp3MusicZone.Auth.EmailSettings::set_Port(System.Int32)</Name>
+              <FileRef uid="3" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="32" ordinal="0" offset="0" sl="9" sc="32" el="9" ec="36" bec="0" bev="0" fileid="3" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="32" ordinal="0" offset="0" sl="9" sc="32" el="9" ec="36" bec="0" bev="0" fileid="3" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="true" isSetter="false">
+              <Summary numSequencePoints="1" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663303</MetadataToken>
+              <Name>System.String Mp3MusicZone.Auth.EmailSettings::get_UsernameEmail()</Name>
+              <FileRef uid="3" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="33" ordinal="0" offset="0" sl="11" sc="39" el="11" ec="43" bec="0" bev="0" fileid="3" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="33" ordinal="0" offset="0" sl="11" sc="39" el="11" ec="43" bec="0" bev="0" fileid="3" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="false" isSetter="true">
+              <Summary numSequencePoints="1" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663304</MetadataToken>
+              <Name>System.Void Mp3MusicZone.Auth.EmailSettings::set_UsernameEmail(System.String)</Name>
+              <FileRef uid="3" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="34" ordinal="0" offset="0" sl="11" sc="44" el="11" ec="48" bec="0" bev="0" fileid="3" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="34" ordinal="0" offset="0" sl="11" sc="44" el="11" ec="48" bec="0" bev="0" fileid="3" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="true" isSetter="false">
+              <Summary numSequencePoints="1" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663305</MetadataToken>
+              <Name>System.String Mp3MusicZone.Auth.EmailSettings::get_UsernamePassword()</Name>
+              <FileRef uid="3" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="35" ordinal="0" offset="0" sl="13" sc="42" el="13" ec="46" bec="0" bev="0" fileid="3" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="35" ordinal="0" offset="0" sl="13" sc="42" el="13" ec="46" bec="0" bev="0" fileid="3" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="false" isSetter="true">
+              <Summary numSequencePoints="1" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663306</MetadataToken>
+              <Name>System.Void Mp3MusicZone.Auth.EmailSettings::set_UsernamePassword(System.String)</Name>
+              <FileRef uid="3" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="36" ordinal="0" offset="0" sl="13" sc="47" el="13" ec="51" bec="0" bev="0" fileid="3" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="36" ordinal="0" offset="0" sl="13" sc="47" el="13" ec="51" bec="0" bev="0" fileid="3" />
+            </Method>
+            <Method visited="true" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="true" isStatic="false" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="0" visitedSequencePoints="0" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="0" />
+              <MetadataToken>100663307</MetadataToken>
+              <Name>System.Void Mp3MusicZone.Auth.EmailSettings::.ctor()</Name>
+              <SequencePoints />
+              <BranchPoints />
+              <MethodPoint vc="1" uspid="37" ordinal="0" offset="0" />
+            </Method>
+          </Methods>
+        </Class>
+        <Class>
+          <Summary numSequencePoints="6" visitedSequencePoints="0" numBranchPoints="2" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="1" visitedMethods="0" numMethods="2" />
+          <FullName>Mp3MusicZone.Auth.Identity.RoleService</FullName>
+          <Methods>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="true" isStatic="false" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663308</MetadataToken>
+              <Name>System.Void Mp3MusicZone.Auth.Identity.RoleService::.ctor(Microsoft.AspNetCore.Identity.IRoleStore`1&lt;Microsoft.AspNetCore.Identity.IdentityRole&gt;,System.Collections.Generic.IEnumerable`1&lt;Microsoft.AspNetCore.Identity.IRoleValidator`1&lt;Microsoft.AspNetCore.Identity.IdentityRole&gt;&gt;,Microsoft.AspNetCore.Identity.ILookupNormalizer,Microsoft.AspNetCore.Identity.IdentityErrorDescriber,Microsoft.Extensions.Logging.ILogger`1&lt;Microsoft.AspNetCore.Identity.RoleManager`1&lt;Microsoft.AspNetCore.Identity.IdentityRole&gt;&gt;)</Name>
+              <FileRef uid="4" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="38" ordinal="0" offset="0" sl="12" sc="227" el="12" ec="285" bec="0" bev="0" fileid="4" />
+                <SequencePoint vc="0" uspid="39" ordinal="1" offset="14" sl="13" sc="9" el="13" ec="10" bec="0" bev="0" fileid="4" />
+                <SequencePoint vc="0" uspid="40" ordinal="2" offset="15" sl="14" sc="9" el="14" ec="10" bec="0" bev="0" fileid="4" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="38" ordinal="0" offset="0" sl="12" sc="227" el="12" ec="285" bec="0" bev="0" fileid="4" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663309</MetadataToken>
+              <Name>System.Threading.Tasks.Task`1&lt;Microsoft.AspNetCore.Identity.IdentityResult&gt; Mp3MusicZone.Auth.Identity.RoleService::CreateAsync(System.String)</Name>
+              <FileRef uid="4" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="41" ordinal="0" offset="0" sl="17" sc="9" el="17" ec="10" bec="0" bev="0" fileid="4" />
+                <SequencePoint vc="0" uspid="42" ordinal="1" offset="1" sl="18" sc="13" el="18" ec="65" bec="0" bev="0" fileid="4" />
+                <SequencePoint vc="0" uspid="43" ordinal="2" offset="16" sl="19" sc="9" el="19" ec="10" bec="0" bev="0" fileid="4" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="41" ordinal="0" offset="0" sl="17" sc="9" el="17" ec="10" bec="0" bev="0" fileid="4" />
+            </Method>
+          </Methods>
+        </Class>
+        <Class>
+          <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="1" visitedMethods="0" numMethods="1" />
+          <FullName>Mp3MusicZone.Auth.Identity.SignInService</FullName>
+          <Methods>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="true" isStatic="false" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663310</MetadataToken>
+              <Name>System.Void Mp3MusicZone.Auth.Identity.SignInService::.ctor(Microsoft.AspNetCore.Identity.UserManager`1&lt;Mp3MusicZone.EfDataAccess.Models.UserEf&gt;,Microsoft.AspNetCore.Http.IHttpContextAccessor,Microsoft.AspNetCore.Identity.IUserClaimsPrincipalFactory`1&lt;Mp3MusicZone.EfDataAccess.Models.UserEf&gt;,Microsoft.Extensions.Options.IOptions`1&lt;Microsoft.AspNetCore.Identity.IdentityOptions&gt;,Microsoft.Extensions.Logging.ILogger`1&lt;Microsoft.AspNetCore.Identity.SignInManager`1&lt;Mp3MusicZone.EfDataAccess.Models.UserEf&gt;&gt;,Microsoft.AspNetCore.Authentication.IAuthenticationSchemeProvider)</Name>
+              <FileRef uid="5" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="44" ordinal="0" offset="0" sl="15" sc="15" el="15" ec="98" bec="0" bev="0" fileid="5" />
+                <SequencePoint vc="0" uspid="45" ordinal="1" offset="16" sl="16" sc="9" el="16" ec="10" bec="0" bev="0" fileid="5" />
+                <SequencePoint vc="0" uspid="46" ordinal="2" offset="17" sl="17" sc="9" el="17" ec="10" bec="0" bev="0" fileid="5" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="44" ordinal="0" offset="0" sl="15" sc="15" el="15" ec="98" bec="0" bev="0" fileid="5" />
+            </Method>
+          </Methods>
+        </Class>
+        <Class>
+          <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="1" visitedMethods="0" numMethods="1" />
+          <FullName>Mp3MusicZone.Auth.Identity.UserService</FullName>
+          <Methods>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="true" isStatic="false" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663311</MetadataToken>
+              <Name>System.Void Mp3MusicZone.Auth.Identity.UserService::.ctor(Microsoft.AspNetCore.Identity.IUserStore`1&lt;Mp3MusicZone.EfDataAccess.Models.UserEf&gt;,Microsoft.Extensions.Options.IOptions`1&lt;Microsoft.AspNetCore.Identity.IdentityOptions&gt;,Microsoft.AspNetCore.Identity.IPasswordHasher`1&lt;Mp3MusicZone.EfDataAccess.Models.UserEf&gt;,System.Collections.Generic.IEnumerable`1&lt;Microsoft.AspNetCore.Identity.IUserValidator`1&lt;Mp3MusicZone.EfDataAccess.Models.UserEf&gt;&gt;,System.Collections.Generic.IEnumerable`1&lt;Microsoft.AspNetCore.Identity.IPasswordValidator`1&lt;Mp3MusicZone.EfDataAccess.Models.UserEf&gt;&gt;,Microsoft.AspNetCore.Identity.ILookupNormalizer,Microsoft.AspNetCore.Identity.IdentityErrorDescriber,System.IServiceProvider,Microsoft.Extensions.Logging.ILogger`1&lt;Microsoft.AspNetCore.Identity.UserManager`1&lt;Mp3MusicZone.EfDataAccess.Models.UserEf&gt;&gt;)</Name>
+              <FileRef uid="6" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="47" ordinal="0" offset="0" sl="14" sc="15" el="14" ec="136" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="0" uspid="48" ordinal="1" offset="22" sl="15" sc="9" el="15" ec="10" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="0" uspid="49" ordinal="2" offset="23" sl="16" sc="9" el="16" ec="10" bec="0" bev="0" fileid="6" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="47" ordinal="0" offset="0" sl="14" sc="15" el="14" ec="136" bec="0" bev="0" fileid="6" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="0" visitedSequencePoints="0" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="0" />
+              <MetadataToken>100663312</MetadataToken>
+              <Name>Microsoft.AspNetCore.Identity.IdentityOptions Mp3MusicZone.Auth.Identity.UserService::Mp3MusicZone.Auth.Contracts.IUserService.get_Options()</Name>
+              <SequencePoints />
+              <BranchPoints />
+              <MethodPoint vc="0" uspid="50" ordinal="0" offset="0" />
+            </Method>
+          </Methods>
+        </Class>
+      </Classes>
+    </Module>
+    <Module hash="36-56-82-70-5D-D1-76-92-28-0D-7E-2B-E8-EE-BA-9F-EB-81-C4-3C">
+      <Summary numSequencePoints="16" visitedSequencePoints="0" numBranchPoints="16" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="1" visitedMethods="0" numMethods="16" />
+      <ModulePath>E:\Programming\ASP.NETCore-MVC\Mp3MusicZone\Mp3MusicZone.UnitTests\bin\Debug\netcoreapp2.1\Mp3MusicZone.Domain.dll</ModulePath>
+      <ModuleTime>2018-06-05T13:41:36.1407602Z</ModuleTime>
+      <ModuleName>Mp3MusicZone.Domain</ModuleName>
+      <Files>
+        <File uid="13" fullPath="E:\Programming\ASP.NETCore-MVC\Mp3MusicZone\Mp3MusicZone.Domain\Models\User.cs" />
+      </Files>
+      <Classes>
+        <Class>
+          <Summary numSequencePoints="0" visitedSequencePoints="0" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="0" minCyclomaticComplexity="0" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="0" />
+          <FullName>&lt;Module&gt;</FullName>
+          <Methods />
+        </Class>
+        <Class>
+          <Summary numSequencePoints="16" visitedSequencePoints="0" numBranchPoints="16" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="1" visitedMethods="0" numMethods="16" />
+          <FullName>Mp3MusicZone.Domain.User</FullName>
+          <Methods>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="true" isSetter="false">
+              <Summary numSequencePoints="1" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663297</MetadataToken>
+              <Name>System.String Mp3MusicZone.Domain.User::get_Id()</Name>
+              <FileRef uid="13" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="51" ordinal="0" offset="0" sl="8" sc="28" el="8" ec="32" bec="0" bev="0" fileid="13" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="51" ordinal="0" offset="0" sl="8" sc="28" el="8" ec="32" bec="0" bev="0" fileid="13" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="false" isSetter="true">
+              <Summary numSequencePoints="1" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663298</MetadataToken>
+              <Name>System.Void Mp3MusicZone.Domain.User::set_Id(System.String)</Name>
+              <FileRef uid="13" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="52" ordinal="0" offset="0" sl="8" sc="33" el="8" ec="37" bec="0" bev="0" fileid="13" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="52" ordinal="0" offset="0" sl="8" sc="33" el="8" ec="37" bec="0" bev="0" fileid="13" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="true" isSetter="false">
+              <Summary numSequencePoints="1" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663299</MetadataToken>
+              <Name>System.String Mp3MusicZone.Domain.User::get_UserName()</Name>
+              <FileRef uid="13" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="53" ordinal="0" offset="0" sl="10" sc="34" el="10" ec="38" bec="0" bev="0" fileid="13" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="53" ordinal="0" offset="0" sl="10" sc="34" el="10" ec="38" bec="0" bev="0" fileid="13" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="false" isSetter="true">
+              <Summary numSequencePoints="1" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663300</MetadataToken>
+              <Name>System.Void Mp3MusicZone.Domain.User::set_UserName(System.String)</Name>
+              <FileRef uid="13" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="54" ordinal="0" offset="0" sl="10" sc="39" el="10" ec="43" bec="0" bev="0" fileid="13" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="54" ordinal="0" offset="0" sl="10" sc="39" el="10" ec="43" bec="0" bev="0" fileid="13" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="true" isSetter="false">
+              <Summary numSequencePoints="1" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663301</MetadataToken>
+              <Name>System.String Mp3MusicZone.Domain.User::get_Email()</Name>
+              <FileRef uid="13" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="55" ordinal="0" offset="0" sl="12" sc="31" el="12" ec="35" bec="0" bev="0" fileid="13" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="55" ordinal="0" offset="0" sl="12" sc="31" el="12" ec="35" bec="0" bev="0" fileid="13" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="false" isSetter="true">
+              <Summary numSequencePoints="1" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663302</MetadataToken>
+              <Name>System.Void Mp3MusicZone.Domain.User::set_Email(System.String)</Name>
+              <FileRef uid="13" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="56" ordinal="0" offset="0" sl="12" sc="36" el="12" ec="40" bec="0" bev="0" fileid="13" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="56" ordinal="0" offset="0" sl="12" sc="36" el="12" ec="40" bec="0" bev="0" fileid="13" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="true" isSetter="false">
+              <Summary numSequencePoints="1" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663303</MetadataToken>
+              <Name>System.String Mp3MusicZone.Domain.User::get_PasswordHash()</Name>
+              <FileRef uid="13" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="57" ordinal="0" offset="0" sl="14" sc="38" el="14" ec="42" bec="0" bev="0" fileid="13" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="57" ordinal="0" offset="0" sl="14" sc="38" el="14" ec="42" bec="0" bev="0" fileid="13" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="false" isSetter="true">
+              <Summary numSequencePoints="1" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663304</MetadataToken>
+              <Name>System.Void Mp3MusicZone.Domain.User::set_PasswordHash(System.String)</Name>
+              <FileRef uid="13" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="58" ordinal="0" offset="0" sl="14" sc="43" el="14" ec="47" bec="0" bev="0" fileid="13" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="58" ordinal="0" offset="0" sl="14" sc="43" el="14" ec="47" bec="0" bev="0" fileid="13" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="true" isSetter="false">
+              <Summary numSequencePoints="1" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663305</MetadataToken>
+              <Name>System.DateTime Mp3MusicZone.Domain.User::get_Birthdate()</Name>
+              <FileRef uid="13" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="59" ordinal="0" offset="0" sl="16" sc="37" el="16" ec="41" bec="0" bev="0" fileid="13" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="59" ordinal="0" offset="0" sl="16" sc="37" el="16" ec="41" bec="0" bev="0" fileid="13" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="false" isSetter="true">
+              <Summary numSequencePoints="1" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663306</MetadataToken>
+              <Name>System.Void Mp3MusicZone.Domain.User::set_Birthdate(System.DateTime)</Name>
+              <FileRef uid="13" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="60" ordinal="0" offset="0" sl="16" sc="42" el="16" ec="46" bec="0" bev="0" fileid="13" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="60" ordinal="0" offset="0" sl="16" sc="42" el="16" ec="46" bec="0" bev="0" fileid="13" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="true" isSetter="false">
+              <Summary numSequencePoints="1" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663307</MetadataToken>
+              <Name>Mp3MusicZone.Domain.Models.Enums.GenreType Mp3MusicZone.Domain.User::get_Genre()</Name>
+              <FileRef uid="13" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="61" ordinal="0" offset="0" sl="18" sc="34" el="18" ec="38" bec="0" bev="0" fileid="13" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="61" ordinal="0" offset="0" sl="18" sc="34" el="18" ec="38" bec="0" bev="0" fileid="13" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="false" isSetter="true">
+              <Summary numSequencePoints="1" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663308</MetadataToken>
+              <Name>System.Void Mp3MusicZone.Domain.User::set_Genre(Mp3MusicZone.Domain.Models.Enums.GenreType)</Name>
+              <FileRef uid="13" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="62" ordinal="0" offset="0" sl="18" sc="39" el="18" ec="43" bec="0" bev="0" fileid="13" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="62" ordinal="0" offset="0" sl="18" sc="39" el="18" ec="43" bec="0" bev="0" fileid="13" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="true" isSetter="false">
+              <Summary numSequencePoints="1" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663309</MetadataToken>
+              <Name>System.String Mp3MusicZone.Domain.User::get_FirstName()</Name>
+              <FileRef uid="13" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="63" ordinal="0" offset="0" sl="20" sc="35" el="20" ec="39" bec="0" bev="0" fileid="13" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="63" ordinal="0" offset="0" sl="20" sc="35" el="20" ec="39" bec="0" bev="0" fileid="13" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="false" isSetter="true">
+              <Summary numSequencePoints="1" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663310</MetadataToken>
+              <Name>System.Void Mp3MusicZone.Domain.User::set_FirstName(System.String)</Name>
+              <FileRef uid="13" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="64" ordinal="0" offset="0" sl="20" sc="40" el="20" ec="44" bec="0" bev="0" fileid="13" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="64" ordinal="0" offset="0" sl="20" sc="40" el="20" ec="44" bec="0" bev="0" fileid="13" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="true" isSetter="false">
+              <Summary numSequencePoints="1" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663311</MetadataToken>
+              <Name>System.String Mp3MusicZone.Domain.User::get_LastName()</Name>
+              <FileRef uid="13" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="65" ordinal="0" offset="0" sl="22" sc="34" el="22" ec="38" bec="0" bev="0" fileid="13" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="65" ordinal="0" offset="0" sl="22" sc="34" el="22" ec="38" bec="0" bev="0" fileid="13" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="false" isGetter="false" isSetter="true">
+              <Summary numSequencePoints="1" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663312</MetadataToken>
+              <Name>System.Void Mp3MusicZone.Domain.User::set_LastName(System.String)</Name>
+              <FileRef uid="13" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="66" ordinal="0" offset="0" sl="22" sc="39" el="22" ec="43" bec="0" bev="0" fileid="13" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="66" ordinal="0" offset="0" sl="22" sc="39" el="22" ec="43" bec="0" bev="0" fileid="13" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="0" branchCoverage="0" isConstructor="true" isStatic="false" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="0" visitedSequencePoints="0" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="0" />
+              <MetadataToken>100663313</MetadataToken>
+              <Name>System.Void Mp3MusicZone.Domain.User::.ctor()</Name>
+              <SequencePoints />
+              <BranchPoints />
+              <MethodPoint vc="0" uspid="67" ordinal="0" offset="0" />
+            </Method>
+          </Methods>
+        </Class>
+      </Classes>
+    </Module>
+    <Module skippedDueTo="Filter" hash="96-1F-A5-9A-60-99-81-FC-8E-F0-9A-6E-0B-B0-7C-FD-63-B6-C5-CD">
+      <ModulePath>c:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.0\System.Security.Cryptography.Primitives.dll</ModulePath>
+      <ModuleTime>2018-05-15T11:03:38Z</ModuleTime>
+      <ModuleName>System.Security.Cryptography.Primitives</ModuleName>
       <Classes />
     </Module>
   </Modules>

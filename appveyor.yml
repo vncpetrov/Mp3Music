@@ -8,11 +8,10 @@ build:
 build_script:
  - msbuild /verbosity:quiet "Mp3MusicZone.sln"
 test_script:
- - $openCoverConsole -register:user -target:"dotnet.exe" -targetargs:"Mp3MusicZone.UnitTests.dll -noshadow" -output:"coverage.xml" -filter:"+[Mp3MusicZone*]* -[*Tests]*" -oldStyle 
+ - packages\opencover\4.6.519\tools\OpenCover.Console.exe -register:user -target:"dotnet.exe" -targetargs:"Mp3MusicZone.UnitTests.dll -noshadow" -output:"coverage.xml" -filter:"+[Mp3MusicZone*]* -[*Tests]*" -oldStyle 
 after_test:
   - ps: |
       $env:PATH = 'C:\msys64\usr\bin;' + $env:PATH
-      $openCoverConsole = $ENV:USERPROFILE + '\.nuget\packages\OpenCover\4.6.519\tools\OpenCover.Console.exe'
       Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile codecov.sh
       bash codecov.sh -f "coverage.xml" -t 2a032ebf-eb46-4114-93da-ba8b0088b02d
       
