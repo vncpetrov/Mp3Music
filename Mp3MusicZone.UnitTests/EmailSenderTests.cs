@@ -5,7 +5,7 @@ using System;
 namespace Mp3MusicZone.UnitTests
 {
     [TestFixture]
-    public class Class1
+    public class EmailSenderTests
     {
         [Test]
         public void EmailSenderDummyTest()

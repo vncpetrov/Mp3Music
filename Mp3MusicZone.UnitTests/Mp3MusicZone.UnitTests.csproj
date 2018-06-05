@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Mp3MusicZone.Auth\Mp3MusicZone.Auth.csproj" />
+    <ProjectReference Include="..\Mp3MusicZone.DataServices\Mp3MusicZone.DataServices.csproj" />
   </ItemGroup>
 
 </Project>
