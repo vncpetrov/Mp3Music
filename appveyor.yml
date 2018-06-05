@@ -2,13 +2,14 @@ version: 1.0.{build}
 image: Visual Studio 2017 Preview
 before_build:
 - cmd: dotnet restore
+- choco install opencover
 build:
   project: Mp3MusicZone.sln
   verbosity: minimal
 build_script:
  - msbuild /verbosity:quiet "Mp3MusicZone.sln"
 test_script:
- - packages\opencover\4.6.519\tools\OpenCover.Console.exe -register:user -target:"dotnet.exe" -targetargs:"Mp3MusicZone.UnitTests.dll -noshadow" -output:"coverage.xml" -filter:"+[Mp3MusicZone*]* -[*Tests]*" -oldStyle 
+ - OpenCover.Console.exe -register:user -target:"dotnet.exe" -targetargs:"Mp3MusicZone.UnitTests.dll -noshadow" -output:"coverage.xml" -filter:"+[Mp3MusicZone*]* -[*Tests]*" -oldStyle 
 after_test:
   - ps: |
       $env:PATH = 'C:\msys64\usr\bin;' + $env:PATH
