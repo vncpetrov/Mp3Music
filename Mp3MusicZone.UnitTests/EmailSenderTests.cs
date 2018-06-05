@@ -19,8 +19,9 @@ namespace Mp3MusicZone.UnitTests
         public void EmailSenderDummyTest2()
         {
             EmailSettings emailSettings = new EmailSettings();
+            emailSettings.Domain = "Test"; 
 
-            Assert.IsNotNull(emailSettings);
+            Assert.IsNotNull(emailSettings.Domain);
         }
     }
 }
