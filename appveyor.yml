@@ -1,13 +1,26 @@
 version: 1.0.{build}
 image: Visual Studio 2017 Preview
+branches:
+    only:
+       - master
+
 before_build:
-- cmd: dotnet restore
-- choco install opencover
+    - cmd: dotnet --version
+    - cmd: dotnet restore --verbosity m
+    - choco install opencover
 build:
-  project: Mp3MusicZone.sln
-  verbosity: minimal
+    project: Mp3MusicZone.sln
+    verbosity: minimal
+  
 build_script:
- - msbuild /verbosity:quiet "Mp3MusicZone.sln"
+    - msbuild /verbosity:quiet "Mp3MusicZone.sln"
+    - cmd: dotnet publish ./Mp3MusicZone.Web/Mp3MusicZone.Web.csproj
+ 
+ artifacts:
+    - path: '\Mp3MusicZone.Web\bin\Debug\netcoreapp2.1\publish'
+      name: WebSite
+      type: WebDeployPackage
+ 
 test_script:
  - OpenCover.Console.exe -target:"c:\Program Files\dotnet\dotnet.exe" -targetargs:"test C:\projects\mp3music\Mp3MusicZone.UnitTests\Mp3MusicZone.UnitTests.csproj" -output:"coverage.xml" -oldStyle -filter:"+[Mp3MusicZone*]* -[*Tests*]*" -register:user
 after_test:

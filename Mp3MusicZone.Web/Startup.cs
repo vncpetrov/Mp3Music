@@ -60,7 +60,7 @@
 
             services.AddTransient<ISignInService, SignInService>();
             services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<IRoleService, RoleService>(); 
 
             services.AddAutoMapper();
 
