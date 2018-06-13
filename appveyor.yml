@@ -17,7 +17,7 @@ build_script:
     - cmd: dotnet publish ./Mp3MusicZone.Web/Mp3MusicZone.Web.csproj
  
  artifacts:
-    - path: '\Mp3MusicZone.Web\bin\Debug\netcoreapp2.1\publish'
+    - path: '.\Mp3MusicZone.Web\bin\Debug\netcoreapp2.1\publish'
       name: WebSite
       type: WebDeployPackage
  
