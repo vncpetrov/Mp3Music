@@ -27,8 +27,8 @@ after_test:
       Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile codecov.sh
       bash codecov.sh -f "coverage.xml" -t 2a032ebf-eb46-4114-93da-ba8b0088b02d
 deploy:
- - provider: Environment
-   name: Mp3MusicZone-Live      
+  provider: Environment
+  name: Mp3MusicZone-Live      
       
 	  
 	  
