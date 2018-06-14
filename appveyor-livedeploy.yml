@@ -2,7 +2,7 @@ version: 1.1.{build}
 image: Visual Studio 2017 Preview
 branches:
   only:
-  - master
+  - never-build-branch-automatically-dont-use-this-name
 before_build:
  - cmd: dotnet --version
  - cmd: dotnet restore --verbosity m
