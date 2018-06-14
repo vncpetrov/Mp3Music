@@ -20,7 +20,13 @@ artifacts:
    name: WebSite
    type: WebDeployPackage
 test_script:
- - cmd: nunit3-console .\Mp3MusicZone.UnitTests\Mp3MusicZone.UnitTests.csproj --result=myresults.xml;format=AppVeyor
+    - ps: |
+        $testResultsFile = ".\TestsResults.xml"
+        $res = Invoke-Pester -OutputFormat NUnitXml -OutputFile $testResultsFile -PassThru
+        (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $testResultsFile))
+        if ($res.FailedCount -gt 0) { 
+            throw "$($res.FailedCount) tests failed."
+        }
 deploy:
  provider: Environment
  name: "Mp3MusicZone-Live"
