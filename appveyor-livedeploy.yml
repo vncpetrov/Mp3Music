@@ -20,7 +20,7 @@ artifacts:
    name: WebSite
    type: WebDeployPackage
 test_script:
- - nunit3-console '.\Mp3MusicZone.UnitTests\bin\Release\netcoreapp2.1\Mp3MusicZone.UnitTests.dll' --result=myresults.xml;format=AppVeyor
+ - nunit3-console .\Mp3MusicZone.UnitTests\bin\Release\netcoreapp2.1\Mp3MusicZone.UnitTests.dll --result=myresults.xml;format=AppVeyor
 deploy:
  provider: Environment
  name: "Mp3MusicZone-Live"
