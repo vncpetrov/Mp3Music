@@ -7,6 +7,8 @@ before_build:
  - cmd: dotnet --version
  - cmd: dotnet restore --verbosity m
  - choco install opencover
+configuration: 
+  - Release 
 build:
  project: Mp3MusicZone.sln
  verbosity: minimal
