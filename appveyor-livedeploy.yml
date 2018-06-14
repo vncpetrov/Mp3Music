@@ -20,12 +20,7 @@ artifacts:
    name: WebSite
    type: WebDeployPackage
 test_script:
- - OpenCover.Console.exe -target:"c:\Program Files\dotnet\dotnet.exe" -targetargs:"test C:\projects\mp3music\Mp3MusicZone.UnitTests\Mp3MusicZone.UnitTests.csproj" -output:"coverage.xml" -oldStyle -filter:"+[Mp3MusicZone*]* -[*Tests*]*" -register:user
-after_test:
-  - ps: |
-      $env:PATH = 'C:\msys64\usr\bin;' + $env:PATH
-      Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile codecov.sh
-      bash codecov.sh -f "coverage.xml" -t 2a032ebf-eb46-4114-93da-ba8b0088b02d
+ - nunit3-console '.\Mp3MusicZone.UnitTests\bin\Release\netcoreapp2.1\Mp3MusicZone.UnitTests.dll' --result=myresults.xml;format=AppVeyor
 deploy:
  provider: Environment
  name: "Mp3MusicZone-Live"
