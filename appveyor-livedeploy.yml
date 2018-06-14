@@ -19,15 +19,15 @@ artifacts:
  - path: '.\Mp3MusicZone.Web\bin\Release\netcoreapp2.1\publish'
    name: WebSite
    type: WebDeployPackage
-test:
-- cmd: dotnet test .\Mp3MusicZone.UnitTests\Mp3MusicZone.UnitTests.csproj -c Release --logger:"trx;LogFileName=UnitTestsResults.trx"
 test_script:
-ps: |
-    $wc = New-Object 'System.Net.WebClient'
-    $results = Resolve-Path .\Mp3MusicZone.UnitTests\TestResults\*.trx
-    $results = $results[0]
-    Write-Host $results
-    $wc.UploadFile("https://ci.appveyor.com/api/testresults/mstest/$($env:APPVEYOR_JOB_ID)", ($results))
+ - cmd: dotnet test .\Mp3MusicZone.UnitTests\Mp3MusicZone.UnitTests.csproj -c Release --logger:"trx;LogFileName=UnitTestsResults.trx"
+after_test:
+  - ps: |
+      $wc = New-Object 'System.Net.WebClient'
+      $results = Resolve-Path .\Mp3MusicZone.UnitTests\TestResults\*.trx
+      $results = $results[0]
+      Write-Host $results
+      $wc.UploadFile("https://ci.appveyor.com/api/testresults/mstest/$($env:APPVEYOR_JOB_ID)", ($results))
 deploy:
  provider: Environment
  name: "Mp3MusicZone-Live"
