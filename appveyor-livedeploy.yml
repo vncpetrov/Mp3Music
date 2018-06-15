@@ -27,7 +27,8 @@ after_test:
       $resultsUnitTests = Resolve-Path .\Mp3MusicZone.UnitTests\TestResults\*.trx
       $resultsIntegrationTests = Resolve-Path .\Mp3MusicZone.IntegrationTests\TestResults\*.trx
       Write-Host "$($resultsUnitTests[0]) $($resultsIntegrationTests[0])"
-      $wc.UploadFile("https://ci.appveyor.com/api/testresults/mstest/$($env:APPVEYOR_JOB_ID)", ($results))
+      $wc.UploadFile("https://ci.appveyor.com/api/testresults/mstest/$($env:APPVEYOR_JOB_ID)", ($resultsUnitTests[0]))
+      $wc.UploadFile("https://ci.appveyor.com/api/testresults/mstest/$($env:APPVEYOR_JOB_ID)", ($resultsIntegrationTests[0]))
 deploy:
  provider: Environment
  name: "Mp3MusicZone-Live"
