@@ -10,7 +10,7 @@ namespace Mp3MusicZone.UnitTests
     public class DummyTestClass
     {
         [Test]
-        public void EmailSenderDummyTest()
+        public void EmailSenderDummyTest3()
         {
             EmailSenderService emailSender = new EmailSenderService(new EmailSettings());
 
