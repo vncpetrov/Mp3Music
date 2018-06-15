@@ -26,9 +26,7 @@ after_test:
       $wc = New-Object 'System.Net.WebClient'
       $resultsUnitTests = Resolve-Path .\Mp3MusicZone.UnitTests\TestResults\*.trx
       $resultsIntegrationTests = Resolve-Path .\Mp3MusicZone.IntegrationTests\TestResults\*.trx
-      $results = $resultsUnitTests[0]
-      $results = $resultsIntegrationTests[0]
-      Write-Host $results
+      Write-Host "$($resultsUnitTests[0]) $($resultsIntegrationTests[0])"
       $wc.UploadFile("https://ci.appveyor.com/api/testresults/mstest/$($env:APPVEYOR_JOB_ID)", ($results))
 deploy:
  provider: Environment
