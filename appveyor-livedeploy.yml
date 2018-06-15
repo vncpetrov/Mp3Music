@@ -27,7 +27,6 @@ after_test:
       $resultsUnitTests = Resolve-Path .\Mp3MusicZone.UnitTests\TestResults\*.trx
       $resultsIntegrationTests = Resolve-Path .\Mp3MusicZone.IntegrationTests\TestResults\*.trx
       $results = $resultsUnitTests[0]
-      Write-Host $results
       $results = $resultsIntegrationTests[0]
       Write-Host $results
       $wc.UploadFile("https://ci.appveyor.com/api/testresults/mstest/$($env:APPVEYOR_JOB_ID)", ($results))
