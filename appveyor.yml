@@ -20,11 +20,17 @@ artifacts:
    name: WebSite
    type: WebDeployPackage
 test_script:
- - OpenCover.Console.exe -target:"c:\Program Files\dotnet\dotnet.exe" -targetargs:"test C:\projects\mp3music\Mp3MusicZone.UnitTests\Mp3MusicZone.UnitTests.csproj" -output:"coverage.xml" -oldStyle -filter:"+[Mp3MusicZone*]* -[*Tests*]*" -register:user
+ - OpenCover.Console.exe -target:"c:\Program Files\dotnet\dotnet.exe" -targetargs:"test C:\projects\mp3music\Mp3MusicZone.UnitTests\Mp3MusicZone.UnitTests.csproj --logger:"trx;LogFileName=UnitTestsResults.trx"" -output:"coverage.xml" -oldStyle -filter:"+[Mp3MusicZone*]* -[*Tests*]*" -register:user
 after_test:
   - ps: |
       $env:PATH = 'C:\msys64\usr\bin;' + $env:PATH
       Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile codecov.sh
       bash codecov.sh -f "coverage.xml" -t 2a032ebf-eb46-4114-93da-ba8b0088b02d
+  - ps: |
+      $wc = New-Object 'System.Net.WebClient'
+      $results = Resolve-Path .\Mp3MusicZone.UnitTests\TestResults\*.trx
+      $results = $results[0]
+      Write-Host $results
+      $wc.UploadFile("https://ci.appveyor.com/api/testresults/mstest/$($env:APPVEYOR_JOB_ID)", ($results))  
       
      
