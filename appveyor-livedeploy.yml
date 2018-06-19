@@ -20,9 +20,9 @@ artifacts:
    type: WebDeployPackage
 before_test:
   - ps: |
-    $appSettings = Get-Content '.\Mp3MusicZone.IntegrationTests\appsettings.json' -raw | ConvertFrom-Json
-    $appSettings.ConnectionStrings | % {$_.MusicZoneConnectionString='Server=(local)\SQL2017;Database=Mp3ZoneDB-SIT;Trusted_Connection=True;MultipleActiveResultSets=true;User Id=sa;Password=Password12!'}
-    $appSettings | ConvertTo-Json  | set-content '.\Mp3MusicZone.IntegrationTests\appsettings.json'
+      $appSettings = Get-Content '.\Mp3MusicZone.IntegrationTests\appsettings.json' -raw | ConvertFrom-Json
+      $appSettings.ConnectionStrings | % {$_.MusicZoneConnectionString='Server=(local)\SQL2017;Database=Mp3ZoneDB-SIT;Trusted_Connection=True;MultipleActiveResultSets=true;User Id=sa;Password=Password12!'}
+      $appSettings | ConvertTo-Json  | set-content '.\Mp3MusicZone.IntegrationTests\appsettings.json'
 test_script:
  - cmd: dotnet test .\Mp3MusicZone.UnitTests\Mp3MusicZone.UnitTests.csproj -c Release --logger:"trx;LogFileName=UnitTestsResults.trx"
  - cmd: dotnet test .\Mp3MusicZone.IntegrationTests\Mp3MusicZone.IntegrationTests.csproj -c Release --logger:"trx;LogFileName=IntegrationTestsResults.trx"
