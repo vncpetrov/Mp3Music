@@ -22,7 +22,7 @@ before_test:
   - ps: |
       echo '{
         "ConnectionStrings": {
-           "MusicZoneConnectionString": "Server=(local)\SQL2017;Database=Mp3ZoneDB-SIT;Trusted_Connection=True;MultipleActiveResultSets=true;User Id=sa;Password=Password12!"
+           "MusicZoneConnectionString": "Server=(local)\\SQL2017;Database=Mp3ZoneDB-SIT;Trusted_Connection=True;MultipleActiveResultSets=true;User Id=sa;Password=Password12!"
         }
       }' > '.\Mp3MusicZone.IntegrationTests\appsettings.json'
 test_script:
