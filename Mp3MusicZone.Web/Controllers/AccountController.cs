@@ -24,7 +24,6 @@
         private readonly IEmailSenderService emailSender;
         private readonly ILogger logger;
 
-
         public AccountController(
             IUserService userService,
             ISignInService signInService,

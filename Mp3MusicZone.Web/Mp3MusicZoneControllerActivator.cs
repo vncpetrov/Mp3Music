@@ -52,7 +52,7 @@
 
         private Controller Create(Type type)
         {
-            MusicZoneDbContext efDbContext = new MusicZoneDbContext(connectionString);
+            MusicZoneDbContext efDbContext = new MusicZoneDbContext(this.connectionString);
 
             // can be optimized - lazy loading?
             IUserService userService = (IUserService)this.accessor.HttpContext

@@ -10,16 +10,8 @@
 
     using static Common.Constants.WebConstants;
 
-
     public class Program
     {
-        public Program(IConfiguration configuration)
-        {
-            this.Configuration = configuration;
-        }
-
-        public IConfiguration Configuration { get; }
-
         public static void Main(string[] args)
         {
             IWebHost webHost = CreateWebHostBuilder(args).Build();
