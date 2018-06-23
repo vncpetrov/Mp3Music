@@ -23,6 +23,12 @@ before_test:
       echo '{
         "ConnectionStrings": {
            "MusicZoneConnectionString": "Server=(local)\\SQL2017;Database=Mp3ZoneDB-SIT;Trusted_Connection=True;MultipleActiveResultSets=true;User Id=sa;Password=Password12!"
+        },
+        "EmailSettings": {
+           "Domain": "smtp.gmail.com",
+           "Port": "587",
+           "UsernameEmail": "mp3musiczone.info@gmail.com",
+           "UsernamePassword": 8YAr2DTZ/9Rj2OSyi9aFmQ==
         }
       }' > '.\Mp3MusicZone.IntegrationTests\appsettings.json'
 test_script:

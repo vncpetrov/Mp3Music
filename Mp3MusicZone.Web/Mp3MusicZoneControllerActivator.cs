@@ -63,6 +63,7 @@
                 .RequestServices
                 .GetService(typeof(ISignInService));
 
+            //should be in singleton scope?
             IEmailSenderService emailSender = new EmailSenderService(this.emailSettings);
 
             switch (type.Name)

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Mp3MusicZone.Auth;
 using Mp3MusicZone.EfDataAccess;
 using NUnit.Framework;
 using System;
@@ -9,6 +10,7 @@ using static Mp3MusicZone.Common.Constants.WebConstants;
 public class TestsInitializer
 {
     public static string ConnectionString { get; private set; }
+    public static string Password { get; private set; }
 
     [OneTimeSetUp]
     public void AssemblyInit()
@@ -25,5 +27,7 @@ public class TestsInitializer
 
         MusicZoneDbContext context = new MusicZoneDbContext(connectionString);
         EfDbContextMigrateDatabase.UseDatabaseMigration(context);
+        
+        TestsInitializer.Password = configuration.GetSection("EmailSettings").Get<EmailSettings>().UsernamePassword;
     }
 }

@@ -1,4 +1,5 @@
-﻿using Mp3MusicZone.EfDataAccess;
+﻿using Mp3MusicZone.Auth;
+using Mp3MusicZone.EfDataAccess;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,9 @@ namespace Mp3MusicZone.IntegrationTests
             bool any = context.Users.Any();
 
             Assert.IsFalse(any);
+
+            Assert.IsTrue(TestsInitializer.Password == "Mp3Music");
+
         }
     }
 }
