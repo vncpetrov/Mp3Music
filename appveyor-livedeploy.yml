@@ -28,7 +28,7 @@ before_test:
            "Domain": "smtp.gmail.com",
            "Port": "587",
            "UsernameEmail": "mp3musiczone.info@gmail.com",
-           "UsernamePassword": 8YAr2DTZ/9Rj2OSyi9aFmQ==
+           "UsernamePassword": "8YAr2DTZ/9Rj2OSyi9aFmQ=="
         }
       }' > '.\Mp3MusicZone.IntegrationTests\appsettings.json'
 test_script:
