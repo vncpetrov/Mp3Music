@@ -31,7 +31,7 @@ before_test:
            "Domain": "smtp.gmail.com",
            "Port": "587",
            "UsernameEmail": "mp3musiczone.info@gmail.com",
-           "UsernamePassword": $($env:password)
+           "UsernamePassword": "LenovoY720"
         }
       }' > '.\Mp3MusicZone.IntegrationTests\appsettings.json'
 test_script:
