@@ -10,7 +10,7 @@ using static Mp3MusicZone.Common.Constants.WebConstants;
 public class TestsInitializer
 {
     public static string ConnectionString { get; private set; }
-    public static string Password { get; private set; }
+    public static EmailSettings EmailSettings { get; private set; }
 
     [OneTimeSetUp]
     public void AssemblyInit()
@@ -28,6 +28,6 @@ public class TestsInitializer
         MusicZoneDbContext context = new MusicZoneDbContext(connectionString);
         EfDbContextMigrateDatabase.UseDatabaseMigration(context);
         
-        TestsInitializer.Password = configuration.GetSection("EmailSettings").Get<EmailSettings>().UsernamePassword;
+        TestsInitializer.EmailSettings = configuration.GetSection("EmailSettings").Get<EmailSettings>();
     }
 }

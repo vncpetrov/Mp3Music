@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Mp3MusicZone.IntegrationTests
 {
@@ -18,8 +19,14 @@ namespace Mp3MusicZone.IntegrationTests
             bool any = context.Users.Any();
 
             Assert.IsFalse(any);
-            Console.WriteLine(TestsInitializer.Password);
-            Assert.IsTrue(TestsInitializer.Password == "LenovoY720");
+            EmailSenderService sender = new EmailSenderService(TestsInitializer.EmailSettings);
+
+            Task.Run(async () =>
+            {
+                await sender.SendEmailAsync("b2h.klo@abv.bg", "Testing Integration Testing", "Thats for the tests");
+            })
+            .GetAwaiter()
+            .GetResult();
         }
     }
 }

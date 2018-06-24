@@ -6,7 +6,7 @@
     using System.Net.Mail;
     using System.Threading.Tasks;
 
-    // Should be web service?
+    // Should be a web service?
     public class EmailSenderService : IEmailSenderService
     {
         private readonly EmailSettings emailSettings;
