@@ -3,8 +3,8 @@ image: Visual Studio 2017 Preview
 branches:
   only:
   - never-build-branch-automatically-dont-use-this-name
-environment: 
-  usernamePassword: 
+environment:
+  password:
     secure: 8YAr2DTZ/9Rj2OSyi9aFmQ==
 before_build:
  - cmd: dotnet --version
@@ -31,7 +31,7 @@ before_test:
            "Domain": "smtp.gmail.com",
            "Port": "587",
            "UsernameEmail": "mp3musiczone.info@gmail.com",
-           "UsernamePassword": %usernamePassword%
+           "UsernamePassword": $env:password
         }
       }' > '.\Mp3MusicZone.IntegrationTests\appsettings.json'
 test_script:
