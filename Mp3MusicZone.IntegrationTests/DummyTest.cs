@@ -19,8 +19,7 @@ namespace Mp3MusicZone.IntegrationTests
 
             Assert.IsFalse(any);
 
-            Assert.IsTrue(TestsInitializer.Password == "Mp3Music");
-
+            Assert.IsTrue(TestsInitializer.Password == "LenovoY720");
         }
     }
 }
