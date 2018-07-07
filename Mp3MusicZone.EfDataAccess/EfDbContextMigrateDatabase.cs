@@ -4,13 +4,16 @@
     using System;
     using System.IO;
 
-    public static class EfDbContextMigrateDatabase
+    public static class EfDbContextUtils
     {
         public static void UseDatabaseMigration(DbContext context)
         {
             context.Database.Migrate();
+        }
 
-            RawSqlString command = File.ReadAllText("../ErrorLogsTable.sql");
+        public static void ExecuteSqlFile(DbContext context, string path)
+        {
+            RawSqlString command = File.ReadAllText(path);
             context.Database.ExecuteSqlCommand(command);
         }
     }

@@ -35,7 +35,8 @@
                     .GetConnectionString(ConnectionStringSectionName);
 
                 MusicZoneDbContext efDbContext = new MusicZoneDbContext(connectionString);
-                EfDbContextMigrateDatabase.UseDatabaseMigration(efDbContext);
+                EfDbContextUtils.UseDatabaseMigration(efDbContext);
+                EfDbContextUtils.ExecuteSqlFile(efDbContext, "../ErrorLogsTable.sql");
 
                 IUserService userService = services.GetService<IUserService>();
                 IRoleService roleService = services.GetService<IRoleService>();

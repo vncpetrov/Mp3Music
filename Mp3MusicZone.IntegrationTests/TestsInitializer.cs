@@ -26,7 +26,7 @@ public class TestsInitializer
         TestsInitializer.ConnectionString = connectionString;
 
         MusicZoneDbContext context = new MusicZoneDbContext(connectionString);
-        EfDbContextMigrateDatabase.UseDatabaseMigration(context);
+        EfDbContextUtils.UseDatabaseMigration(context);
         
         TestsInitializer.EmailSettings = configuration.GetSection("EmailSettings").Get<EmailSettings>();
     }
