@@ -6,6 +6,8 @@
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using NLog;
+    using NLog.Web;
     using System;
 
     using static Common.Constants.WebConstants;
@@ -33,7 +35,7 @@
                     .GetConnectionString(ConnectionStringSectionName);
 
                 MusicZoneDbContext efDbContext = new MusicZoneDbContext(connectionString);
-                EfDbContextMigrateDatabase.UseDatabaseMigration(efDbContext); 
+                EfDbContextMigrateDatabase.UseDatabaseMigration(efDbContext);
 
                 IUserService userService = services.GetService<IUserService>();
                 IRoleService roleService = services.GetService<IRoleService>();
@@ -47,6 +49,7 @@
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseIISIntegration()
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                .UseNLog();
     }
 }

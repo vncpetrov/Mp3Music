@@ -15,6 +15,8 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
+    using NLog;
     using System;
 
     using static Common.Constants.WebConstants;
@@ -38,7 +40,7 @@
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            string connectionString = 
+            string connectionString =
                 Configuration.GetConnectionString(ConnectionStringSectionName);
 
             services.AddDbContext<MusicZoneDbContext>(
@@ -72,7 +74,8 @@
             })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            var emailSettings = Configuration.GetSection("EmailSettings").Get<EmailSettings>();
+            var emailSettings = Configuration.GetSection("EmailSettings")
+                .Get<EmailSettings>();
 
             IControllerActivator activator = new Mp3MusicZoneControllerActivator(
                     connectionString,
@@ -83,8 +86,13 @@
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            GlobalDiagnosticsContext.Set("connectionString", Configuration.GetConnectionString(ConnectionStringSectionName));
+
+            //loggerFactory.AddNLog();
+            //env.ConfigureNLog("nlog.config");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

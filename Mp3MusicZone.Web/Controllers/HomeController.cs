@@ -15,7 +15,7 @@
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
-
+            throw new ArgumentException("Testing NLog db");
             return View();
         }
 
