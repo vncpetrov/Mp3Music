@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mp3MusicZone.Web", "Mp3Musi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mp3MusicZone.UnitTests", "Mp3MusicZone.UnitTests\Mp3MusicZone.UnitTests.csproj", "{FC8A410A-BDB9-43D6-A7F2-A81FDB655B3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mp3MusicZone.IntegrationTests", "Mp3MusicZone.IntegrationTests\Mp3MusicZone.IntegrationTests.csproj", "{80AA9BDC-EB74-42B7-B0AB-253884A7327B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mp3MusicZone.IntegrationTests", "Mp3MusicZone.IntegrationTests\Mp3MusicZone.IntegrationTests.csproj", "{80AA9BDC-EB74-42B7-B0AB-253884A7327B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

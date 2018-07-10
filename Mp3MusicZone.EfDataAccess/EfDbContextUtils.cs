@@ -11,10 +11,10 @@
             context.Database.Migrate();
         }
 
-        public static void ExecuteSqlFile(DbContext context, string path)
-        {
-            RawSqlString command = File.ReadAllText(path);
-            context.Database.ExecuteSqlCommand(command);
-        }
+        //public static void ExecuteSqlFile(DbContext context, string path)
+        //{
+        //    RawSqlString command = File.ReadAllText(path);
+        //    context.Database.ExecuteSqlCommand(command);
+        //}
     }
 }

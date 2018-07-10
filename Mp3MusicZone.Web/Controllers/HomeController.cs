@@ -1,6 +1,8 @@
 ﻿namespace Mp3MusicZone.Web.Controllers
 {
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
+    using NLog;
     using System;
     using System.Diagnostics;
     using Web.ViewModels;
@@ -9,6 +11,10 @@
     {
         public IActionResult Index()
         {
+            // sample admin logging
+            var logger = LogManager.GetLogger("AdminLogger");
+            logger.Trace("asd");
+
             return View();
         }
 

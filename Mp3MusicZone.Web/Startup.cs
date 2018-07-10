@@ -40,8 +40,7 @@
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            string connectionString =
-                Configuration.GetConnectionString(ConnectionStringSectionName);
+            string connectionString = Configuration.GetConnectionString(ConnectionStringSectionName);
 
             services.AddDbContext<MusicZoneDbContext>(
                 options => options.UseSqlServer(connectionString));
@@ -91,7 +90,9 @@
             GlobalDiagnosticsContext.Set("connectionString", Configuration.GetConnectionString(ConnectionStringSectionName));
 
             //loggerFactory.AddNLog();
-            //env.ConfigureNLog("nlog.config");
+            //env.ConfigureNLog("web.config");
+
+            LogManager.ThrowExceptions = true;
 
             if (env.IsDevelopment())
             {
