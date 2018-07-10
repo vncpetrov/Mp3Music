@@ -36,7 +36,7 @@
 
                 MusicZoneDbContext efDbContext = new MusicZoneDbContext(connectionString);
                 EfDbContextUtils.UseDatabaseMigration(efDbContext);
-                //EfDbContextUtils.ExecuteSqlFile(efDbContext, "../SqlScripts/ErrorLogsTable.sql");
+
                 efDbContext.Database.ExecuteSqlCommand(@"IF OBJECT_ID(N'dbo.ErrorLogs') IS NULL
 BEGIN
 	SET ANSI_NULLS ON
