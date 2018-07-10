@@ -2,8 +2,10 @@
 {
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
+    using Mp3MusicZone.EfDataAccess;
     using NLog;
     using System;
+    using System.Data.SqlClient;
     using System.Diagnostics;
     using Web.ViewModels;
 
@@ -15,7 +17,20 @@
             var logger = LogManager.GetLogger("AdminLogger");
             logger.Trace("asd");
 
-            return View();
+            SqlConnection connection = new SqlConnection("Server=(localdb)\\mssqllocaldb;Database=Mp3ZoneDB;Trusted_Connection=True;MultipleActiveResultSets=true;User Id=mp3music;Password=Mp3Music");
+            connection.Open();
+            SqlCommand command = new SqlCommand(@"SELECT COUNT(*) FROM ErrorLogs", connection);
+            var reader = command.ExecuteReader();
+            reader.Read();
+            var cnt1 = reader[0];
+            reader.Close();
+
+            SqlCommand command2 = new SqlCommand(@"SELECT COUNT(*) FROM AdminLogs", connection);
+            var reader2 = command2.ExecuteReader();
+            reader2.Read();
+            var cnt2 = reader2[0];
+
+            return View(new object[] { cnt1, cnt2 });
         }
 
         public IActionResult About()
