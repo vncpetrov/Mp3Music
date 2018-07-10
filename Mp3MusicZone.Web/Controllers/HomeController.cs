@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
     using Mp3MusicZone.EfDataAccess;
     using NLog;
     using System;
@@ -11,13 +12,15 @@
 
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index([FromServices]IConfiguration conf)
         {
+            string connStr = conf.GetConnectionString("MusicZoneConnectionString");
+
             // sample admin logging
             var logger = LogManager.GetLogger("AdminLogger");
             logger.Trace("asd");
 
-            SqlConnection connection = new SqlConnection("Server=(localdb)\\mssqllocaldb;Database=Mp3ZoneDB;Trusted_Connection=True;MultipleActiveResultSets=true;User Id=mp3music;Password=Mp3Music");
+            SqlConnection connection = new SqlConnection(connStr);
             connection.Open();
             SqlCommand command = new SqlCommand(@"SELECT COUNT(*) FROM ErrorLogs", connection);
             var reader = command.ExecuteReader();
@@ -30,7 +33,7 @@
             reader2.Read();
             var cnt2 = reader2[0];
 
-            return View(new object[] { cnt1, cnt2 });
+            return View(new object[] { connStr, cnt1, cnt2 });
         }
 
         public IActionResult About()
