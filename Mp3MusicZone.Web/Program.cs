@@ -36,45 +36,7 @@
 
                 MusicZoneDbContext efDbContext = new MusicZoneDbContext(connectionString);
                 EfDbContextUtils.UseDatabaseMigration(efDbContext);
-                efDbContext.Database.ExecuteSqlCommand(@"IF OBJECT_ID(N'dbo.AdminLogs') IS NULL
-BEGIN
-	SET ANSI_NULLS ON
-	SET QUOTED_IDENTIFIER ON
-	CREATE TABLE [dbo].[AdminLogs] (
-		[Id] [int] IDENTITY(1,1) NOT NULL,
-		[Application] [nvarchar](50) NOT NULL,
-		[LoggedOn] [datetime] NOT NULL,
-		[Level] [nvarchar](50) NOT NULL,
-		[Message] [nvarchar](max) NOT NULL,
-		[Logger] [nvarchar](250) NULL,
-		[Callsite] [nvarchar](max) NULL,
-		[Exception] [nvarchar](max) NULL,
-	  CONSTRAINT [PK_dbo.AdminLogs] PRIMARY KEY CLUSTERED ([Id] ASC)
-		WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-	) ON [PRIMARY]
-END
-");
-
-
-                efDbContext.Database.ExecuteSqlCommand(@"IF OBJECT_ID(N'dbo.ErrorLogs') IS NULL
-BEGIN
-	SET ANSI_NULLS ON
-	SET QUOTED_IDENTIFIER ON
-	CREATE TABLE [dbo].[ErrorLogs] (
-		[Id] [int] IDENTITY(1,1) NOT NULL,
-		[Application] [nvarchar](50) NOT NULL,
-		[LoggedOn] [datetime] NOT NULL,
-		[Level] [nvarchar](50) NOT NULL,
-		[Message] [nvarchar](max) NOT NULL,
-		[Logger] [nvarchar](250) NULL,
-		[Callsite] [nvarchar](max) NULL,
-		[Exception] [nvarchar](max) NULL,
-	  CONSTRAINT [PK_dbo.ErrorLogs] PRIMARY KEY CLUSTERED ([Id] ASC)
-		WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-	) ON [PRIMARY]
-END
-");
-                efDbContext.SaveChanges();
+             
                 IUserService userService = services.GetService<IUserService>();
                 IRoleService roleService = services.GetService<IRoleService>();
 
