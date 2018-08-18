@@ -1,7 +1,5 @@
 ﻿namespace Mp3MusicZone.Auth.Contracts
 {
-    using Domain;
-    using EfDataAccess.Models;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Identity;
     using System;

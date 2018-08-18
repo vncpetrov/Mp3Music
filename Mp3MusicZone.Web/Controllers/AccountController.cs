@@ -1,7 +1,6 @@
 ﻿namespace Mp3MusicZone.Web.Controllers
 {
     using Auth.Contracts;
-    using AutoMapper;
     using Domain.Contracts;
     using EfDataAccess.Models;
     using Microsoft.AspNetCore.Authentication;
@@ -9,7 +8,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
-    using Models.Account; 
+    using Models.Account;
     using System;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -75,7 +74,8 @@
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await this.signInService.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await this.signInService.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, lockoutOnFailure: false);
+
                 if (result.Succeeded)
                 {
                     logger.LogInformation("User logged in.");
@@ -92,7 +92,8 @@
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    this.TempData.AddErrorMessage("Invalid login attempt.");
+
                     return View(model);
                 }
             }
@@ -244,15 +245,14 @@
                 return View(model);
             }
 
-            //user = Mapper.Map<UserEf>(model);
             user = new UserEf()
             {
+                UserName = model.Username,
                 Email = model.Email,
-                UserName = "Test1",
-                Birthdate = new DateTime(2001,11,22),
-                FirstName = "Test1",
-                Genre = Domain.Models.Enums.GenreType.Male,
-                LastName = "Testov1"
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Genre = model.Genre,
+                Birthdate = model.Birthdate
             };
 
             IdentityResult result = await this.userService.CreateAsync(user, model.Password);
@@ -404,19 +404,24 @@
         {
             if (ModelState.IsValid)
             {
-                var user = await this.userService.FindByEmailAsync(model.Email);
+                UserEf user = await this.userService.FindByEmailAsync(model.Email);
+
                 if (user == null || !(await this.userService.IsEmailConfirmedAsync(user)))
                 {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return RedirectToAction(nameof(ForgotPasswordConfirmation));
+                    TempData.AddErrorMessage($"Invalid Email address.");
+
+                    return View();
                 }
 
-                // For more information on how to enable account confirmation and password reset please
-                // visit https://go.microsoft.com/fwlink/?LinkID=532713
-                var code = await this.userService.GeneratePasswordResetTokenAsync(user);
-                var callbackUrl = Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
+                string code = await this.userService.GeneratePasswordResetTokenAsync(user);
+                string callbackUrl =
+                    Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
+
+                callbackUrl += $"&email={user.Email}";
+
                 await emailSender.SendEmailAsync(model.Email, "Reset Password",
                    $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
+
                 return RedirectToAction(nameof(ForgotPasswordConfirmation));
             }
 
@@ -433,13 +438,23 @@
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult ResetPassword(string code = null)
+        public IActionResult ResetPassword(string code = null, string email = null)
         {
             if (code == null)
             {
-                throw new ApplicationException("A code must be supplied for password reset.");
+                TempData.AddErrorMessage("A code must be supplied for password reset.");
+
+                return this.RedirectToAction(nameof(HomeController.Index), "Home");
             }
-            var model = new ResetPasswordViewModel { Code = code };
+
+            if (this.userService.FindByEmailAsync(email) == null)
+            {
+                TempData.AddErrorMessage("A valid email must be supplied for password reset.");
+
+                return this.RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+
+            var model = new ResetPasswordViewModel { Code = code, Email = email };
             return View(model);
         }
 
@@ -452,28 +467,28 @@
             {
                 return View(model);
             }
-            var user = await this.userService.FindByEmailAsync(model.Email);
+
+            UserEf user = await this.userService.FindByEmailAsync(model.Email);
+
             if (user == null)
             {
-                // Don't reveal that the user does not exist
-                return RedirectToAction(nameof(ResetPasswordConfirmation));
+                TempData.AddErrorMessage("A valid email must be supplied for password reset.");
+
+                return this.RedirectToAction(nameof(HomeController.Index), "Home");
             }
-            var result = await this.userService.ResetPasswordAsync(user, model.Code, model.Password);
+
+            IdentityResult result = await this.userService
+                .ResetPasswordAsync(user, model.Code, model.Password);
+
             if (result.Succeeded)
             {
-                return RedirectToAction(nameof(ResetPasswordConfirmation));
+                this.TempData.AddSuccessMessage("Your password has been reset successfully.");
+                return RedirectToAction(nameof(Login));
             }
+
             this.AddErrors(result);
             return View();
         }
-
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult ResetPasswordConfirmation()
-        {
-            return View();
-        }
-
 
         [HttpGet]
         public IActionResult AccessDenied()

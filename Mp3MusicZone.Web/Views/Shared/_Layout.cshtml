@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Mp3MusicZone.Web</title>
+    <title>@ViewData["Title"] - Mp3MusicZone</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -28,11 +28,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Mp3MusicZone.Web</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="brand navbar-brand">
+                    <img src="~/images/logo.png" class="logo" />
+                </a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                 </ul>
@@ -59,7 +60,11 @@
 
         <hr />
         <footer>
-            <p>&copy; 2018 - Mp3MusicZone.Web</p>
+            <p>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="brand footer-brand">
+                    <img src="~/images/logo.png" class="logo" />
+                </a>Copyright &copy; 2018. All Rights Reserved.
+            </p>
         </footer>
     </div>
 
