@@ -49,6 +49,8 @@ deploy:
  artifact: WebSite
  aspnet_core: true 
  aspnet_core_force_restart: true 
+ remove_files: true
+ app_offline: true
  on: 
    branch: master
 services:
