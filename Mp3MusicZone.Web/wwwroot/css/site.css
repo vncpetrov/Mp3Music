@@ -262,3 +262,7 @@ input.disabled {
     cursor: default;
     user-select: none;
 }
+
+ul.navbar-nav a {
+    cursor: pointer;
+}

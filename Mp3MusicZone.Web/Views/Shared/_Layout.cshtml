@@ -28,19 +28,23 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="brand navbar-brand">
                     <img src="~/images/logo.png" class="logo" />
                 </a>
             </div>
+
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                 </ul>
+
                 @await Html.PartialAsync("_LoginPartial")
             </div>
         </div>
     </nav>
+
     <div class="container body-content">
         @if (TempData.ContainsKey(TempDataSuccessMessageKey))
         {
@@ -63,7 +67,8 @@
             <p>
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="brand footer-brand">
                     <img src="~/images/logo.png" class="logo" />
-                </a>Copyright &copy; 2018. All Rights Reserved.
+                </a>
+                Copyright &copy; 2018. All Rights Reserved.
             </p>
         </footer>
     </div>

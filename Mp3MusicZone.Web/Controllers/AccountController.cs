@@ -291,6 +291,7 @@
         {
             await this.signInService.SignOutAsync();
             logger.LogInformation("User logged out.");
+
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
