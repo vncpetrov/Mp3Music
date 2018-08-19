@@ -41,11 +41,16 @@ after_test:
       $wc.UploadFile("https://ci.appveyor.com/api/testresults/mstest/$($env:APPVEYOR_JOB_ID)", ($resultsIntegrationTests[0]))
 deploy:
  provider: WebDeploy
- server: https://mp3musiczone.scm.azurewebsites.net:443/msdeploy.axd
+ server: https://mp3musiczone.scm.azurewebsites.net:443/msdeploy.axd?site=mp3musiczone
  website: mp3musiczone
  username: $mp3musiczone
- password: 0whg4tpi5hLETJGkeyHwv6jaf6CZGNXytWRTM4zJRodfJ4xHhfksh0wFQ6nl
+ password: 
+    secure: 0whg4tpi5hLETJGkeyHwv6jaf6CZGNXytWRTM4zJRodfJ4xHhfksh0wFQ6nl
  name: "Mp3MusicZone-Live"
  artifact: WebSite
+ aspnet_core: true 
+ aspnet_core_force_restart: true 
+ on: 
+   branch: master
 services:
   - mssql2017
