@@ -26,5 +26,8 @@
         [MinLength(NameMinLength)]
         [MaxLength(NameMaxLength)]
         public string LastName { get; set; }
+
+        [MaxLength(ProfileImageMaxLength)]
+        public byte[] ProfileImage { get; set; }
     }
 }

@@ -65,5 +65,7 @@
         Task<UserEf> FindByNameAsync(string userName);
 
         Task<IdentityResult> AddToRoleAsync(UserEf user, string role);
+
+        Task<IdentityResult> UpdateAsync(UserEf user);
     }
 } 

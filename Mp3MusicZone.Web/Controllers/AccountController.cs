@@ -74,21 +74,37 @@
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await this.signInService.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await this.signInService
+                    .PasswordSignInAsync(
+                        model.Username,
+                        model.Password,
+                        model.RememberMe,
+                        lockoutOnFailure: false);
 
                 if (result.Succeeded)
                 {
                     logger.LogInformation("User logged in.");
                     return this.RedirectToLocal(returnUrl);
                 }
-                if (result.RequiresTwoFactor)
+                //if (result.RequiresTwoFactor)
+                //{
+                //    return RedirectToAction(nameof(LoginWith2fa), new { returnUrl, model.RememberMe });
+                //}
+                //if (result.IsLockedOut)
+                //{
+                //    logger.LogWarning("User account locked out.");
+                //    return RedirectToAction(nameof(Lockout));
+                //}
+
+                UserEf user = await this.userService.FindByNameAsync(model.Username);
+                bool isEmailConfirmet = await this.userService
+                    .IsEmailConfirmedAsync(user);
+
+                if (!isEmailConfirmet)
                 {
-                    return RedirectToAction(nameof(LoginWith2fa), new { returnUrl, model.RememberMe });
-                }
-                if (result.IsLockedOut)
-                {
-                    logger.LogWarning("User account locked out.");
-                    return RedirectToAction(nameof(Lockout));
+                    this.TempData.AddErrorMessage("Please, confirm your email address, to activate your account.");
+
+                    return View(model);
                 }
                 else
                 {
@@ -273,7 +289,7 @@
                 {
                     TempData.AddSuccessMessage($"The registration is successfull. Please, verify your e-mail address {model.Email} before proceeding.");
 
-                    return View(model);
+                    return View();
                 }
 
                 return this.RedirectToLocal(returnUrl);

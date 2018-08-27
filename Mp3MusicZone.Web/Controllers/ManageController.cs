@@ -5,16 +5,19 @@
     using EfDataAccess.Models;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
-    using Models.Manage; 
+    using Models.Manage;
     using System;
     using System.Linq;
     using System.Text;
     using System.Text.Encodings.Web;
     using System.Threading.Tasks;
     using Web.Infrastructure.Extensions;
+
+    using static Common.Constants.ModelConstants;
 
     [Authorize]
     [Route("[controller]/[action]")]
@@ -61,21 +64,61 @@
         [TempData]
         public string StatusMessage { get; set; }
 
-        [HttpGet]
-        public async Task<IActionResult> Index()
+        [HttpPost]
+        public async Task<IActionResult> UploadProfilePicture(IFormFile file)
         {
-            var user = await this.userService.GetUserAsync(User);
-            if (user == null)
+            UserEf user = await this.userService.GetUserAsync(User);
+
+            if (user is null)
             {
-                throw new ApplicationException($"Unable to load user with ID '{this.userService.GetUserId(User)}'.");
+                this.TempData.AddErrorMessage($"Unable to load user with ID '{this.userService.GetUserId(User)}'.");
+
+                return RedirectToAction(nameof(HomeController.Index), "Home");
             }
 
-            var model = new IndexViewModel
+            if (!file.IsImage() || file.Length > ProfileImageMaxLength)
+            {
+                this.TempData.AddErrorMessage($"Your submission should be a image file and no more than 5 MBs in size!");
+            }
+            else
+            {
+                user.ProfileImage = file.ToByteArray();
+
+                IdentityResult result = await this.userService.UpdateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    this.TempData.AddSuccessMessage("Profile Picture uploaded successfully.");
+                }
+                else
+                {
+                    this.TempData.AddErrorMessage("We're sorry, something went wrong. Please try again later.");
+                }
+            }
+
+            return RedirectToAction(nameof(Profile));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Profile()
+        {
+            UserEf user = await this.userService.GetUserAsync(User);
+
+            if (user is null)
+            {
+                this.TempData.AddErrorMessage($"Unable to load user with ID '{this.userService.GetUserId(User)}'.");
+
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+
+
+            var model = new ProfileViewModel
             {
                 Username = user.UserName,
                 Email = user.Email,
                 IsEmailConfirmed = user.EmailConfirmed,
-                StatusMessage = StatusMessage
+                StatusMessage = StatusMessage,
+                ProfileImage = user.ProfileImage
             };
 
             return View(model);
@@ -83,7 +126,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(IndexViewModel model)
+        public async Task<IActionResult> Profile(ProfileViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -107,12 +150,12 @@
             }
 
             StatusMessage = "Your profile has been updated";
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Profile));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SendVerificationEmail(IndexViewModel model)
+        public async Task<IActionResult> SendVerificationEmail(ProfileViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -131,7 +174,7 @@
             await emailSender.SendEmailConfirmationAsync(email, callbackUrl);
 
             StatusMessage = "Verification email sent. Please check your email.";
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Profile));
         }
 
         [HttpGet]

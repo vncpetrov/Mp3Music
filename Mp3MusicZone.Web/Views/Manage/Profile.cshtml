@@ -1,0 +1,95 @@
+﻿@model ProfileViewModel
+
+@{
+    ViewData["Title"] = "Manage Profile";
+    ViewData.AddActivePage(ManageNavPages.Profile);
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <h2 class="heading">@ViewData["Title"]</h2>
+            <hr />
+        </div>
+    </div>
+
+    @{
+        string imageSrc = Model.ProfileImage == null ?
+            "../images/NoImage.png" 
+            : string.Format("data:{0};base64,{1}",
+                "image/*",
+                Convert.ToBase64String(Model.ProfileImage));
+    }
+
+    <div class="row">
+        <div class="col-md-4 profile-image-section">
+            <div class="col-md-12">
+                <img src="@imageSrc" class="img-responsive profile-img" alt="Profile Picture">
+            </div>
+            <div class="col-md-12">
+                <form method="POST" asp-action="UploadProfilePicture" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly"></div>
+
+                    <p class="disclaimer">*Please note, that profile image must be no bigger than <span class="bold">5 MBs.</span> and be of some type image!*</p>
+
+                    <div class="form-group profile-image-buttons">
+                        <input name="file" type="file" accept="image/*" style="display: none" />
+
+                        <button type="button"
+                                class="btn btn-default manage-btn"
+                                onclick="document.getElementsByName('file')[0].click()">
+                            Choose your file!
+                        </button>
+
+                        <input type="submit" class="btn btn-default upload-btn manage-btn" value="Upload Image!" />
+
+                        <div>
+                            <span asp-validation-for="ProfileImage" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<h4>@ViewData["Title"]</h4>
+@*@Html.PartialAsync("_StatusMessage", Model.StatusMessage)*@
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Username"></label>
+                <input asp-for="Username" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                @if (Model.IsEmailConfirmed)
+                {
+                    <div class="input-group">
+                        <input asp-for="Email" class="form-control" />
+                        <span class="input-group-addon" aria-hidden="true"><span class="glyphicon glyphicon-ok text-success"></span></span>
+                    </div>
+                }
+                else
+                {
+                    <input asp-for="Email" class="form-control" />
+                    <button asp-action="SendVerificationEmail" class="btn btn-link">Send verification email</button>
+                }
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-default">Save</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

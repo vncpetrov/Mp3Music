@@ -30,8 +30,17 @@
                 </button>
 
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="brand navbar-brand">
-                    <img src="~/images/logo.png" class="logo" />
+                    <img src="~/images/logo.png" class="logo img-responsive" />
                 </a>
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    string imageSrc = "../images/NoImage.png";
+
+                    <div class="navbar-profile-image">
+                        <img src="@imageSrc" class="img-circle" />
+                    </div>
+                }
             </div>
 
             <div class="navbar-collapse collapse">

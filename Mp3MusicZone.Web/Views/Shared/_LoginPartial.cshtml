@@ -6,31 +6,34 @@
 
 @if (SignInService.IsSignedIn(User))
 {
+    var user = await UserService.GetUserAsync(User);
+
+    //string imageSrc = user.ProfileImage == null ?
+    //    "../images/NoImage.png"
+    //    : string.Format("data:{0};base64,{1}",
+    //        "image/*",
+    //        Convert.ToBase64String(user.ProfileImage));
+
     <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" name="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
+            @*<li class="navbar-profile-image">
+                <img src="@imageSrc" class="img-circle" />
+            </li>*@
+
             <li>
-                <a asp-area="" asp-controller="Manage" asp-action="Index" title="Profile">@UserService.GetUserName(User)</a>
+                <a asp-area="" asp-controller="Manage" asp-action="Profile" title="Manage Profile">@UserService.GetUserName(User)</a>
             </li>
+
             <li>
                 <a onclick="document.logoutForm.submit()" title="Logout">Logout</a>
             </li>
         </ul>
     </form>
-
-
-    @*<ul class="nav navbar-nav navbar-right">
-            <li>
-                <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserService.GetUserName(User)!</a>
-            </li>
-            <li>
-                <a asp-area="" asp-controller="Account" asp-action="Logout" title="Logout">Logout</a>
-            </li>
-        </ul>*@
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
         <li><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>
-        <li><a asp-area="" asp-controller="Account" asp-action="Login">Log in</a></li>
+        <li><a asp-area="" asp-controller="Account" asp-action="Login">Login</a></li>
     </ul>
 }

@@ -15,6 +15,9 @@
 
         public const int UserMinAge = 16;
 
+        public const int ProfileImageMaxLength = 5_242_880;
+
+
         public const string MinLengthErrorMessage =
             "The {0} must be at least {1} characters long.";
 
