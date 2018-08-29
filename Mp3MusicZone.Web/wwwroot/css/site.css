@@ -323,8 +323,32 @@ form .btn.manage-btn {
     background-color: rgba(0, 180, 199, 0.85) !important;
 }
 
+.navbar-profile-image {
+    display: inline-block;
+    position: absolute;
+    left: 77.5%;
+}
+
+.navbar-profile-image img {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    border: 1px solid #D0D0D0;
+    margin-top: 2.5px;
+}
+
+nav.navbar .container {
+    position: relative;
+}
+
 img.img-responsive {
     display: inline-block;
+}
+
+@media all and (max-width: 1200px) {
+    .navbar-profile-image {
+        left: 73%;
+    }
 }
 
 @media all and (max-width: 1000px) {
@@ -338,6 +362,12 @@ img.img-responsive {
     }
 }
 
+@media all and (max-width: 992px) {
+    .navbar-profile-image {
+        left: 65%;
+    }
+}
+
 @media all and (max-width: 767px) {
     a.navbar-brand {
         margin-left: 3%;
@@ -348,6 +378,16 @@ img.img-responsive {
         position: absolute;
         top: 2px;
         right: 70px;
+    }
+
+    .navbar-profile-image {
+        position: initial;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .navbar-profile-image img {
+        margin-right: 10px;
     }
 }
 
@@ -375,6 +415,14 @@ img.img-responsive {
     .disclaimer {
         font-size: 1em;
     }
+
+    button.navbar-toggle {
+        margin-right: 5px;
+    }
+
+    .navbar-profile-image img {
+        margin-right: 5px;
+    }
 }
 
 @media all and (max-width: 346px) {
@@ -385,6 +433,15 @@ img.img-responsive {
     body a.brand.footer-brand {
         height: 50px;
     }
+
+    .navbar-profile-image img {
+        width: 45px;
+        height: 45px;
+    }
+
+    a.navbar-brand {
+        margin-left: 1%;
+    }
 }
 
 @media all and (max-width: 315px) {
@@ -393,18 +450,4 @@ img.img-responsive {
         height: 45px;
         line-height: 38px;
     }
-}
-
-.navbar-profile-image {
-    display: inline-block;
-    position: absolute;
-    right: 250px;
-}
-
-.navbar-profile-image img {
-    width: 50px;
-    height: 50px;
-    border-radius: 25px;
-    border: 1px solid #D0D0D0;
-    margin-top: 3px; 
 }

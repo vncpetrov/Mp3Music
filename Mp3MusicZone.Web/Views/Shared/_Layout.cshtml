@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject IUserService UserService
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -35,7 +37,13 @@
 
                 @if (User.Identity.IsAuthenticated)
                 {
-                    string imageSrc = "../images/NoImage.png";
+                    var user = await UserService.GetUserAsync(User);
+
+                    string imageSrc = user.ProfileImage == null ?
+                        "../images/NoImage.png"
+                        : string.Format("data:{0};base64,{1}",
+                            "image/*",
+                            Convert.ToBase64String(user.ProfileImage));
 
                     <div class="navbar-profile-image">
                         <img src="@imageSrc" class="img-circle" />

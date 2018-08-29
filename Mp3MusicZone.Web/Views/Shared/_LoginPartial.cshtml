@@ -8,11 +8,11 @@
 {
     var user = await UserService.GetUserAsync(User);
 
-    //string imageSrc = user.ProfileImage == null ?
-    //    "../images/NoImage.png"
-    //    : string.Format("data:{0};base64,{1}",
-    //        "image/*",
-    //        Convert.ToBase64String(user.ProfileImage));
+    string imageSrc = user.ProfileImage == null ?
+        "../images/NoImage.png"
+        : string.Format("data:{0};base64,{1}",
+            "image/*",
+            Convert.ToBase64String(user.ProfileImage));
 
     <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" name="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
