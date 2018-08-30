@@ -50,6 +50,8 @@
             WebHost.CreateDefaultBuilder(args)
                 .UseIISIntegration()
                 .UseStartup<Startup>()
+                .UseSetting("detailedErrors", "true")
+                .CaptureStartupErrors(true)
                 .UseNLog();
     }
 }
