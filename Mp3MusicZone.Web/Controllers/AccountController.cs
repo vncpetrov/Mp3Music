@@ -9,6 +9,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
     using Models.Account;
+    using Mp3MusicZone.Web.Infrastructure.Filters;
     using System;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -30,19 +31,13 @@
             ILogger<AccountController> logger)
         {
             if (userService is null)
-            {
                 throw new ArgumentNullException(nameof(userService));
-            }
 
             if (signInService is null)
-            {
                 throw new ArgumentNullException(nameof(signInService));
-            }
 
             if (emailSender is null)
-            {
                 throw new ArgumentNullException(nameof(emailSender));
-            }
 
             this.userService = userService;
             this.signInService = signInService;
@@ -67,54 +62,43 @@
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [ValidateModelState]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
-            if (ModelState.IsValid)
+
+            UserEf user = await this.userService.FindByNameAsync(model.Username);
+            if (user != null)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await this.signInService
-                    .PasswordSignInAsync(
-                        model.Username,
-                        model.Password,
-                        model.RememberMe,
-                        lockoutOnFailure: false);
+                bool isEmailConfirmed = await this.userService
+                .IsEmailConfirmedAsync(user);
 
-                if (result.Succeeded)
+                if (!isEmailConfirmed)
                 {
-                    logger.LogInformation("User logged in.");
-                    return this.RedirectToLocal(returnUrl);
-                }
-                //if (result.RequiresTwoFactor)
-                //{
-                //    return RedirectToAction(nameof(LoginWith2fa), new { returnUrl, model.RememberMe });
-                //}
-                //if (result.IsLockedOut)
-                //{
-                //    logger.LogWarning("User account locked out.");
-                //    return RedirectToAction(nameof(Lockout));
-                //}
-
-                UserEf user = await this.userService.FindByNameAsync(model.Username);
-                bool isEmailConfirmet = await this.userService
-                    .IsEmailConfirmedAsync(user);
-
-                if (!isEmailConfirmet)
-                {
-                    this.TempData.AddErrorMessage("Please, confirm your email address, to activate your account.");
-
-                    return View(model);
-                }
-                else
-                {
-                    this.TempData.AddErrorMessage("Invalid login attempt.");
+                    this.TempData.AddErrorMessage($@"Please, confirm your email address, to activate your account. If you cannot find your confirmation email <a href=""/account/resendemailconfirmation?email={user.Email}"">click here to resend it.</a>");
 
                     return View(model);
                 }
             }
 
+            // This doesn't count login failures towards account lockout
+            // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+            var result = await this.signInService
+                .PasswordSignInAsync(
+                    model.Username,
+                    model.Password,
+                    model.RememberMe,
+                    lockoutOnFailure: false);
+
+            if (result.Succeeded)
+            {
+                logger.LogInformation("User logged in.");
+                return this.RedirectToLocal(returnUrl);
+            }
+
             // If we got this far, something failed, redisplay form
+            this.TempData.AddErrorMessage("Invalid login attempt.");
+
             return View(model);
         }
 
@@ -271,16 +255,14 @@
                 Birthdate = model.Birthdate
             };
 
-            IdentityResult result = await this.userService.CreateAsync(user, model.Password);
+            IdentityResult result =
+                await this.userService.CreateAsync(user, model.Password);
 
             if (result.Succeeded)
             {
                 logger.LogInformation("User created a new account with password.");
 
-                string code = await this.userService.GenerateEmailConfirmationTokenAsync(user);
-                string callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-
-                await emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+                await this.SendEmailConfirmationToken(user);
 
                 //await signInManager.SignInAsync(user, isPersistent: false);
                 logger.LogInformation("User created a new account with password.");
@@ -299,6 +281,27 @@
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResendEmailConfirmation(string email)
+        {
+            UserEf user = await this.userService.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                this.TempData.AddErrorMessage(
+                    $"Unable to find user with email {email}.");
+
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+
+            await this.SendEmailConfirmationToken(user);
+
+            this.TempData.AddSuccessMessage($"A verification link has been sent to email address {email}. Please verify your email.");
+
+            return View(nameof(this.Login));
         }
 
         [HttpPost]
@@ -398,13 +401,24 @@
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
-            var user = await this.userService.FindByIdAsync(userId);
+
+            UserEf user = await this.userService.FindByIdAsync(userId);
+
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{userId}'.");
             }
-            var result = await this.userService.ConfirmEmailAsync(user, code);
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+
+            IdentityResult result = await this.userService.ConfirmEmailAsync(user, code);
+
+            if (!result.Succeeded)
+            {
+                this.TempData.AddErrorMessage("Oops! Something went wrong. Please try again.");
+            }
+
+            this.TempData.AddSuccessMessage("Thank you for verifying your email. You can now log in.");
+
+            return RedirectToAction(nameof(this.Login));
         }
 
         [HttpGet]
@@ -430,27 +444,15 @@
                     return View();
                 }
 
-                string code = await this.userService.GeneratePasswordResetTokenAsync(user);
-                string callbackUrl =
-                    Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
+                await SendForgotPasswordToken(user);
 
-                callbackUrl += $"&email={user.Email}";
+                this.TempData.AddSuccessMessage("Please check your email to reset your password.");
 
-                await emailSender.SendEmailAsync(model.Email, "Reset Password",
-                   $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
-
-                return RedirectToAction(nameof(ForgotPasswordConfirmation));
+                return View();
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult ForgotPasswordConfirmation()
-        {
-            return View();
         }
 
         [HttpGet]
@@ -512,5 +514,26 @@
         {
             return View();
         }
+
+        private async Task SendEmailConfirmationToken(UserEf user)
+        {
+            string code = await this.userService.GenerateEmailConfirmationTokenAsync(user);
+            string callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+
+            await emailSender.SendEmailConfirmationAsync(user.Email, callbackUrl);
+        }
+
+        private async Task SendForgotPasswordToken(UserEf user)
+        {
+            string code = await this.userService.GeneratePasswordResetTokenAsync(user);
+            string callbackUrl =
+                Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
+
+            callbackUrl += $"&email={user.Email}";
+
+            await emailSender.SendEmailAsync(user.Email, "Reset Password",
+               $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
+        }
+
     }
 }

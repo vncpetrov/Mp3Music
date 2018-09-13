@@ -3,9 +3,9 @@
 @{
     ViewData["Title"] = "Create a new account";
 }
-  
-<div class="container"> 
-    <div class="row"> 
+
+<div class="container">
+    <div class="row">
         <div class="col-md-4 col-md-offset-4">
             <h2 class="heading">@ViewData["Title"]</h2>
             <hr />
@@ -14,7 +14,9 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 <div class="form-group form-field user-icon">
-                    <input asp-for="Username" class="form-control" placeholder="Username" />
+                    <input asp-for="Username"
+                           class="form-control"
+                           placeholder="Username" />
                     <span asp-validation-for="Username" class="text-danger"></span>
                 </div>
 
@@ -24,22 +26,30 @@
                 </div>
 
                 <div class="form-group form-field password-icon">
-                    <input asp-for="Password" class="form-control" placeholder="Password"/>
+                    <input asp-for="Password"
+                           class="form-control"
+                           placeholder="Password" />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
 
                 <div class="form-group form-field password-icon">
-                    <input asp-for="ConfirmPassword" class="form-control" placeholder="Re-type Password"/>
+                    <input asp-for="ConfirmPassword"
+                           class="form-control"
+                           placeholder="Re-type Password" />
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
 
                 <div class="form-group form-field universal-icon">
-                    <input asp-for="FirstName" class="form-control" placeholder="First Name"/>
+                    <input asp-for="FirstName"
+                           class="form-control"
+                           placeholder="First Name" />
                     <span asp-validation-for="FirstName" class="text-danger"></span>
                 </div>
 
                 <div class="form-group form-field universal-icon">
-                    <input asp-for="LastName" class="form-control" placeholder="Last Name"/>
+                    <input asp-for="LastName"
+                           class="form-control"
+                           placeholder="Last Name" />
                     <span asp-validation-for="LastName" class="text-danger"></span>
                 </div>
 
@@ -47,20 +57,40 @@
                     <div>
                         @foreach (GenreType enumValue in Enum.GetValues(typeof(GenreType)))
                         {
-                            <input type="radio" name="Genre" value="@enumValue" id="@enumValue" /> <label for="@enumValue">@enumValue</label>
+                            <input type="radio"
+                                   name="Genre"
+                                   value="@enumValue"
+                                   id="@enumValue" />
+                            <label for="@enumValue">@enumValue</label>
                         }
                     </div>
                     <span asp-validation-for="Genre" class="text-danger"></span>
                 </div>
 
                 <div class="form-group form-field birthday-icon">
-                    <input asp-for="Birthdate" class="form-control" placeholder="Birthdate" onfocus="(this.type='date')" />
+                    <input asp-for="Birthdate"
+                           class="form-control"
+                           placeholder="Birthdate"
+                           onfocus="(this.type='date')" />
                     <span asp-validation-for="Birthdate" class="text-danger"></span>
                 </div>
 
-                <button type="submit" class="btn btn-default hvr-back-pulse">Create Your Account</button>
+                <button type="submit"
+                        class="btn
+                               btn-default
+                               hvr-back-pulse
+                               col-md-12">
+                    Create Your Account
+                </button>
 
-                <p class="have-account"><a asp-controller="Account" asp-action="Login">Already have a Mp3MusicZone account?</a></p>
+                <div class="form-group">
+                    <p class="have-account">
+                        <a asp-controller="Account"
+                           asp-action="Login">
+                            Already have a Mp3MusicZone account?
+                        </a>
+                    </p>
+                </div>
             </form>
         </div>
     </div>

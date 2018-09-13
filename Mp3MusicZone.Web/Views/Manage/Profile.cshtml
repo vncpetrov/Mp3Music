@@ -13,27 +13,32 @@
         </div>
     </div>
 
-    @{
-        string imageSrc = Model.ProfileImage == null ?
-            "../images/NoImage.png" 
-            : string.Format("data:{0};base64,{1}",
-                "image/*",
-                Convert.ToBase64String(Model.ProfileImage));
-    }
-
-    <div class="row">
-        <div class="col-md-4 profile-image-section">
+    <div class="row profile-data">
+        <section class="col-md-4
+                        profile-image-section">
             <div class="col-md-12">
-                <img src="@imageSrc" class="img-responsive profile-img" alt="Profile Picture">
+                <img src="@Model.ProfileImageSource"
+                     class="img-responsive profile-img"
+                     alt="Profile Picture" />
             </div>
+
             <div class="col-md-12">
-                <form method="POST" asp-action="UploadProfilePicture" enctype="multipart/form-data">
+                <form method="POST"
+                      enctype="multipart/form-data"
+                      asp-action="UploadProfilePicture">
                     <div asp-validation-summary="ModelOnly"></div>
 
-                    <p class="disclaimer">*Please note, that profile image must be no bigger than <span class="bold">5 MBs.</span> and be of some type image!*</p>
+                    <p class="disclaimer">
+                        *Please note, that profile image must be no bigger than
+                        <span class="bold">5 MBs.</span>
+                        and be of some type image!*
+                    </p>
 
                     <div class="form-group profile-image-buttons">
-                        <input name="file" type="file" accept="image/*" style="display: none" />
+                        <input name="file"
+                               type="file"
+                               accept="image/*"
+                               style="display: none" />
 
                         <button type="button"
                                 class="btn btn-default manage-btn"
@@ -41,54 +46,81 @@
                             Choose your file!
                         </button>
 
-                        <input type="submit" class="btn btn-default upload-btn manage-btn" value="Upload Image!" />
+                        <input type="submit"
+                               class="btn btn-default upload-btn manage-btn"
+                               value="Upload Image!" />
 
                         <div>
-                            <span asp-validation-for="ProfileImage" class="text-danger"></span>
+                            <span asp-validation-for="ProfileImageSource"
+                                  class="text-danger">
+                            </span>
                         </div>
                     </div>
 
                 </form>
             </div>
-        </div>
+        </section>
+
+        <section class="col-md-4
+                        col-md-offset-1
+                        profile-details-section">
+            <div class="user-name">
+                @Model.Username
+            </div>
+
+            <div class="role">
+                @Model.Role
+            </div>
+
+            <div class="contact-info">
+                <h1>contact information</h1>
+
+                <div class="">
+                    <label>e-mail:</label>
+                    @Model.Email
+                </div>
+            </div>
+
+            <div class="contact-info">
+                <h1>general information</h1>
+
+                <div class="">
+                    <label>genre:</label>
+                    @Model.Genre
+                </div>
+
+                <div class="">
+                    <label>birthdate:</label>
+                    @Model.Birthdate.ToString("dd MMMM, yyyy")
+                </div>
+            </div>
+        </section>
+
+        <section class="col-md-2
+                        col-md-offset-1
+                        profile-actions-section">
+            <h1 class="heading-actions">Actions</h1>
+            <ul>
+                <li class="profile-action">
+                    <a asp-controller="Manage"
+                       asp-action="EditProfile"
+                       class="edit-icon">
+                        edit profile
+                    </a>
+                </li>
+
+                <li class="profile-action">
+                    <a asp-controller="Manage"
+                       asp-action="ChangePassword"
+                       class="password-icon">
+                        change password
+                    </a>
+                </li>
+            </ul>
+        </section>
     </div>
 </div>
 
-
-
-
-
-
-<h4>@ViewData["Title"]</h4>
-@*@Html.PartialAsync("_StatusMessage", Model.StatusMessage)*@
-<div class="row">
-    <div class="col-md-6">
-        <form method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Username"></label>
-                <input asp-for="Username" class="form-control" disabled />
-            </div>
-            <div class="form-group">
-                <label asp-for="Email"></label>
-                @if (Model.IsEmailConfirmed)
-                {
-                    <div class="input-group">
-                        <input asp-for="Email" class="form-control" />
-                        <span class="input-group-addon" aria-hidden="true"><span class="glyphicon glyphicon-ok text-success"></span></span>
-                    </div>
-                }
-                else
-                {
-                    <input asp-for="Email" class="form-control" />
-                    <button asp-action="SendVerificationEmail" class="btn btn-link">Send verification email</button>
-                }
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <button type="submit" class="btn btn-default">Save</button>
-        </form>
-    </div>
-</div>
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")

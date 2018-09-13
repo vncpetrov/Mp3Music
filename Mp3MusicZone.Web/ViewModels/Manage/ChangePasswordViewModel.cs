@@ -3,22 +3,36 @@
     using System;
     using System.ComponentModel.DataAnnotations;
 
+    using static Mp3MusicZone.Common.Constants.ModelConstants;
+
     public class ChangePasswordViewModel
     {
         [Required]
+        [MinLength(PasswordMinLength, 
+            ErrorMessage = MinLengthErrorMessage)]
+        [MaxLength(PasswordMaxLength,
+            ErrorMessage = MaxLengthErrorMessage)]
         [DataType(DataType.Password)]
-        [Display(Name = "Current password")]
+        [Display(Name = "Old password")]
         public string OldPassword { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
+        [MinLength(PasswordMinLength,
+            ErrorMessage = MinLengthErrorMessage)]
+        [MaxLength(PasswordMaxLength,
+            ErrorMessage = MaxLengthErrorMessage)]
         [Display(Name = "New password")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
+        [Compare(nameof(NewPassword),
+           ErrorMessage = "New password and confirmation password do not match.")]
+        [MinLength(PasswordMinLength,
+            ErrorMessage = MinLengthErrorMessage)]
+        [MaxLength(PasswordMaxLength,
+            ErrorMessage = MaxLengthErrorMessage)]
         [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
         public string StatusMessage { get; set; }

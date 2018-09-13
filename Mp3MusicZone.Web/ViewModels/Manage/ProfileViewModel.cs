@@ -9,16 +9,20 @@
     {
         public string Username { get; set; }
 
-        public bool IsEmailConfirmed { get; set; }
-
-        [Required]
-        [EmailAddress]
         public string Email { get; set; }
+        
+        public string ProfileImageSource { get; set; }
 
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string Genre { get; set; }
+
+        public DateTime Birthdate { get; set; }
+        
         public string StatusMessage { get; set; }
 
-        [MaxLength(ProfileImageMaxLength)]
-        public byte[] ProfileImage { get; set; }
-
+        public string Role { get; set; }
     }
 }

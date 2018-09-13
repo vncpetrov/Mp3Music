@@ -35,7 +35,32 @@
                     <img src="~/images/logo.png" class="logo img-responsive" />
                 </a>
 
-                @if (User.Identity.IsAuthenticated)
+                @*@if (User.Identity.IsAuthenticated)
+                    {
+                        var user = await UserService.GetUserAsync(User);
+
+                        string imageSrc = user.ProfileImage == null ?
+                            "../images/NoImage.png"
+                            : string.Format("data:{0};base64,{1}",
+                                "image/*",
+                                Convert.ToBase64String(user.ProfileImage));
+
+                        <div class="navbar-profile-image">
+                            <img src="@imageSrc" class="img-circle" />
+                        </div>
+                    }*@
+            </div>
+
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                </ul>
+
+                @await Html.PartialAsync("_LoginPartial")
+            </div>
+
+            @*@if (User.Identity.IsAuthenticated)
                 {
                     var user = await UserService.GetUserAsync(User);
 
@@ -48,17 +73,7 @@
                     <div class="navbar-profile-image">
                         <img src="@imageSrc" class="img-circle" />
                     </div>
-                }
-            </div>
-
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                </ul>
-
-                @await Html.PartialAsync("_LoginPartial")
-            </div>
+                }*@
         </div>
     </nav>
 
@@ -66,14 +81,14 @@
         @if (TempData.ContainsKey(TempDataSuccessMessageKey))
         {
             <div class="alert alert-success text-center">
-                @TempData[TempDataSuccessMessageKey]
+                @Html.Raw(TempData[TempDataSuccessMessageKey])
             </div>
         }
 
         @if (TempData.ContainsKey(TempDataErrorMessageKey))
         {
             <div class="alert alert-danger text-center">
-                @TempData[TempDataErrorMessageKey]
+                @Html.Raw(TempData[TempDataErrorMessageKey])
             </div>
         }
 

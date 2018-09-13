@@ -1,0 +1,91 @@
+﻿@model EditProfileViewModel
+
+@{
+    ViewData["Title"] = "Edit Profile";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h2 class="heading">@ViewData["Title"]</h2>
+            <hr />
+
+            <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="col-md-6">
+                    <div class="form-group form-field edit universal-icon">
+                        <label asp-for="FirstName" class="input-label"></label>
+                        <input asp-for="FirstName" 
+                               class="form-control" 
+                               placeholder="First Name" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group form-field edit genre-icon genre">
+                        <label asp-for="Genre" class="input-label genre-edit"></label>
+                        <div>
+                            @foreach (GenreType enumValue in Enum.GetValues(typeof(GenreType)))
+                            {
+                                string checkd = string.Empty;
+                                if (enumValue == Model.Genre)
+                                {
+                                    checkd = "checked";
+                                }
+
+                                <input type="radio"
+                                       name="Genre"
+                                       value="@enumValue"
+                                       id="@enumValue" 
+                                       @checkd />
+                                <label for="@enumValue">@enumValue</label>
+                            }
+                        </div>
+                        <span asp-validation-for="Genre" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group form-field edit universal-icon">
+                        <label asp-for="LastName" class="input-label"></label>
+                        <input asp-for="LastName" 
+                               class="form-control" 
+                               placeholder="Last Name" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group form-field edit birthday-icon">
+                        <label asp-for="Birthdate" class="input-label"></label>
+                        <input asp-for="Birthdate" 
+                               class="form-control" 
+                               placeholder="Birthdate" 
+                               onfocus="(this.type='date')" />
+                        <span asp-validation-for="Birthdate" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <button type="submit" 
+                        class="btn btn-default hvr-back-pulse col-md-5">
+                     Save Changes
+                </button>
+
+                <a asp-controller="Manage" asp-action="Profile" 
+                   class="btn
+                          btn-default 
+                          hvr-red
+                          hvr-back-pulse 
+                          col-md-5
+                          col-md-offset-2">
+                     Cancel
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
+
+

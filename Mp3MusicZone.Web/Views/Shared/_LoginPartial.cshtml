@@ -21,7 +21,10 @@
             </li>*@
 
             <li>
-                <a asp-area="" asp-controller="Manage" asp-action="Profile" title="Manage Profile">@UserService.GetUserName(User)</a>
+                <div class="navbar-profile-image">
+                    <img src="@imageSrc" class="img-circle" />
+                </div>
+                <a asp-area="" asp-controller="Manage" asp-action="Profile" title="Manage Profile" class="profile-link">@UserService.GetUserName(User)</a>
             </li>
 
             <li>

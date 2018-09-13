@@ -10,7 +10,7 @@
 
     using static Mp3MusicZone.Common.Constants.ModelConstants;
 
-    public class RegisterViewModel : IMapTo<UserEf>, IHaveCustomMappings
+    public class RegisterViewModel
     {
         [Required]
         [MinLength(UsernameMinLength,
@@ -59,23 +59,5 @@
 
         [Required]
         public GenreType Genre { get; set; }
-
-        public void Configure(Profile config)
-        {
-            config.CreateMap<RegisterViewModel, UserEf>()
-                .ForMember(x => x.AccessFailedCount, opt => opt.Ignore())
-                .ForMember(x => x.ConcurrencyStamp, opt => opt.Ignore())
-                .ForMember(x => x.EmailConfirmed, opt => opt.Ignore())
-                .ForMember(x => x.Id, opt => opt.Ignore())
-                .ForMember(x => x.LockoutEnabled, opt => opt.Ignore())
-                .ForMember(x => x.LockoutEnd, opt => opt.Ignore())
-                .ForMember(x => x.NormalizedEmail, opt => opt.Ignore())
-                .ForMember(x => x.NormalizedUserName, opt => opt.Ignore())
-                .ForMember(x => x.PasswordHash, opt => opt.Ignore())
-                .ForMember(x => x.PhoneNumber, opt => opt.Ignore())
-                .ForMember(x => x.PhoneNumberConfirmed, opt => opt.Ignore())
-                .ForMember(x => x.SecurityStamp, opt => opt.Ignore())
-                .ForMember(x => x.TwoFactorEnabled, opt => opt.Ignore());
-        }
     }
 }

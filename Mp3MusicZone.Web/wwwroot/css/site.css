@@ -88,7 +88,7 @@ hr {
     border-radius: 4px;
 }
 
-form button.btn {
+form .btn {
     font-size: 15px;
     padding: 10px 50px;
     background-color: #F0F0F0;
@@ -138,7 +138,7 @@ body div.navbar-header:hover {
 }
 
 ul.navbar-nav {
-    margin-top: 3px;
+    margin-top: 2px;
     font-weight: bold;
 }
 
@@ -150,15 +150,15 @@ div.form-field {
     position: relative;
 }
 
-    div.form-field::before {
-        font-family: "FontAwesome";
-        content: '@';
-        color: #7e7e7e;
-        font-size: 23px;
-        position: absolute;
-        left: 15px;
-        top: 1px;
-    }
+div.form-field::before {
+    font-family: "FontAwesome";
+    content: '@';
+    color: #7e7e7e;
+    font-size: 23px;
+    position: absolute;
+    left: 15px;
+    top: 1px;
+}
 
     div.form-field.email-icon::before {
         content: "\f0e0";
@@ -206,9 +206,9 @@ input.form-control:focus::-webkit-input-placeholder {
     padding-top: 6px;
 }
 
-    .form-field.genre label {
-        padding-right: 10px;
-    }
+.form-field.genre label {
+    padding-right: 10px;
+}
 
 .form-field {
     margin-bottom: 30px;
@@ -216,7 +216,6 @@ input.form-control:focus::-webkit-input-placeholder {
 
 button[type=submit].btn {
     border: 1px solid #cfcfcf;
-    width: 100%;
 }
 
 button[type=submit].btn-default:active:hover {
@@ -230,19 +229,27 @@ p.forgot-password {
     margin-top: 15px;
 }
 
-    p.have-account a,
-    p.register a,
-    p.forgot-password a {
-        color: #00B4C7;
-        font-weight: bold;
-        text-decoration: none;
-    }
+p.have-account a,
+p.register a,
+p.forgot-password a {
+    color: #00B4C7;
+    font-weight: bold;
+    text-decoration: none;
+}
 
-        p.have-account a:hover,
-        p.register a:hover,
-        p.forgot-password a:hover {
-            color: #008d9b;
-        }
+p.have-account {
+    margin-top: 105px;
+}
+
+p.forgot-password {
+    margin-top: 90px;
+}
+
+p.have-account a:hover,
+p.register a:hover,
+p.forgot-password a:hover {
+    color: #008d9b;
+}
 
 .alert {
     font-weight: bold;
@@ -317,6 +324,9 @@ form .btn.manage-btn {
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgb(0, 180, 199);
 }
 
+.btn.btn-default.hvr-red:hover {
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px red;
+}
 
 .btn.upload-btn:hover {
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgb(120, 120, 120);
@@ -324,9 +334,20 @@ form .btn.manage-btn {
 }
 
 .navbar-profile-image {
+    position: relative;
+    left: 13px;
     display: inline-block;
+    /*position: absolute;
+    right: 135px;*/
+    /*left: 77.5%;*/
+    /*display: inline-block;
     position: absolute;
-    left: 77.5%;
+    right: 7%;
+    top: 0;*/
+}
+
+.nav > li > a.profile-link {
+    display: inline-block;
 }
 
 .navbar-profile-image img {
@@ -334,7 +355,7 @@ form .btn.manage-btn {
     height: 50px;
     border-radius: 25px;
     border: 1px solid #D0D0D0;
-    margin-top: 2.5px;
+    /*margin-top: 2.5px;*/
 }
 
 nav.navbar .container {
@@ -346,13 +367,13 @@ img.img-responsive {
 }
 
 @media all and (max-width: 1200px) {
-    .navbar-profile-image {
+    /*.navbar-profile-image {
         left: 73%;
-    }
+    }*/
 }
 
 @media all and (max-width: 1000px) {
-    div.profile-image-section {
+    section.profile-image-section {
         text-align: center;
         padding-top: 10px 0 0 0;
     }
@@ -363,8 +384,12 @@ img.img-responsive {
 }
 
 @media all and (max-width: 992px) {
-    .navbar-profile-image {
+    /*.navbar-profile-image {
         left: 65%;
+    }*/
+
+    .profile-details-section {
+        margin-top: 30px;
     }
 }
 
@@ -374,13 +399,17 @@ img.img-responsive {
         margin-right: 0px;
     }
 
-    li.navbar-profile-image {
+    /*li.navbar-profile-image {
         position: absolute;
         top: 2px;
         right: 70px;
-    }
+    }*/
 
     .navbar-profile-image {
+        display: none;
+    }
+
+    /*.navbar-profile-image {
         position: initial;
         display: flex;
         justify-content: flex-end;
@@ -388,7 +417,7 @@ img.img-responsive {
 
     .navbar-profile-image img {
         margin-right: 10px;
-    }
+    }*/
 }
 
 @media all and (max-width: 530px) {
@@ -420,9 +449,9 @@ img.img-responsive {
         margin-right: 5px;
     }
 
-    .navbar-profile-image img {
+    /*.navbar-profile-image img {
         margin-right: 5px;
-    }
+    }*/
 }
 
 @media all and (max-width: 346px) {
@@ -434,10 +463,10 @@ img.img-responsive {
         height: 50px;
     }
 
-    .navbar-profile-image img {
+    /*.navbar-profile-image img {
         width: 45px;
         height: 45px;
-    }
+    }*/
 
     a.navbar-brand {
         margin-left: 1%;
@@ -450,4 +479,133 @@ img.img-responsive {
         height: 45px;
         line-height: 38px;
     }
+}
+
+.profile-details-section {
+    letter-spacing: 1px;
+}
+
+.profile-details-section div.user-name {
+    color: #00B4C7;
+    font-size: 2.5em;
+    font-weight: bold;
+    font-family: cursive;
+}
+
+.profile-details-section .contact-info {
+    padding: 25px 0;
+}
+
+.profile-details-section .role {
+    text-transform: uppercase;
+    font-size: 0.8em;
+    color: red;
+    font-weight: bold;
+}
+
+.profile-details-section .contact-info h1,
+label.input-label {
+    text-transform: uppercase;
+    color: #aeacac;
+    font-size: 0.9em;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.profile-details-section .contact-info div {
+    margin-top: 15px;
+}
+
+.profile-details-section .contact-info div label {
+    width: 125px;
+}
+
+.profile-details-section .contact-info div label:first-letter {
+    text-transform: capitalize;
+}
+
+div.profile-data {
+    display: flex;
+    /*align-items: center;*/
+}
+
+.profile-actions-section {
+    padding-top: 15px;
+    border: 1px solid #00B4C7;
+    background: #fbfbfb;
+    border-radius: 5px;
+    box-shadow: 10px 10px 30px -14px rgba(0,0,0,0.75);
+    display: table;
+    padding: 5px 10px;
+    width: 170px;
+}
+
+.profile-actions-section .heading-actions {
+    color: black;
+    font-size: 1em;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-left: 15px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.profile-actions-section ul {
+    list-style: none;
+    padding: 0;
+    /*display: inline-block;*/
+}
+
+.profile-actions-section ul li.profile-action {
+    margin-bottom: 10px;
+    font-size: 0.75em;
+}
+
+li.profile-action a {
+    text-transform: capitalize;
+    color: black;
+    background-color: #f0f0f0;
+    border-radius: 20px;
+    display: block;
+    padding: 0px 18px;
+    padding-bottom: 2px;
+}
+
+li.profile-action a::before {
+    font-family: "FontAwesome";
+    content: '@';
+    color: #7e7e7e;
+    font-size: 15px;
+    position: relative;
+    right: 8px;
+    top: 2px;
+}
+
+li.profile-action a.edit-icon::before {
+    content: "\f044";
+}
+
+li.profile-action a.password-icon::before {
+    content: "\f023";
+}
+
+li.profile-action a:hover {
+    box-shadow: 0px 0px 0px 1px rgba(148,148,148,1);
+}
+
+a:hover, a:focus {
+    text-decoration: none;
+}
+
+label.genre-edit {
+    position: relative;
+    right: 50px;
+}
+
+div.form-field.edit::before {
+    top: 28px;
+}
+
+label.input-label {
+    font-weight: 400;
 }
