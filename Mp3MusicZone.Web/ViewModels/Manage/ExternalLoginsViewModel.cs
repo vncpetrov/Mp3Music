@@ -1,4 +1,4 @@
-﻿namespace Mp3MusicZone.Web.Models.Manage
+﻿namespace Mp3MusicZone.Web.ViewModels.Manage
 {
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Identity;

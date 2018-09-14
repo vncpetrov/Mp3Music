@@ -1,4 +1,4 @@
-﻿namespace Mp3MusicZone.Web.Models.Account
+﻿namespace Mp3MusicZone.Web.ViewModels.Account
 {
     using AutoMapper;
     using Common.Mappings;

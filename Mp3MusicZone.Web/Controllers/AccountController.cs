@@ -8,7 +8,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
-    using Models.Account;
+    using ViewModels.Account;
     using Mp3MusicZone.Web.Infrastructure.Filters;
     using System;
     using System.Security.Claims;

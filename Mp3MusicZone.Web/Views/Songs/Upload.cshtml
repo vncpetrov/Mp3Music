@@ -1,0 +1,67 @@
+﻿@model UploadSongViewModel
+
+@{
+    ViewData["Title"] = "Upload song";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <h2 class="heading">@ViewData["Title"]</h2>
+            <hr />
+
+            <form asp-route-returnUrl="@ViewData["ReturnUrl"]"
+                  method="post"
+                  enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group form-field music-icon">
+                    <input asp-for="Title"
+                           class="form-control"
+                           placeholder="Title" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="form-group form-field user-icon">
+                    <input asp-for="Singer"
+                           class="form-control"
+                           placeholder="Singer" />
+                    <span asp-validation-for="Singer" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input asp-for="Song"
+                           accept="audio/*"
+                           style="display: none" />
+
+                    <button type="button"
+                            class="btn btn-default manage-btn col-md-6"
+                            onclick="document.getElementsByName('Song')[0].click()">
+                        Choose your file!
+                    </button>
+
+                    <p class="song disclaimer col-md-12">
+                        *Please note, that song must be no bigger than
+                        <span class="bold">25 MBs.</span>
+                        and be of some type audio!*
+                    </p>
+
+
+                </div>
+
+                <button type="submit"
+                        class="btn
+                               btn-default
+                               hvr-back-pulse
+                               col-md-12">
+                    Upload
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

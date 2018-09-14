@@ -102,10 +102,18 @@
                 case "ManageController":
                     return this.CreateManageController(scope);
 
+                case "SongsController":
+                    return this.CreateSongsController();
+
                 default:
                     throw new Exception("Unknown controller " + type.Name);
             }
-        } 
+        }
+
+        private Controller CreateSongsController()
+        {
+            return new SongsController();
+        }
 
         private ManageController CreateManageController(Scope scope)
         {
