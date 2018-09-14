@@ -75,9 +75,8 @@
 
                 if (!isEmailConfirmed)
                 {
-                    this.TempData.AddErrorMessage($@"Please, confirm your email address, to activate your account. If you cannot find your confirmation email <a href=""/account/resendemailconfirmation?email={user.Email}"">click here to resend it.</a>");
-
-                    return View(model);
+                    return View(model)
+                        .WithErrorMessage($@"Please, confirm your email address, to activate your account. If you cannot find your confirmation email <a href=""/account/resendemailconfirmation?email={user.Email}"">click here to resend it.</a>");
                 }
             }
 
@@ -97,9 +96,9 @@
             }
 
             // If we got this far, something failed, redisplay form
-            this.TempData.AddErrorMessage("Invalid login attempt.");
 
-            return View(model);
+            return View(model)
+                .WithErrorMessage("Invalid login attempt.");
         }
 
         [HttpGet]
@@ -239,10 +238,8 @@
 
             if (user != null)
             {
-                this.TempData.AddErrorMessage(
-                    $"E-mail address '{model.Email}' is already taken.");
-
-                return View(model);
+                return View(model)
+                    .WithErrorMessage($"E-mail address '{model.Email}' is already taken.");
             }
 
             user = new UserEf()
@@ -265,22 +262,21 @@
                 await this.SendEmailConfirmationToken(user);
 
                 //await signInManager.SignInAsync(user, isPersistent: false);
-                logger.LogInformation("User created a new account with password.");
 
                 if (returnUrl is null)
-                {
-                    TempData.AddSuccessMessage($"The registration is successfull. Please, verify your e-mail address {model.Email} before proceeding.");
-
-                    return View();
+                { 
+                    return View()
+                        .WithSuccessMessage($"The registration is successfull. Please, verify your e-mail address {model.Email} before proceeding.");
                 }
 
                 return this.RedirectToLocal(returnUrl);
             }
 
-            this.AddErrors(result);
+            string errors = this.GetErrorsDescription(result);
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return View(model)
+                .WithErrorMessage(errors);
         }
 
         [HttpGet]
@@ -291,17 +287,14 @@
 
             if (user == null)
             {
-                this.TempData.AddErrorMessage(
-                    $"Unable to find user with email {email}.");
-
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(HomeController.Index), "Home")
+                    .WithErrorMessage($"Unable to find user with email {email}.");
             }
 
             await this.SendEmailConfirmationToken(user);
-
-            this.TempData.AddSuccessMessage($"A verification link has been sent to email address {email}. Please verify your email.");
-
-            return View(nameof(this.Login));
+            
+            return View(nameof(this.Login))
+                .WithSuccessMessage($"A verification link has been sent to email address {email}. Please verify your email.");
         }
 
         [HttpPost]
@@ -366,6 +359,8 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ExternalLoginConfirmation(ExternalLoginViewModel model, string returnUrl = null)
         {
+            string errors = string.Empty;
+
             if (ModelState.IsValid)
             {
                 // Get the information about the user from the external login provider
@@ -374,8 +369,10 @@
                 {
                     throw new ApplicationException("Error loading external login information during confirmation.");
                 }
-                var user = new UserEf { UserName = model.Email, Email = model.Email };
-                var result = await this.userService.CreateAsync(user);
+
+                UserEf user = new UserEf { UserName = model.Email, Email = model.Email };
+                IdentityResult result = await this.userService.CreateAsync(user);
+
                 if (result.Succeeded)
                 {
                     result = await this.userService.AddLoginAsync(user, info);
@@ -386,11 +383,14 @@
                         return this.RedirectToLocal(returnUrl);
                     }
                 }
-                this.AddErrors(result);
+
+                errors = this.GetErrorsDescription(result);
             }
 
             ViewData["ReturnUrl"] = returnUrl;
-            return View(nameof(ExternalLogin), model);
+
+            return View(nameof(ExternalLogin), model)
+                .WithErrorMessage(errors);
         }
 
         [HttpGet]
@@ -410,15 +410,15 @@
             }
 
             IdentityResult result = await this.userService.ConfirmEmailAsync(user, code);
-
+            
             if (!result.Succeeded)
             {
-                this.TempData.AddErrorMessage("Oops! Something went wrong. Please try again.");
+                return RedirectToAction(nameof(this.Login))
+                    .WithErrorMessage("Oops! Something went wrong. Please try again.");
             }
 
-            this.TempData.AddSuccessMessage("Thank you for verifying your email. You can now log in.");
-
-            return RedirectToAction(nameof(this.Login));
+            return RedirectToAction(nameof(this.Login))
+                .WithSuccessMessage("Thank you for verifying your email. You can now log in.");
         }
 
         [HttpGet]
@@ -439,16 +439,14 @@
 
                 if (user == null || !(await this.userService.IsEmailConfirmedAsync(user)))
                 {
-                    TempData.AddErrorMessage($"Invalid Email address.");
-
-                    return View();
+                    return View()
+                        .WithErrorMessage($"Invalid Email address.");
                 }
 
                 await SendForgotPasswordToken(user);
-
-                this.TempData.AddSuccessMessage("Please check your email to reset your password.");
-
-                return View();
+                
+                return View()
+                    .WithSuccessMessage("Please check your email to reset your password.");
             }
 
             // If we got this far, something failed, redisplay form
@@ -461,16 +459,14 @@
         {
             if (code == null)
             {
-                TempData.AddErrorMessage("A code must be supplied for password reset.");
-
-                return this.RedirectToAction(nameof(HomeController.Index), "Home");
+                return this.RedirectToAction(nameof(HomeController.Index), "Home")
+                    .WithErrorMessage("A code must be supplied for password reset.");
             }
 
             if (this.userService.FindByEmailAsync(email) == null)
             {
-                TempData.AddErrorMessage("A valid email must be supplied for password reset.");
-
-                return this.RedirectToAction(nameof(HomeController.Index), "Home");
+                return this.RedirectToAction(nameof(HomeController.Index), "Home")
+                    .WithErrorMessage("A valid email must be supplied for password reset.");
             }
 
             var model = new ResetPasswordViewModel { Code = code, Email = email };
@@ -491,9 +487,8 @@
 
             if (user == null)
             {
-                TempData.AddErrorMessage("A valid email must be supplied for password reset.");
-
-                return this.RedirectToAction(nameof(HomeController.Index), "Home");
+                return this.RedirectToAction(nameof(HomeController.Index), "Home")
+                    .WithErrorMessage("A valid email must be supplied for password reset.");
             }
 
             IdentityResult result = await this.userService
@@ -501,12 +496,13 @@
 
             if (result.Succeeded)
             {
-                this.TempData.AddSuccessMessage("Your password has been reset successfully.");
-                return RedirectToAction(nameof(Login));
+                return RedirectToAction(nameof(Login))
+                    .WithSuccessMessage("Your password has been reset successfully.");
             }
 
-            this.AddErrors(result);
-            return View();
+            string errors = this.GetErrorsDescription(result);
+            return View()
+                .WithErrorMessage(errors);
         }
 
         [HttpGet]

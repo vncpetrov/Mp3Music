@@ -3,18 +3,25 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using System;
+    using System.Text;
 
     public static class ControllerExtensions
     {
-        public static void AddErrors(this Controller controller, IdentityResult result)
+        public static string GetErrorsDescription(this Controller controller,
+            IdentityResult result)
         {
+            StringBuilder errors = new StringBuilder();
+
             foreach (var error in result.Errors)
             {
-                controller.TempData.AddErrorMessage(error.Description);
+                errors.AppendLine(error.Description);    
             }
+
+            return errors.ToString();
         }
 
-        public static IActionResult RedirectToLocal(this Controller controller, string returnUrl)
+        public static IActionResult RedirectToLocal(this Controller controller,
+            string returnUrl)
         {
             if (controller.Url.IsLocalUrl(returnUrl))
             {

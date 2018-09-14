@@ -8,5 +8,11 @@
         public const string TempDataErrorMessageKey = "ErrorMessage";
 
         public const string ConnectionStringSectionName = "MusicZoneConnectionString";
+
+        public const string TempDataMessageTypeKey = "MessageType";
+        public const string TempDataMessageTextKey = "MessageText";
+
+        public const string SuccessMessageType = "success";
+        public const string ErrorsMessageType = "danger";
     }
 }

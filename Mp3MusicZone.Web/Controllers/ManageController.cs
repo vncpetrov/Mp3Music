@@ -21,6 +21,8 @@
     using Web.Infrastructure.Extensions;
 
     using static Common.Constants.ModelConstants;
+    using static Common.Constants.WebConstants;
+
 
     [Authorize]
     [Route("[controller]/[action]")]
@@ -69,9 +71,8 @@
 
             if (user is null)
             {
-                this.TempData.AddErrorMessage($"Unable to load user with ID '{this.userService.GetUserId(User)}'.");
-
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(HomeController.Index), "Home")
+                    .WithErrorMessage($"Unable to load user with ID '{this.userService.GetUserId(User)}'.");
             }
 
             EditProfileViewModel model = new EditProfileViewModel()
@@ -93,9 +94,8 @@
 
             if (user is null)
             {
-                this.TempData.AddErrorMessage($"Unable to load user with ID '{this.userService.GetUserId(User)}'.");
-
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(HomeController.Index), "Home")
+                    .WithErrorMessage($"Unable to load user with ID '{this.userService.GetUserId(User)}'.");
             }
 
             user.FirstName = model.FirstName;
@@ -107,13 +107,14 @@
 
             if (!updateUserResult.Succeeded)
             {
-                this.AddErrors(updateUserResult);
-                return View(model);
+                string errors = this.GetErrorsDescription(updateUserResult);
+
+                return View(model)
+                    .WithErrorMessage(errors);
             }
-
-            this.TempData.AddSuccessMessage("Your profile has been successfully updated.");
-
-            return RedirectToAction(nameof(Profile));
+            
+            return RedirectToAction(nameof(Profile))
+                .WithSuccessMessage("Your profile has been successfully updated.");
         }
 
         [HttpPost]
@@ -123,14 +124,19 @@
 
             if (user is null)
             {
-                this.TempData.AddErrorMessage($"Unable to load user with ID '{this.userService.GetUserId(User)}'.");
-
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(HomeController.Index), "Home")
+                    .WithErrorMessage($"Unable to load user with ID '{this.userService.GetUserId(User)}'.");
             }
+
+            string messageType = string.Empty;
+            string messageText = string.Empty;
 
             if (!file.IsImage() || file.Length > ProfileImageMaxLength)
             {
-                this.TempData.AddErrorMessage($"Your submission should be a image file and no more than 5 MBs in size!");
+                messageType = ErrorsMessageType;
+                messageText = $"Your submission should be a image file and no more than 5 MBs in size!";
+
+                //this.TempData.AddErrorMessage($"Your submission should be a image file and no more than 5 MBs in size!");
             }
             else
             {
@@ -140,15 +146,22 @@
 
                 if (result.Succeeded)
                 {
-                    this.TempData.AddSuccessMessage("Profile Picture uploaded successfully.");
+                    messageType = SuccessMessageType;
+                    messageText = "Profile Picture uploaded successfully.";
+
+                    //this.TempData.AddSuccessMessage("Profile Picture uploaded successfully.");
                 }
                 else
                 {
-                    this.TempData.AddErrorMessage("We're sorry, something went wrong. Please try again later.");
+                    messageType = ErrorsMessageType;
+                    messageText = "We're sorry, something went wrong. Please try again later.";
+
+                    //this.TempData.AddErrorMessage("We're sorry, something went wrong. Please try again later.");
                 }
             }
 
-            return RedirectToAction(nameof(Profile));
+            return RedirectToAction(nameof(Profile))
+                .WithMessage(messageType, messageText);
         }
 
         [HttpGet]
@@ -158,9 +171,8 @@
 
             if (user is null)
             {
-                this.TempData.AddErrorMessage($"Unable to load user with ID '{this.userService.GetUserId(User)}'.");
-
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(HomeController.Index), "Home")
+                    .WithErrorMessage($"Unable to load user with ID '{this.userService.GetUserId(User)}'.");
             }
 
             string profileImageSource = user.ProfileImage == null ?
@@ -215,9 +227,8 @@
             UserEf user = await this.userService.GetUserAsync(User);
             if (user is null)
             {
-                this.TempData.AddErrorMessage($"Unable to load user with ID '{this.userService.GetUserId(User)}'.");
-
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(HomeController.Index), "Home")
+                    .WithErrorMessage($"Unable to load user with ID '{this.userService.GetUserId(User)}'.");
             }
 
             ChangePasswordViewModel model = new ChangePasswordViewModel
@@ -240,9 +251,8 @@
 
             if (user is null)
             {
-                this.TempData.AddErrorMessage($"Unable to load user with ID '{this.userService.GetUserId(User)}'.");
-
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(HomeController.Index), "Home")
+                    .WithErrorMessage($"Unable to load user with ID '{this.userService.GetUserId(User)}'.");
             }
 
             IdentityResult changePasswordResult = await this.userService
@@ -250,17 +260,20 @@
 
             if (!changePasswordResult.Succeeded)
             {
-                this.AddErrors(changePasswordResult);
-                return View(model);
+                string errors = this.GetErrorsDescription(changePasswordResult);
+
+                return View(model)
+                    .WithErrorMessage(errors);
             }
 
             await signInService.SignInAsync(user, isPersistent: false);
             logger.LogInformation("User changed their password successfully.");
             StatusMessage = "Your password has been changed.";
 
-            this.TempData.AddSuccessMessage("Your password has been successfully changed.");
+            //this.TempData.AddSuccessMessage("Your password has been successfully changed.");
 
-            return RedirectToAction(nameof(Profile));
+            return RedirectToAction(nameof(Profile))
+                .WithSuccessMessage("Your password has been successfully changed.");
         }
 
         //[HttpGet]

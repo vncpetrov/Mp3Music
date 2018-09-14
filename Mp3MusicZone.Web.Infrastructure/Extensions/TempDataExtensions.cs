@@ -7,12 +7,14 @@
 
     public static class TempDataExtensions
     {
-        public static void AddSuccessMessage(this ITempDataDictionary tempData, string message)
+        public static void AddSuccessMessage(this ITempDataDictionary tempData,
+            string message)
         {
             tempData[TempDataSuccessMessageKey] = message;
         }
 
-        public static void AddErrorMessage(this ITempDataDictionary tempData, string message)
+        public static void AddErrorMessage(this ITempDataDictionary tempData,
+            string message)
         {
             tempData[TempDataErrorMessageKey] = message;
         }
