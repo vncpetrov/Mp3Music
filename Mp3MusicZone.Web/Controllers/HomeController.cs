@@ -13,7 +13,8 @@
 
     public class HomeController : Controller
     {
-        public IActionResult Index([FromServices]IConfiguration conf, [FromServices]MusicZoneDbContext context)
+        public IActionResult Index([FromServices]IConfiguration conf,
+            [FromServices]MusicZoneDbContext context)
         {
             // sample admin logging
             //var logger = LogManager.GetLogger("AdminLogger");
