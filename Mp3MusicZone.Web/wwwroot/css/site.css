@@ -177,6 +177,10 @@ div.form-field.user-icon::before {
     content: "\f007";
 }
 
+div.form-field.calendar-icon::before {
+    content: "\f133";
+}
+
 div.form-field.password-icon::before {
     content: "\f023";
 }

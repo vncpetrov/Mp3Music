@@ -12,14 +12,11 @@
 
         public SongProvider(string path)
         {
-            if (path is null)
-                throw new ArgumentNullException(nameof(path));
-
             if (string.IsNullOrWhiteSpace(path))
                 throw new ArgumentException("Value should not be empty.", nameof(path));
 
             this.path = path;
-            this.songPath = this.path + "/{1}.mp3";
+            this.songPath = this.path + "/{0}.{1}";
 
             if (!Directory.Exists(this.path))
             {
@@ -27,30 +24,29 @@
             }
         }
 
-        public void Delete(string songName)
+        public void Delete(string songName, string extension)
         {
-            File.Delete(string.Format(this.songPath, songName));
+            File.Delete(string.Format(this.songPath, songName, extension));
         }
 
-        public async Task<byte[]> GetAsync(string songName)
+        public async Task<byte[]> GetAsync(string songName, string extension)
         {
-            string songFullPath = string.Format(this.songPath, songName);
+            string songFullPath = string.Format(this.songPath, songName, extension);
 
             return await File.ReadAllBytesAsync(songFullPath);
         }
 
-        public void Rename(string oldSongName, string newSongName)
+        public void Rename(string oldSongName, string newSongName, string extension)
         {
-            string oldSongFullName = string.Format(this.songPath, oldSongName);
-            string newSongFullName = string.Format(this.songPath, newSongName);
+            string oldSongFullName = string.Format(this.songPath, oldSongName, extension);
+            string newSongFullName = string.Format(this.songPath, newSongName, extension);
 
             File.Move(oldSongFullName, newSongFullName);
-
         }
 
-        public async Task WriteAsync(string songName, byte[] song)
+        public async Task WriteAsync(string songName, string extension, byte[] song)
         {
-            string songFullPath = string.Format(this.songPath, songName);
+            string songFullPath = string.Format(this.songPath, songName, extension);
 
             using (FileStream stream = File.OpenWrite(songFullPath))
             {

@@ -10,6 +10,10 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.Extensions.Logging;
+    using Mp3MusicZone.Common.Providers;
+    using Mp3MusicZone.DataServices;
+    using Mp3MusicZone.EfDataAccess.EfRepositories;
+    using Mp3MusicZone.FileAccess;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -23,6 +27,8 @@
 
         // Singletons
         private readonly IEmailSenderService emailSender;
+        private readonly IDateTimeProvider dateTimeProvider;
+
 
         public Mp3MusicZoneControllerActivator(
             string connectionString,
@@ -43,6 +49,7 @@
             this.emailSettings = emailSettings;
 
             this.emailSender = new EmailSenderService(this.emailSettings);
+            this.dateTimeProvider = new SystemDateTimeProvider();
         }
 
         public object Create(ControllerContext controllerContext)
@@ -72,9 +79,9 @@
 
         private Controller Create(Type type, ControllerContext context)
         {
-            //MusicZoneDbContext efDbContext = new MusicZoneDbContext(this.connectionString);
-            //// Similar as context.HttpContext.Response.RegisterForDispose method
-            //TrackDisposable(context, efDbContext);
+            MusicZoneDbContext efDbContext = new MusicZoneDbContext(this.connectionString);
+            // Similar as context.HttpContext.Response.RegisterForDispose method
+            TrackDisposable(context, efDbContext);
 
             Scope scope = new Scope();
             TrackDisposable(context, scope);
@@ -103,16 +110,21 @@
                     return this.CreateManageController(scope);
 
                 case "SongsController":
-                    return this.CreateSongsController();
+                    return this.CreateSongsController(scope);
 
                 default:
                     throw new Exception("Unknown controller " + type.Name);
             }
         }
 
-        private Controller CreateSongsController()
+        private Controller CreateSongsController(Scope scope)
         {
-            return new SongsController();
+            return new SongsController(
+                new SongService(
+                    new SongEfRepository(this.CreateContext(scope)),
+                    new SongProvider("../Music"),
+                    this.dateTimeProvider,
+                    this.CreateContext(scope)));
         }
 
         private ManageController CreateManageController(Scope scope)

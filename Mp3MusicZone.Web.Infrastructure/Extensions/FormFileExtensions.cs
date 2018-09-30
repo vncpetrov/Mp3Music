@@ -25,5 +25,15 @@
 
             return file.ContentType.Contains("image");
         }
+
+        public static bool IsSong(this IFormFile file)
+        {
+            if (file is null)
+            {
+                return false;
+            }
+
+            return file.ContentType.Contains("audio");
+        }
     }
 }

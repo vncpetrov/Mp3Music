@@ -1,4 +1,4 @@
-﻿namespace Mp3MusicZone.EfDataAccess.EfRepository
+﻿namespace Mp3MusicZone.EfDataAccess.EfRepositories
 {
     using AutoMapper;
     using AutoMapper.QueryableExtensions;

@@ -12,9 +12,7 @@
         public AspNetUserContext(IHttpContextAccessor accessor)
         {
             if (accessor is null)
-            {
                 throw new ArgumentNullException(nameof(accessor));
-            }
 
             this.accessor = accessor;
         }

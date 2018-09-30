@@ -39,16 +39,16 @@
         public string Email { get; set; }
 
         [Required]
-        [MinLength(NameMinLength,
+        [MinLength(StringMinLength,
             ErrorMessage = MinLengthErrorMessage)]
-        [MaxLength(NameMaxLength,
+        [MaxLength(StringMaxLength,
             ErrorMessage = MaxLengthErrorMessage)]
         public string FirstName { get; set; }
 
         [Required]
-        [MinLength(NameMinLength,
+        [MinLength(StringMinLength,
             ErrorMessage = MinLengthErrorMessage)]
-        [MaxLength(NameMaxLength,
+        [MaxLength(StringMaxLength,
             ErrorMessage = MaxLengthErrorMessage)]
         public string LastName { get; set; }
 

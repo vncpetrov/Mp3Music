@@ -7,19 +7,24 @@
 
     public static class ActionResultExtensions
     {
-        public static IActionResult WithSuccessMessage(this IActionResult action,
+        public static IActionResult WithSuccessMessage(
+            this IActionResult action,
             string message)
         {
             return WithMessage(action, SuccessMessageType, message);
         }
 
-        public static IActionResult WithErrorMessage(this IActionResult action, 
+        public static IActionResult WithErrorMessage(
+            this IActionResult action, 
             string message)
         {
             return WithMessage(action, ErrorsMessageType, message);
         }
 
-        public static IActionResult WithMessage(this IActionResult action, string type, string message)
+        public static IActionResult WithMessage(
+            this IActionResult action,
+            string type,
+            string message)
         {
             return new WithMessageResult(action, type, message);
         }

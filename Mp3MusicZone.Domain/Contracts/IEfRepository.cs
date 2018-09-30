@@ -1,6 +1,6 @@
 ﻿namespace Mp3MusicZone.Domain.Contracts
 {
-    using Mp3MusicZone.Domain.Models.Contracts;
+    using Models.Contracts;
     using System;
     using System.Linq;
 

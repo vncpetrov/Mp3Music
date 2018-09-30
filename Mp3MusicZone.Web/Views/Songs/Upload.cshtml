@@ -29,14 +29,21 @@
                     <span asp-validation-for="Singer" class="text-danger"></span>
                 </div>
 
+                <div class="form-group form-field calendar-icon">
+                    <input asp-for="ReleasedYear"
+                           class="form-control"
+                           placeholder="Released Year" />
+                    <span asp-validation-for="ReleasedYear" class="text-danger"></span>
+                </div>
+
                 <div class="form-group">
-                    <input asp-for="Song"
+                    <input asp-for="File"
                            accept="audio/*"
                            style="display: none" />
 
                     <button type="button"
                             class="btn btn-default manage-btn col-md-6"
-                            onclick="document.getElementsByName('Song')[0].click()">
+                            onclick="document.getElementsByName('File')[0].click()">
                         Choose your file!
                     </button>
 

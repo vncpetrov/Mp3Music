@@ -26,11 +26,14 @@
                 throw new ArgumentNullException(nameof(connectionString));
 
             if (string.IsNullOrWhiteSpace(connectionString))
-                throw new ArgumentException("Value should not be empty.",
+                throw new ArgumentException(
+                    "Value should not be empty.",
                     nameof(connectionString));
 
             this.connectionString = connectionString;
         }
+
+        public DbSet<SongEf> Songs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -47,10 +50,12 @@
             base.OnModelCreating(builder);
 
             builder.Entity<UserEf>(entity
-                => { entity.ToTable(name: "Users"); });
+                =>
+            { entity.ToTable(name: "Users"); });
 
-            builder.Entity<IdentityRole>(entity 
-                => { entity.ToTable(name: "Roles"); });
+            builder.Entity<IdentityRole>(entity
+                =>
+            { entity.ToTable(name: "Roles"); });
 
             builder.Entity<IdentityUserRole<string>>(
                 entity => { entity.ToTable("UserRoles"); });
@@ -66,6 +71,15 @@
 
             builder.Entity<IdentityRoleClaim<string>>(
                 entity => { entity.ToTable("RoleClaim"); });
+
+            builder.Entity<SongEf>(
+                s => s.Property(p => p.PublishedOn)
+                        .HasColumnType("date"));
+
+            builder.Entity<SongEf>()
+                .HasOne(s => s.Uploader)
+                .WithMany(u => u.Songs)
+                .HasForeignKey(s => s.UploaderId);
         }
     }
 }

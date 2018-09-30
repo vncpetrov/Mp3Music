@@ -1,4 +1,4 @@
-﻿namespace Mp3MusicZone.EfDataAccess.EfRepository.Contracts
+﻿namespace Mp3MusicZone.EfDataAccess.EfRepositories.Contracts
 {
     using Domain.Models.Contracts;
     using System;
