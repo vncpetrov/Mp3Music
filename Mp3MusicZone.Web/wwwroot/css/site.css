@@ -1,6 +1,4 @@
-﻿@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-
-body {
+﻿body {
     padding-top: 80px;
     padding-bottom: 20px;
     background-color: #fbfbfb;
@@ -151,8 +149,9 @@ div.form-field {
 }
 
 div.form-field::before {
-    font-family: "FontAwesome";
+    font-family: "Font Awesome 5 Free";
     content: '@';
+    font-weight: 600;
     color: #7e7e7e;
     font-size: 23px;
     position: absolute;
@@ -571,7 +570,7 @@ li.profile-action a {
 }
 
 li.profile-action a::before {
-    font-family: "FontAwesome";
+    font-family: "Font Awesome5 Free";
     content: '@';
     color: #7e7e7e;
     font-size: 15px;
@@ -611,4 +610,91 @@ label.input-label {
 
 p.disclaimer.song {
     margin: 0;
+}
+
+.jumbotron {
+    padding: 0;
+    margin: 0;
+
+    padding-right: 15px !important;
+    padding-left: 15px !important;
+    background-color: #f5f5f5;
+    border: 1px solid #00b4c7;
+    border-radius: 0;
+}
+
+a.song-heading-text {
+    color: black;
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-right: 15px;
+}
+
+a.song-heading-text, audio {
+    display: inline-block;
+    vertical-align: middle;
+    /*padding-right: 15px;*/
+}
+
+audio {
+    background-color: #f3f3f3;
+    border-radius: 50px;
+    border: 1px solid #cfcfcf;
+}
+
+div.song-heading {
+    padding-bottom: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    width: 55%;
+    max-width: 55%;
+}
+
+.song-uploader small {
+    font-weight: bold;
+}
+
+.song-published-date small {
+    color: #707070;
+    position: relative;
+    bottom: 7px;
+}
+
+li.list-group-item.song-listing {
+    padding-bottom: 0;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    transition: all 0.5s ease;
+}
+
+.song-listing:hover {
+    background-color: #ebeaea;
+    border: 1px solid silver;
+}
+
+li a.upload {
+    border: 1px solid #c0c0c0;
+    border-radius: 10px;
+    padding: 0;
+    margin-top: 9px;
+    padding-left: 30px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-right: 5px;
+    color: #00B4C7 !important;
+    position: relative;
+}
+
+li a.upload:hover {
+    border-color: #7e7e7e;
+}
+
+li a.upload::before {
+    font-family: "Font Awesome 5 Free";
+    content: "\f093";
+    color: #00B4C7;
+    font-size: 15px;
+    position: absolute;
+    left: 10px;
+    top: 5px;
 }

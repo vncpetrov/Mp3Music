@@ -53,8 +53,8 @@
                       {
                           Destination = t,
                           Source = t.GetInterfaces()
-                            .First(i => i.GetGenericTypeDefinition() == typeof(IMapFrom<>)
-                            .GetGenericArguments().First())
+                            .First(i => i.GetGenericTypeDefinition() == typeof(IMapFrom<>))
+                            .GetGenericArguments().First()
                       });
 
             foreach (var mapping in fromMappings)

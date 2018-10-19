@@ -1,12 +1,15 @@
 ﻿namespace Mp3MusicZone.Web.ViewModels.Songs
 {
+    using AutoMapper;
     using Microsoft.AspNetCore.Http;
+    using Mp3MusicZone.Common.Mappings;
+    using Mp3MusicZone.Domain.Models;
     using System;
     using System.ComponentModel.DataAnnotations;
 
     using static Mp3MusicZone.Common.Constants.ModelConstants;
 
-    public class UploadSongViewModel
+    public class SongFormModel : IMapFrom<Song>, IHaveCustomMappings
     {
         [Required]
         [MinLength(StringMinLength, 
@@ -26,8 +29,13 @@
         [Range(SongMinYear, int.MaxValue,
             ErrorMessage = "The Released Year cannot be less than 1950.")]
         public int ReleasedYear { get; set; }
-
-        [Required(ErrorMessage = "Please, choose a file!")]
+        
         public IFormFile File { get; set; }
+
+        public void Configure(Profile config)
+        {
+            config.CreateMap<Song, SongFormModel>()
+                .ForMember(s => s.File, opt => opt.Ignore());
+        }
     }
 }

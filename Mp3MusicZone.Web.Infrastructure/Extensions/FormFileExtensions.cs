@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Http;
     using System;
     using System.IO;
+    using System.Linq;
 
     public static class FormFileExtensions
     {
@@ -35,5 +36,12 @@
 
             return file.ContentType.Contains("audio");
         }
+
+        public static string GetFileExtension(this IFormFile file)
+            => file
+                ?.ContentType
+                ?.Split("/")
+                ?.Last();
+
     }
 }

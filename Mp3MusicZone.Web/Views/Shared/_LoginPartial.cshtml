@@ -14,17 +14,38 @@
             "image/*",
             Convert.ToBase64String(user.ProfileImage));
 
-    <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" name="logoutForm" class="navbar-right">
+    <form asp-area=""
+          asp-controller="Account"
+          asp-action="Logout"
+          method="post"
+          name="logoutForm"
+          class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
             @*<li class="navbar-profile-image">
-                <img src="@imageSrc" class="img-circle" />
-            </li>*@
+                    <img src="@imageSrc" class="img-circle" />
+                </li>*@
+
+            <li>
+                <a asp-area=""
+                   asp-controller="Songs"
+                   asp-action="Upload"
+                   class="upload">
+                    upload
+                </a>
+            </li>
 
             <li>
                 <div class="navbar-profile-image">
                     <img src="@imageSrc" class="img-circle" />
                 </div>
-                <a asp-area="" asp-controller="Manage" asp-action="Profile" title="Manage Profile" class="profile-link">@UserService.GetUserName(User)</a>
+
+                <a asp-area=""
+                   asp-controller="Manage"
+                   asp-action="Profile"
+                   title="Manage Profile"
+                   class="profile-link">
+                    @UserService.GetUserName(User)
+                </a>
             </li>
 
             <li>
@@ -36,7 +57,20 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>
-        <li><a asp-area="" asp-controller="Account" asp-action="Login">Login</a></li>
+        <li>
+            <a asp-area=""
+               asp-controller="Account"
+               asp-action="Register">
+                Register
+            </a>
+        </li>
+
+        <li>
+            <a asp-area=""
+               asp-controller="Account"
+               asp-action="Login">
+                Login
+            </a>
+        </li>
     </ul>
 }

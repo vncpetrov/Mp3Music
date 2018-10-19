@@ -19,7 +19,8 @@
 
         public const int ProfileImageMaxLength = 5 * MB;
 
-        public const int SongMaxLength = 25 * MB;
+        public const int SongMaxMBs = 25;
+        public const int SongMaxLength = SongMaxMBs * MB;
         public const int SongMinYear = 1950;
 
         public const string MinLengthErrorMessage =

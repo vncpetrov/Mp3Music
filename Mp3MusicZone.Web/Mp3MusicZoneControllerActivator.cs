@@ -101,7 +101,7 @@
             switch (type.Name)
             {
                 case "HomeController":
-                    return this.CreateHomeController();
+                    return this.CreateHomeController(scope);
 
                 case "AccountController":
                     return this.CreateAccountController(scope);
@@ -154,9 +154,14 @@
                logger);
         }
 
-        private HomeController CreateHomeController()
+        private HomeController CreateHomeController(Scope scope)
         {
-            return new HomeController();
+            return new HomeController(
+                new SongService(
+                    new SongEfRepository(this.CreateContext(scope)),
+                    new SongProvider("../Music"),
+                    this.dateTimeProvider,
+                    this.CreateContext(scope)));
         }
 
         private MusicZoneDbContext CreateContext(Scope scope)
@@ -189,7 +194,6 @@
             IList<IDisposable> disposableItems =
                 (IList<IDisposable>)contextItems["Disposables"];
             disposableItems.Add(disposable);
-
         }
     }
 }

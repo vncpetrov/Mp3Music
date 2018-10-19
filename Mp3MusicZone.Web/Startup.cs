@@ -16,6 +16,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+    using Mp3MusicZone.Web.Infrastructure.Mappings;
     using NLog;
     using System;
 
@@ -64,7 +65,7 @@
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRoleService, RoleService>();
 
-            services.AddAutoMapper();
+            services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
             services.AddRouting(options => options.LowercaseUrls = true);
 

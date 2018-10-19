@@ -3,13 +3,14 @@
     using Models.Contracts;
     using System;
     using System.Linq;
+    using System.Threading.Tasks;
 
     public interface IEfRepository<TDomain>
         where TDomain : IDomainModel
     {
         IQueryable<TDomain> All { get; }
 
-        TDomain GetById(int id);
+        Task<TDomain> GetByIdAsync(int id);
 
         void Add(TDomain item);
 

@@ -14,5 +14,7 @@
 
         public const string SuccessMessageType = "success";
         public const string ErrorsMessageType = "danger";
+
+        public const int DefaultHomePageLastApprovedSongsCount = 10;
     }
 }

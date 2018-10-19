@@ -9,6 +9,7 @@
     using Microsoft.EntityFrameworkCore.ChangeTracking;
     using System;
     using System.Linq;
+    using System.Threading.Tasks;
 
     public abstract class EfRepository<TDomain, TEntity> : IEfRepository<TDomain>
         where TDomain : class, IDomainModel, new()
@@ -58,9 +59,9 @@
             }
         }
 
-        public TDomain GetById(int id)
+        public async Task<TDomain> GetByIdAsync(int id)
         {
-            TEntity entity = this.dbSet.Find(id);
+            TEntity entity = await this.dbSet.FindAsync(id);
             TDomain domainModel = Mapper.Map<TDomain>(entity);
 
             return domainModel;

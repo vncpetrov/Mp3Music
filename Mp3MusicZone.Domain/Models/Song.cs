@@ -15,6 +15,8 @@
         
         public DateTime PublishedOn { get; set; }
 
+        public string FileExtension { get; set; }
+
         public string UploaderId { get; set; }
         public User Uploader { get; set; }
     }

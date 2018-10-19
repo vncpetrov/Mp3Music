@@ -1,0 +1,52 @@
+﻿@model SongFormModel
+
+<form method="post"
+      enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group form-field music-icon">
+        <input asp-for="Title"
+               class="form-control"
+               placeholder="Title" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group form-field user-icon">
+        <input asp-for="Singer"
+               class="form-control"
+               placeholder="Singer" />
+        <span asp-validation-for="Singer" class="text-danger"></span>
+    </div>
+
+    <div class="form-group form-field calendar-icon">
+        <input asp-for="ReleasedYear"
+               class="form-control"
+               placeholder="Released Year" />
+        <span asp-validation-for="ReleasedYear" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input asp-for="File"
+               accept="audio/*"
+               style="display: none" />
+
+        <button type="button"
+                class="btn btn-default manage-btn col-md-6"
+                onclick="document.getElementsByName('File')[0].click()">
+            Choose your file!
+        </button>
+
+        <p class="song disclaimer col-md-12">
+            *Please note, that song must be no bigger than
+            <span class="bold">25 MBs.</span>
+            and be of some type audio!*
+        </p>
+    </div>
+
+    <input type="submit"
+           class="btn
+                   btn-default
+                   hvr-back-pulse
+                   col-md-12"
+           value="Submit"/>
+</form>

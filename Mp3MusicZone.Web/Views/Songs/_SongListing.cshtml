@@ -1,0 +1,40 @@
+﻿@model IEnumerable<SongListingViewModel>
+
+<ul class="list-group">
+    @foreach (var song in Model)
+    {
+        string urlPath = $"/songs/play?id={song.Id}";
+        string audioId = $"audio{song.Id}";
+
+        <li class="list-group-item
+                                   song-listing">
+            <div class="song-heading">
+                <a href="javascript:void(0)"
+                   class="song-heading-text"
+                   title="@song.HeadingText"
+                   onclick="document.getElementById('@audioId').play()">
+                    @song.HeadingText
+                </a>
+
+                <div class="song-uploader">
+                    <small>@song.UploaderName</small>
+                </div>
+
+                <div class="song-published-date">
+                    <small>
+                        Published on @song.PublishedOn.ToString("dd MMM, yyyy")
+                    </small>
+                </div>
+            </div>
+
+            <audio id="@audioId"
+                   controls
+                   preload="metadata">
+                <source src="@urlPath"
+                        type="audio/@song.FileExtension">
+                Your br type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </li>
+    }
+</ul>
