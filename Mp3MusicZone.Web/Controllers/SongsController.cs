@@ -9,6 +9,7 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Mp3MusicZone.DataServices.Contracts;
+    using Mp3MusicZone.DataServices.SongServices;
     using System;
     using System.IO;
     using System.Linq;
@@ -21,13 +22,28 @@
     [Authorize]
     public class SongsController : Controller
     {
+        private readonly ICommandService<EditSong> editSongService;
+        private readonly ICommandService<UploadSong> uploadSongService;
         private readonly ISongService songService;
 
-        public SongsController(ISongService songService)
-        {
-            if (songService is null)
-                throw new ArgumentNullException(nameof(songService));
 
+
+        public SongsController(
+            ICommandService<EditSong> editSongService,
+            ICommandService<UploadSong> uploadSongService,
+            ISongService songService)
+        {
+            if (editSongService is null)
+                throw new ArgumentNullException(nameof(editSongService));
+
+            if (uploadSongService is null)
+                throw new ArgumentNullException(nameof(uploadSongService));
+
+            if (songService is null)
+                throw new ArgumentException(nameof(songService));
+
+            this.editSongService = editSongService;
+            this.uploadSongService = uploadSongService;
             this.songService = songService;
         }
 
@@ -55,16 +71,21 @@
 
             string message = await this.CallServiceAsync(async () =>
             {
-                string songExtension = model.File
+                string fileExtension = model.File
                     .GetFileExtension();
 
-                await this.songService.UploadAsync(
-                     model.Title,
-                     songExtension,
-                     model.Singer,
-                     model.ReleasedYear,
-                     this.User.FindFirst(ClaimTypes.NameIdentifier).Value,
-                     model.File.ToByteArray());
+                UploadSong command = new UploadSong()
+                {
+                    UploaderId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value,
+                    Title = model.Title,
+                    FileExtension = fileExtension,
+                    ReleasedYear = model.ReleasedYear,
+                    Singer = model.Singer,
+                    SongFile = model.File.ToByteArray()
+                };
+
+
+                await this.uploadSongService.ExecuteAsync(command);
             });
 
             if (message != null)
@@ -144,16 +165,20 @@
 
             string message = await this.CallServiceAsync(async () =>
             {
-                string songExtension = model.File
+                string fileExtension = model.File
                     .GetFileExtension();
 
-                await this.songService.EditAsync(
-                    id,
-                    model.Title,
-                    songExtension,
-                    model.Singer,
-                    model.ReleasedYear,
-                    model.File?.ToByteArray());
+                EditSong command = new EditSong()
+                {
+                    Title = model.Title,
+                    FileExtension = fileExtension,
+                    ReleasedYear = model.ReleasedYear,
+                    Singer = model.Singer,
+                    SongFile = model.File?.ToByteArray(),
+                    SongId = id
+                };
+
+                await this.editSongService.ExecuteAsync(command);
             });
 
             if (message != null)
@@ -242,7 +267,7 @@
             {
                 message = ex.Message;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 message = "We're sorry, something went wrong. Please try again later.";
             }

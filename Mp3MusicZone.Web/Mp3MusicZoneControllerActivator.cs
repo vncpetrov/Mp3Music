@@ -12,6 +12,7 @@
     using Microsoft.Extensions.Logging;
     using Mp3MusicZone.Common.Providers;
     using Mp3MusicZone.DataServices;
+    using Mp3MusicZone.DataServices.SongServices;
     using Mp3MusicZone.EfDataAccess.EfRepositories;
     using Mp3MusicZone.FileAccess;
     using System;
@@ -120,6 +121,15 @@
         private Controller CreateSongsController(Scope scope)
         {
             return new SongsController(
+                new EditSongService(
+                    new SongEfRepository(this.CreateContext(scope)),
+                    new SongProvider("../Music"),
+                    this.CreateContext(scope)),
+                new UploadSongService(
+                    new SongEfRepository(this.CreateContext(scope)),
+                    new SongProvider("../Music"),
+                    this.dateTimeProvider,
+                    this.CreateContext(scope)),
                 new SongService(
                     new SongEfRepository(this.CreateContext(scope)),
                     new SongProvider("../Music"),
