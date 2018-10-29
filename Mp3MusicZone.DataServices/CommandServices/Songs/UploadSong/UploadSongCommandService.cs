@@ -7,14 +7,14 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class UploadSongService : ICommandService<UploadSong>
+    public class UploadSongCommandService : ICommandService<UploadSong>
     {
         private readonly IEfRepository<Song> songRepository;
         private readonly ISongProvider songProvider;
         private readonly IDateTimeProvider timeProvider;
         private readonly IEfDbContextSaveChanges contextSaveChanges;
 
-        public UploadSongService(
+        public UploadSongCommandService(
             IEfRepository<Song> songRepository,
             ISongProvider songProvider,
             IDateTimeProvider timeProvider,

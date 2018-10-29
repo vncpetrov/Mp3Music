@@ -16,6 +16,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.Extensions.Logging;
+    using Mp3MusicZone.DomainServices.CommandServicesAspects;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -30,7 +31,7 @@
         // Singletons
         private readonly IEmailSenderService emailSender;
         private readonly IDateTimeProvider dateTimeProvider;
-        
+
         public Mp3MusicZoneControllerActivator(
             string connectionString,
             IHttpContextAccessor accessor,
@@ -121,15 +122,15 @@
         private Controller CreateSongsController(Scope scope)
         {
             return new SongsController(
-                new EditSongService(
+                new TransactionCommandServiceDecorator<EditSong>(new EditSongCommandService(
                     new SongEfRepository(this.CreateContext(scope)),
                     new SongProvider("../Music"),
-                    this.CreateContext(scope)),
-                new UploadSongService(
+                    this.CreateContext(scope))),
+                new TransactionCommandServiceDecorator<UploadSong>(new UploadSongCommandService(
                     new SongEfRepository(this.CreateContext(scope)),
                     new SongProvider("../Music"),
                     this.dateTimeProvider,
-                    this.CreateContext(scope)),
+                    this.CreateContext(scope))),
                 new SongService(
                     new SongEfRepository(this.CreateContext(scope)),
                     new SongProvider("../Music"),

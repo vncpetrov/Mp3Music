@@ -6,13 +6,13 @@
     using System;
     using System.Threading.Tasks;
 
-    public class EditSongService : ICommandService<EditSong>
+    public class EditSongCommandService : ICommandService<EditSong>
     {
         private readonly IEfRepository<Song> songRepository;
         private readonly ISongProvider songProvider;
         private readonly IEfDbContextSaveChanges contextSaveChanges;
 
-        public EditSongService(
+        public EditSongCommandService(
             IEfRepository<Song> songRepository,
             ISongProvider songProvider,
             IEfDbContextSaveChanges contextSaveChanges)

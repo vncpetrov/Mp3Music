@@ -34,7 +34,7 @@
             //var logger = LogManager.GetLogger("AdminLogger");
             //logger.Trace("asd");
             IEnumerable<Song> lastSongs = await this.songService
-                    .GetLastApprovedAsync(DefaultHomePageLastApprovedSongsCount);
+                .GetLastApprovedAsync(DefaultHomePageLastApprovedSongsCount);
 
             IEnumerable<SongListingViewModel> model =
                 Mapper.Map<IEnumerable<SongListingViewModel>>(lastSongs);
@@ -47,6 +47,8 @@
             // Testing loggin
             //ViewData["Message"] = "Your application description page.";
             //throw new ArgumentException("Testing NLog db");
+
+
 
             return View();
         }
