@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{FE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mp3MusicZone.Auth", "Mp3MusicZone.Auth\Mp3MusicZone.Auth.csproj", "{D8DECB16-56D6-4F2C-89EF-08FD48CC2B39}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mp3MusicZone.DataServices", "Mp3MusicZone.DataServices\Mp3MusicZone.DataServices.csproj", "{00E62634-ED2C-4EA4-831B-F0D36CEC2FAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mp3MusicZone.DomainServices", "Mp3MusicZone.DataServices\Mp3MusicZone.DomainServices.csproj", "{00E62634-ED2C-4EA4-831B-F0D36CEC2FAD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mp3MusicZone.Web.Infrastructure", "Mp3MusicZone.Web.Infrastructure\Mp3MusicZone.Web.Infrastructure.csproj", "{DAD6EBB8-2C14-4EFD-88DB-5128CAC2D0E5}"
 EndProject

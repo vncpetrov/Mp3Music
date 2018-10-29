@@ -1,23 +1,19 @@
 ﻿namespace Mp3MusicZone.Web.Controllers
 {
-    using Microsoft.AspNetCore.Hosting;
+    using AutoMapper;
+    using Domain.Models;
+    using DomainServices.Contracts;
+    using EfDataAccess;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
-    using DataServices.Contracts;
-    using EfDataAccess;
-    using NLog;
     using System;
-    using System.Data.SqlClient;
+    using System.Collections.Generic;
     using System.Diagnostics;
-    using System.Linq;
+    using System.Threading.Tasks;
+    using ViewModels.Songs;
     using Web.ViewModels;
 
     using static Common.Constants.WebConstants;
-    using System.Collections.Generic;
-    using Mp3MusicZone.Domain.Models;
-    using System.Threading.Tasks;
-    using Mp3MusicZone.Web.ViewModels.Songs;
-    using AutoMapper;
 
     public class HomeController : Controller
     {
@@ -37,7 +33,6 @@
             // sample admin logging
             //var logger = LogManager.GetLogger("AdminLogger");
             //logger.Trace("asd");
-
             IEnumerable<Song> lastSongs = await this.songService
                     .GetLastApprovedAsync(DefaultHomePageLastApprovedSongsCount);
 
@@ -52,8 +47,6 @@
             // Testing loggin
             //ViewData["Message"] = "Your application description page.";
             //throw new ArgumentException("Testing NLog db");
-
-
 
             return View();
         }

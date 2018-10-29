@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
 	<DebugType>full</DebugType>
+	<AssemblyName>Mp3MusicZone.DomainServices</AssemblyName>
+	<RootNamespace>Mp3MusicZone.DomainServices</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +15,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Mp3MusicZone.Domain\Mp3MusicZone.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="QueryServices\" />
   </ItemGroup>
 
 </Project>

@@ -3,11 +3,11 @@
 <ul class="list-group">
     @foreach (var song in Model)
     {
-        string urlPath = $"/songs/play?id={song.Id}";
+        string urlPath = Url.Action("Play", "Songs", new { id = song.Id });
         string audioId = $"audio{song.Id}";
 
         <li class="list-group-item
-                                   song-listing">
+                   song-listing">
             <div class="song-heading">
                 <a href="javascript:void(0)"
                    class="song-heading-text"

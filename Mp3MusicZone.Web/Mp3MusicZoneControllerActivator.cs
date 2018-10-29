@@ -2,19 +2,20 @@
 {
     using Auth;
     using Auth.Contracts;
+    using Common.Providers;
     using Controllers;
     using Domain.Contracts;
+    using DomainServices;
+    using DomainServices.CommandServices.Songs.EditSong;
+    using DomainServices.CommandServices.Songs.UploadSong;
     using EfDataAccess;
+    using EfDataAccess.EfRepositories;
+    using FileAccess;
     using Infrastructure;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.Extensions.Logging;
-    using Mp3MusicZone.Common.Providers;
-    using Mp3MusicZone.DataServices;
-    using Mp3MusicZone.DataServices.SongServices;
-    using Mp3MusicZone.EfDataAccess.EfRepositories;
-    using Mp3MusicZone.FileAccess;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -29,8 +30,7 @@
         // Singletons
         private readonly IEmailSenderService emailSender;
         private readonly IDateTimeProvider dateTimeProvider;
-
-
+        
         public Mp3MusicZoneControllerActivator(
             string connectionString,
             IHttpContextAccessor accessor,

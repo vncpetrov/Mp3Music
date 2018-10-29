@@ -29,7 +29,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Mp3MusicZone.Common\Mp3MusicZone.Common.csproj" />
-    <ProjectReference Include="..\Mp3MusicZone.DataServices\Mp3MusicZone.DataServices.csproj" />
+    <ProjectReference Include="..\Mp3MusicZone.DataServices\Mp3MusicZone.DomainServices.csproj" />
     <ProjectReference Include="..\Mp3MusicZone.EfDataAccess\Mp3MusicZone.EfDataAccess.csproj" />
     <ProjectReference Include="..\Mp3MusicZone.Web\Mp3MusicZone.Web.csproj" />
   </ItemGroup>

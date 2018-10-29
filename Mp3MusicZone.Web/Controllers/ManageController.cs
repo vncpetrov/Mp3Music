@@ -5,7 +5,6 @@
     using Domain.Models.Enums;
     using EfDataAccess.Models;
     using Infrastructure.Filters;
-    using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
@@ -13,17 +12,14 @@
     using Microsoft.Extensions.Logging;
     using ViewModels.Manage;
     using System;
-    using System.Linq;
     using System.Text;
     using System.Text.Encodings.Web;
     using System.Threading.Tasks;
-    using ViewModels.Manage;
     using Web.Infrastructure.Extensions;
 
     using static Common.Constants.ModelConstants;
     using static Common.Constants.WebConstants;
-
-
+    
     [Authorize]
     [Route("[controller]/[action]")]
     public class ManageController : Controller

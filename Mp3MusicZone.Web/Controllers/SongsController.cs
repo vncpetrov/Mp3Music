@@ -1,18 +1,16 @@
 ﻿namespace Mp3MusicZone.Web.Controllers
 {
     using AutoMapper;
-    using Domain.Contracts;
     using Domain.Models;
+    using DomainServices.CommandServices.Songs.EditSong;
+    using DomainServices.CommandServices.Songs.UploadSong;
+    using DomainServices.Contracts;
     using Infrastructure.Extensions;
     using Infrastructure.Filters;
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using Mp3MusicZone.DataServices.Contracts;
-    using Mp3MusicZone.DataServices.SongServices;
     using System;
     using System.IO;
-    using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
     using ViewModels.Songs;
@@ -25,9 +23,7 @@
         private readonly ICommandService<EditSong> editSongService;
         private readonly ICommandService<UploadSong> uploadSongService;
         private readonly ISongService songService;
-
-
-
+        
         public SongsController(
             ICommandService<EditSong> editSongService,
             ICommandService<UploadSong> uploadSongService,
@@ -267,7 +263,7 @@
             {
                 message = ex.Message;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 message = "We're sorry, something went wrong. Please try again later.";
             }

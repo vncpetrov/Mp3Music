@@ -1,8 +1,8 @@
-﻿namespace Mp3MusicZone.DataServices.SongServices
+﻿namespace Mp3MusicZone.DomainServices.CommandServices.Songs.UploadSong
 {
     using Contracts;
-    using Mp3MusicZone.Domain.Contracts;
-    using Mp3MusicZone.Domain.Models;
+    using Domain.Contracts;
+    using Domain.Models;
     using System;
     using System.Linq;
     using System.Threading.Tasks;

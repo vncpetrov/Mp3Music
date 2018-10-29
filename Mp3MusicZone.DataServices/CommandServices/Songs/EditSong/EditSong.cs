@@ -1,9 +1,11 @@
-﻿namespace Mp3MusicZone.DataServices.SongServices
+﻿namespace Mp3MusicZone.DomainServices.CommandServices.Songs.EditSong
 {
     using System;
 
-    public class UploadSong
-    {        
+    public class EditSong
+    {
+        public int SongId { get; set; }
+
         public string Title { get; set; }
 
         public string Singer { get; set; }
@@ -13,7 +15,5 @@
         public string FileExtension { get; set; }
 
         public byte[] SongFile { get; set; }
-
-        public string UploaderId { get; set; }
     }
 }

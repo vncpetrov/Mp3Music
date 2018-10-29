@@ -1,4 +1,4 @@
-﻿namespace Mp3MusicZone.DataServices
+﻿namespace Mp3MusicZone.DomainServices
 {
     using Contracts;
     using Domain.Contracts;

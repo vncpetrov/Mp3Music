@@ -7,6 +7,7 @@
     using Domain.Models.Contracts;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.ChangeTracking;
+    using Mp3MusicZone.Domain.Models;
     using System;
     using System.Linq;
     using System.Threading.Tasks;
@@ -27,7 +28,7 @@
         }
 
         public IQueryable<TDomain> All => this.dbSet.ProjectTo<TDomain>();
-
+        
         public void Add(TDomain item)
         {
             TEntity entity = Mapper.Map<TEntity>(item);
