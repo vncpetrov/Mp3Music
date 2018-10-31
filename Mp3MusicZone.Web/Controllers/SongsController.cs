@@ -265,7 +265,7 @@
             {
                 message = ex.Message;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 message = "We're sorry, something went wrong. Please try again later.";
             }

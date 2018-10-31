@@ -6,6 +6,7 @@
     using AutoMapper;
     using EfDataAccess;
     using EfDataAccess.Models;
+    using Infrastructure.Mappings;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -16,7 +17,6 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
-    using Mp3MusicZone.Web.Infrastructure.Mappings;
     using NLog;
     using System;
 
@@ -35,6 +35,7 @@
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IConfiguration>(Configuration);
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
