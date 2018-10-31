@@ -17,6 +17,9 @@
     using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.Extensions.Logging;
     using Mp3MusicZone.DomainServices.CommandServicesAspects;
+    using Mp3MusicZone.DomainServices.QueryServices.Songs.GetById;
+    using Mp3MusicZone.DomainServices.QueryServices.Songs.GetLastApproved;
+    using Mp3MusicZone.DomainServices.QueryServices.Songs.GetSongForPlaying;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -121,21 +124,37 @@
 
         private Controller CreateSongsController(Scope scope)
         {
+            //return new SongsController(
+            //    new TransactionCommandServiceDecorator<EditSong>(new EditSongCommandService(
+            //        new SongEfRepository(this.CreateContext(scope)),
+            //        new SongProvider("../Music"),
+            //        this.CreateContext(scope))),
+            //    new TransactionCommandServiceDecorator<UploadSong>(new UploadSongCommandService(
+            //        new SongEfRepository(this.CreateContext(scope)),
+            //        new SongProvider("../Music"),
+            //        this.dateTimeProvider,
+            //        this.CreateContext(scope))),
+            //    new GetSongByIdQueryService(
+            //        new SongEfRepository(this.CreateContext(scope))),
+            //    new GetSongForPlayingQueryService(
+            //        new SongProvider("../Music"),
+            //        new SongEfRepository(this.CreateContext(scope))));
+
             return new SongsController(
                 new TransactionCommandServiceDecorator<EditSong>(new EditSongCommandService(
-                    new SongEfRepository(this.CreateContext(scope)),
+                    this.CreateSongRepository(scope),
                     new SongProvider("../Music"),
                     this.CreateContext(scope))),
                 new TransactionCommandServiceDecorator<UploadSong>(new UploadSongCommandService(
-                    new SongEfRepository(this.CreateContext(scope)),
+                    this.CreateSongRepository(scope),
                     new SongProvider("../Music"),
                     this.dateTimeProvider,
                     this.CreateContext(scope))),
-                new SongService(
-                    new SongEfRepository(this.CreateContext(scope)),
+                new GetSongByIdQueryService(
+                    this.CreateSongRepository(scope)),
+                new GetSongForPlayingQueryService(
                     new SongProvider("../Music"),
-                    this.dateTimeProvider,
-                    this.CreateContext(scope)));
+                    this.CreateSongRepository(scope)));
         }
 
         private ManageController CreateManageController(Scope scope)
@@ -168,12 +187,14 @@
         private HomeController CreateHomeController(Scope scope)
         {
             return new HomeController(
-                new SongService(
-                    new SongEfRepository(this.CreateContext(scope)),
-                    new SongProvider("../Music"),
-                    this.dateTimeProvider,
-                    this.CreateContext(scope)));
+                new GetLastApprovedSongsQueryService(
+                    this.CreateSongRepository(scope)));
         }
+
+        private SongEfRepository CreateSongRepository(Scope scope)
+            => scope.Get<SongEfRepository>(_ =>
+                  new SongEfRepository(
+                      this.CreateContext(scope)));
 
         private MusicZoneDbContext CreateContext(Scope scope)
             => scope.Get<MusicZoneDbContext>(_ =>

@@ -5,6 +5,8 @@
     using DomainServices.CommandServices.Songs.EditSong;
     using DomainServices.CommandServices.Songs.UploadSong;
     using DomainServices.Contracts;
+    using DomainServices.QueryServices.Songs.GetById;
+    using DomainServices.QueryServices.Songs.GetSongForPlaying;
     using Infrastructure.Extensions;
     using Infrastructure.Filters;
     using Microsoft.AspNetCore.Authorization;
@@ -20,27 +22,35 @@
     [Authorize]
     public class SongsController : Controller
     {
-        private readonly ICommandService<EditSong> editSongService;
-        private readonly ICommandService<UploadSong> uploadSongService;
-        private readonly ISongService songService;
+        private readonly ICommandService<EditSong> editSong;
+        private readonly ICommandService<UploadSong> uploadSong;
+
+        private readonly IQueryService<GetSongById, Song> getSong;
+        private readonly IQueryService<GetSongForPlaying, SongForPlayingDTO> getSongForPlaying;
         
         public SongsController(
-            ICommandService<EditSong> editSongService,
-            ICommandService<UploadSong> uploadSongService,
-            ISongService songService)
+            ICommandService<EditSong> editSong,
+            ICommandService<UploadSong> uploadSong,
+            IQueryService<GetSongById, Song> getSong,
+            IQueryService<GetSongForPlaying, SongForPlayingDTO> getSongForPlaying)
         {
-            if (editSongService is null)
-                throw new ArgumentNullException(nameof(editSongService));
+            if (editSong is null)
+                throw new ArgumentNullException(nameof(editSong));
 
-            if (uploadSongService is null)
-                throw new ArgumentNullException(nameof(uploadSongService));
+            if (uploadSong is null)
+                throw new ArgumentNullException(nameof(uploadSong));
 
-            if (songService is null)
-                throw new ArgumentException(nameof(songService));
+            if (getSong is null)
+                throw new ArgumentException(nameof(getSong));
 
-            this.editSongService = editSongService;
-            this.uploadSongService = uploadSongService;
-            this.songService = songService;
+            if (getSongForPlaying is null)
+                throw new ArgumentException(nameof(getSongForPlaying));
+
+            this.editSong = editSong;
+            this.uploadSong = uploadSong;
+
+            this.getSong = getSong;
+            this.getSongForPlaying = getSongForPlaying;
         }
 
         public IActionResult Upload()
@@ -81,7 +91,7 @@
                 };
 
 
-                await this.uploadSongService.ExecuteAsync(command);
+                await this.uploadSong.ExecuteAsync(command);
             });
 
             if (message != null)
@@ -120,23 +130,14 @@
         public async Task<IActionResult> Edit(int id)
         {
             Song song = null;
-
-            //try
-            //{
-            //    song = this.songService.GetById(id);
-            //}
-            //catch (Exception ex)
-            //{
-            //    string message = ex.GetType() == typeof(InvalidOperationException) ?
-            //        ex.Message :
-            //        "We're sorry, something went wrong. Please try again later.";
-
-            //    return View()
-            //        .WithErrorMessage(message);
-            //}
+            
+            GetSongById query = new GetSongById()
+            {
+                SongId = id
+            };
 
             string message = await this.CallServiceAsync(
-                async () => song = await this.songService.GetByIdAsync(id));
+                async () => song = await this.getSong.ExecuteAsync(query));
 
             if (message != null)
             {
@@ -159,23 +160,21 @@
                     .WithErrorMessage($"Your submission should be an audio file and no more than {SongMaxMBs} MBs in size!");
             }
 
-            string message = await this.CallServiceAsync(async () =>
+            string fileExtension = model.File
+                .GetFileExtension();
+
+            EditSong command = new EditSong()
             {
-                string fileExtension = model.File
-                    .GetFileExtension();
+                Title = model.Title,
+                FileExtension = fileExtension,
+                ReleasedYear = model.ReleasedYear,
+                Singer = model.Singer,
+                SongFile = model.File?.ToByteArray(),
+                SongId = id
+            };
 
-                EditSong command = new EditSong()
-                {
-                    Title = model.Title,
-                    FileExtension = fileExtension,
-                    ReleasedYear = model.ReleasedYear,
-                    Singer = model.Singer,
-                    SongFile = model.File?.ToByteArray(),
-                    SongId = id
-                };
-
-                await this.editSongService.ExecuteAsync(command);
-            });
+            string message = await this.CallServiceAsync(
+                async () => await this.editSong.ExecuteAsync(command));
 
             if (message != null)
             {
@@ -213,10 +212,15 @@
         [AllowAnonymous]
         public async Task<IActionResult> Play(int id)
         {
-            Song song = null;
+            GetSongForPlaying query = new GetSongForPlaying()
+            {
+                SongId = id
+            };
+
+            SongForPlayingDTO song = null;
 
             string message = await this.CallServiceAsync(
-                async () => song = await this.songService.GetByIdAsync(id));
+                async () => song = await this.getSongForPlaying.ExecuteAsync(query));
 
             if (message != null)
             {
@@ -224,11 +228,9 @@
                     .WithErrorMessage(message);
             }
 
-            byte[] songFile = await this.songService.GetSongFileAsync(song);
+            MemoryStream ms = new MemoryStream(song.File);
 
-            MemoryStream ms = new MemoryStream(songFile);
-
-            return File(ms, $"audio/{song.FileExtension}", $"{song.Singer} - {song.Title}, {song.ReleasedYear}.{song.FileExtension}");
+            return File(ms, $"audio/{song.FileExtension}", song.HeadingText);
         }
 
         private string CallService(Action action)

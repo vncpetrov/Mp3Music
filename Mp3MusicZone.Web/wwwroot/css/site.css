@@ -570,13 +570,13 @@ li.profile-action a {
 }
 
 li.profile-action a::before {
-    font-family: "Font Awesome5 Free";
+    font-family: "Font Awesome 5 Free";
     content: '@';
     color: #7e7e7e;
     font-size: 15px;
     position: relative;
     right: 8px;
-    top: 2px;
+    font-weight: 600;
 }
 
 li.profile-action a.edit-icon::before {

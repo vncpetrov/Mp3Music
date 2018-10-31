@@ -3,6 +3,7 @@
     using AutoMapper;
     using Domain.Models;
     using DomainServices.Contracts;
+    using DomainServices.QueryServices.Songs.GetLastApproved;
     using EfDataAccess;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
@@ -17,14 +18,15 @@
 
     public class HomeController : Controller
     {
-        private ISongService songService;
+        private readonly IQueryService<GetLastApprovedSongs, IEnumerable<Song>> getSongs;
 
-        public HomeController(ISongService songService)
+        public HomeController(
+            IQueryService<GetLastApprovedSongs, IEnumerable<Song>> getSongs)
         {
-            if (songService is null)
-                throw new ArgumentNullException(nameof(songService));
-
-            this.songService = songService;
+            if (getSongs is null)
+                throw new ArgumentNullException(nameof(getSongs));
+            
+            this.getSongs = getSongs;
         }
 
         public async Task<IActionResult> Index([FromServices]IConfiguration conf,
@@ -33,8 +35,13 @@
             // sample admin logging
             //var logger = LogManager.GetLogger("AdminLogger");
             //logger.Trace("asd");
-            IEnumerable<Song> lastSongs = await this.songService
-                .GetLastApprovedAsync(DefaultHomePageLastApprovedSongsCount);
+
+            GetLastApprovedSongs query = new GetLastApprovedSongs()
+            {
+                Count = DefaultHomePageLastApprovedSongsCount
+            };
+
+            IEnumerable<Song> lastSongs = await this.getSongs.ExecuteAsync(query);
 
             IEnumerable<SongListingViewModel> model =
                 Mapper.Map<IEnumerable<SongListingViewModel>>(lastSongs);
@@ -47,9 +54,7 @@
             // Testing loggin
             //ViewData["Message"] = "Your application description page.";
             //throw new ArgumentException("Testing NLog db");
-
-
-
+            
             return View();
         }
 
@@ -62,7 +67,11 @@
 
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(
+                new ErrorViewModel
+                {
+                    RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+                });
         }
     }
 }
