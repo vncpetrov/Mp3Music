@@ -4,6 +4,6 @@
 
     public interface IModel
     {
-        int Id { get; }
+        string Id { get; }
     }
 }

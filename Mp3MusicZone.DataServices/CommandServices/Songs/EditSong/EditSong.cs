@@ -1,10 +1,13 @@
 ﻿namespace Mp3MusicZone.DomainServices.CommandServices.Songs.EditSong
 {
+    using Common.Constants;
+    using Domain.Attributes;
     using System;
 
+    [Permission(Permissions.EditSong)]
     public class EditSong
     {
-        public int SongId { get; set; }
+        public string SongId { get; set; }
 
         public string Title { get; set; }
 

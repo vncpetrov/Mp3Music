@@ -4,6 +4,7 @@
     using Domain.Models.Enums;
     using Microsoft.AspNetCore.Http;
     using System;
+    using System.Security.Claims;
 
     public class AspNetUserContext : IUserContext
     {
@@ -17,9 +18,14 @@
             this.accessor = accessor;
         }
 
-        public bool IsInRole(Role role)
+        public bool IsInRole(RoleType role)
         {
             return this.accessor.HttpContext.User.IsInRole(role.ToString());
+        }
+
+        public string GetCurrentUserId()
+        {
+            return this.accessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
     }
 }

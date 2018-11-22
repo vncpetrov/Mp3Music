@@ -5,6 +5,6 @@
 
     public class GetSongForPlaying : IQuery<SongForPlayingDTO>
     {
-        public int SongId { get; set; }
+        public string SongId { get; set; }
     }
 }

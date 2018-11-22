@@ -2,6 +2,8 @@
 {
     using Common.ValidationAttributes;
     using Domain.Models.Enums;
+    using EfRepositories.Contracts;
+    using MappingTables;
     using Microsoft.AspNetCore.Identity;
     using System;
     using System.Collections.Generic;
@@ -9,7 +11,7 @@
 
     using static Mp3MusicZone.Common.Constants.ModelConstants;
 
-    public class UserEf : IdentityUser
+    public class UserEf : IdentityUser, IEntityModel
     {
         [Required]
         [DataType(DataType.Date)]
@@ -31,6 +33,13 @@
         [MaxLength(ProfileImageMaxLength)]
         public byte[] ProfileImage { get; set; }
 
-        public ICollection<SongEf> Songs { get; set; } = new HashSet<SongEf>(); 
+        public ICollection<SongEf> Songs { get; set; } 
+            = new HashSet<SongEf>();
+
+        public ICollection<UserRole> Roles { get; set; } =
+            new HashSet<UserRole>();
+
+        //public ICollection<IdentityUserRole<string>> Roles { get; set; } =
+        //    new HashSet<IdentityUserRole<string>>();
     }
 }

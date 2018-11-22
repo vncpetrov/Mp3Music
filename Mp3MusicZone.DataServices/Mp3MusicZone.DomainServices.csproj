@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Mp3MusicZone.Common\Mp3MusicZone.Common.csproj" />
     <ProjectReference Include="..\Mp3MusicZone.Domain\Mp3MusicZone.Domain.csproj" />
   </ItemGroup>
 

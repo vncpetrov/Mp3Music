@@ -23,7 +23,7 @@
         }
 
         public async Task<IEnumerable<Song>> ExecuteAsync(GetLastApprovedSongs query)
-             => await this.songRepository.All
+             => await this.songRepository.All()
                     .OrderByDescending(s => s.Id)
                     .Take(query.Count)
                     .ToListAsync();

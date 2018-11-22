@@ -5,8 +5,12 @@
     using DomainServices.Contracts;
     using DomainServices.QueryServices.Songs.GetLastApproved;
     using EfDataAccess;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
+    using Mp3MusicZone.DomainServices;
+    using Mp3MusicZone.EfDataAccess.EfRepositories;
+    using Mp3MusicZone.Web.Infrastructure;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;

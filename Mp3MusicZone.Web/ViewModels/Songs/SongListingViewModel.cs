@@ -7,7 +7,7 @@
 
     public class SongListingViewModel : IMapFrom<Song>, IHaveCustomMappings
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         public DateTime PublishedOn { get; set; }
 

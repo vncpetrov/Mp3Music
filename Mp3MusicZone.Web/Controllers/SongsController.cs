@@ -127,7 +127,7 @@
                 .WithSuccessMessage("Song uploaded successfully.");
         }
 
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(string id)
         {
             Song song = null;
             
@@ -151,7 +151,7 @@
 
         [HttpPost]
         [ValidateModelState]
-        public async Task<IActionResult> Edit(int id, SongFormModel model)
+        public async Task<IActionResult> Edit(string id, SongFormModel model)
         {
             if (model.File != null
                 && (!model.File.IsSong() || model.File.Length > SongMaxLength))
@@ -210,7 +210,7 @@
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> Play(int id)
+        public async Task<IActionResult> Play(string id)
         {
             GetSongForPlaying query = new GetSongForPlaying()
             {

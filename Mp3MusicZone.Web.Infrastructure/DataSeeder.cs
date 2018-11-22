@@ -6,12 +6,16 @@
     using System;
     using System.Threading.Tasks;
 
+    //OBSOLETE -> to be deleted
     public static class DataSeeder
     {
         public static void Seed(IUserService userService, IRoleService roleService)
         {
-            if (userService is null) throw new ArgumentNullException(nameof(userService));
-            if (roleService is null) throw new ArgumentNullException(nameof(roleService));
+            if (userService is null)
+                throw new ArgumentNullException(nameof(userService));
+
+            if (roleService is null)
+                throw new ArgumentNullException(nameof(roleService));
 
             SeedRoles(roleService);
             SeedAdministrator(userService);
@@ -21,7 +25,7 @@
         {
             Task.Run(async () =>
             {
-                string[] roles = Enum.GetNames(typeof(Role));
+                string[] roles = Enum.GetNames(typeof(RoleType));
 
                 foreach (var role in roles)
                 {
@@ -41,7 +45,7 @@
         {
             Task.Run(async () =>
             {
-                string adminName = Role.Administrator.ToString();
+                string adminName = RoleType.Administrator.ToString();
 
                 UserEf adminUser = await userService.FindByNameAsync(adminName);
 

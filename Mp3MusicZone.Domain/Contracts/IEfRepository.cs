@@ -8,9 +8,9 @@
     public interface IEfRepository<TDomain>
         where TDomain : IDomainModel
     {
-        IQueryable<TDomain> All { get; }
+        IQueryable<TDomain> All(bool eagerLoading = false);
 
-        Task<TDomain> GetByIdAsync(int id);
+        Task<TDomain> GetByIdAsync(string id);
 
         void Add(TDomain item);
 

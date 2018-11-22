@@ -2,7 +2,7 @@
 {
     using System;
 
-    public enum Role
+    public enum RoleType
     {
         Administrator = 1,
         Uploader = 2

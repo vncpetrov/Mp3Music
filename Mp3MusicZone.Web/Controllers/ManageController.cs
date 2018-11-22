@@ -304,13 +304,13 @@
         {
             string mostSignificantRole = string.Empty;
 
-            if (User.IsInRole(Role.Administrator.ToString()))
+            if (User.IsInRole(RoleType.Administrator.ToString()))
             {
-                mostSignificantRole = Role.Administrator.ToString();
+                mostSignificantRole = RoleType.Administrator.ToString();
             }
-            else if (this.User.IsInRole(Role.Uploader.ToString()))
+            else if (this.User.IsInRole(RoleType.Uploader.ToString()))
             {
-                mostSignificantRole = Role.Uploader.ToString();
+                mostSignificantRole = RoleType.Uploader.ToString();
             }
 
             return mostSignificantRole;

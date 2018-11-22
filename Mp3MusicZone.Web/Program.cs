@@ -1,12 +1,8 @@
 ﻿namespace Mp3MusicZone.Web
 {
-    using Auth.Contracts;
-    using EfDataAccess;
+    using Infrastructure.Extensions;
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.EntityFrameworkCore;
     using NLog.Web;
     using System;
 
@@ -16,7 +12,11 @@
     {
         public static void Main(string[] args)
         {
-            IWebHost webHost = CreateWebHostBuilder(args).Build();
+            IWebHost webHost = CreateWebHostBuilder(args)
+                .Build()
+                .MigrateDatabase()
+                .SeedDatabase()
+                .Result;
 
             //string projectPath = AppDomain.CurrentDomain.BaseDirectory.Split(new string[] { @"bin\" }, StringSplitOptions.None)[0];
             //IConfigurationRoot configuration = new ConfigurationBuilder()
@@ -27,21 +27,32 @@
             //string connectionString =
             //    configuration.GetConnectionString(ConnectionStringSectionName); 
 
-            using (IServiceScope scope = webHost.Services.CreateScope())
-            {
-                IServiceProvider services = scope.ServiceProvider;
+            //using (IServiceScope scope = webHost.Services.CreateScope())
+            //{
+            //    IServiceProvider services = scope.ServiceProvider;
 
-                string connectionString = services.GetService<IConfiguration>()
-                    .GetConnectionString(ConnectionStringSectionName);
+            //    string connectionString = services.GetService<IConfiguration>()
+            //        .GetConnectionString(ConnectionStringSectionName);
 
-                MusicZoneDbContext efDbContext = new MusicZoneDbContext(connectionString);
-                EfDbContextUtils.UseDatabaseMigration(efDbContext);
-             
-                IUserService userService = services.GetService<IUserService>();
-                IRoleService roleService = services.GetService<IRoleService>();
+            //    MusicZoneDbContext efDbContext = new MusicZoneDbContext(connectionString);
+            //    EfDbContextUtils.UseDatabaseMigration(efDbContext);
 
-                DataSeeder.Seed(userService, roleService);
-            }
+            //    IUserService userService = services.GetService<IUserService>();
+            //    IRoleService roleService = services.GetService<IRoleService>();
+
+            //    DataSeeder.Seed(userService, roleService);
+
+            //    ICommandService<OnStartupNullObject> startupCommandServices =
+            //        new CompositeOnStartupCommandService(
+            //            new ICommandService<OnStartupNullObject>[]
+            //            {
+            //                new RegisterPermissionsCommandService(
+            //                    new PermissionEfRepository(efDbContext),
+            //                    efDbContext)
+            //            });
+
+            //    startupCommandServices.ExecuteAsync(new OnStartupNullObject());
+            //}
 
             webHost.Run();
         }

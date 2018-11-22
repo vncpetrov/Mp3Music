@@ -5,9 +5,12 @@
     using Common.Providers;
     using Controllers;
     using Domain.Contracts;
-    using DomainServices;
     using DomainServices.CommandServices.Songs.EditSong;
     using DomainServices.CommandServices.Songs.UploadSong;
+    using DomainServices.CommandServicesAspects;
+    using DomainServices.QueryServices.Songs.GetById;
+    using DomainServices.QueryServices.Songs.GetLastApproved;
+    using DomainServices.QueryServices.Songs.GetSongForPlaying;
     using EfDataAccess;
     using EfDataAccess.EfRepositories;
     using FileAccess;
@@ -16,10 +19,6 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.Extensions.Logging;
-    using Mp3MusicZone.DomainServices.CommandServicesAspects;
-    using Mp3MusicZone.DomainServices.QueryServices.Songs.GetById;
-    using Mp3MusicZone.DomainServices.QueryServices.Songs.GetLastApproved;
-    using Mp3MusicZone.DomainServices.QueryServices.Songs.GetSongForPlaying;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -141,15 +140,17 @@
             //        new SongEfRepository(this.CreateContext(scope))));
 
             return new SongsController(
-                new TransactionCommandServiceDecorator<EditSong>(new EditSongCommandService(
-                    this.CreateSongRepository(scope),
-                    new SongProvider("../Music"),
-                    this.CreateContext(scope))),
-                new TransactionCommandServiceDecorator<UploadSong>(new UploadSongCommandService(
-                    this.CreateSongRepository(scope),
-                    new SongProvider("../Music"),
-                    this.dateTimeProvider,
-                    this.CreateContext(scope))),
+                new TransactionCommandServiceDecorator<EditSong>(
+                    new EditSongCommandService(
+                        this.CreateSongRepository(scope),
+                        new SongProvider("../Music"),
+                        this.CreateContext(scope))),
+                new TransactionCommandServiceDecorator<UploadSong>(
+                    new UploadSongCommandService(
+                        this.CreateSongRepository(scope),
+                        new SongProvider("../Music"),
+                        this.dateTimeProvider,
+                        this.CreateContext(scope))),
                 new GetSongByIdQueryService(
                     this.CreateSongRepository(scope)),
                 new GetSongForPlayingQueryService(

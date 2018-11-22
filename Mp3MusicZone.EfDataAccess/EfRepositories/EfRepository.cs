@@ -7,7 +7,6 @@
     using Domain.Models.Contracts;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.ChangeTracking;
-    using Mp3MusicZone.Domain.Models;
     using System;
     using System.Linq;
     using System.Threading.Tasks;
@@ -16,8 +15,8 @@
         where TDomain : class, IDomainModel, new()
         where TEntity : class, IEntityModel, new()
     {
-        private MusicZoneDbContext context;
-        private DbSet<TEntity> dbSet;
+        protected MusicZoneDbContext context;
+        protected DbSet<TEntity> dbSet;
 
         protected EfRepository(MusicZoneDbContext context)
         {
@@ -27,8 +26,11 @@
             this.dbSet = context.Set<TEntity>();
         }
 
-        public IQueryable<TDomain> All => this.dbSet.ProjectTo<TDomain>();
-        
+        public virtual IQueryable<TDomain> All(bool eagerLoading = false)
+        {
+            return this.dbSet.ProjectTo<TDomain>();
+        }
+
         public void Add(TDomain item)
         {
             TEntity entity = Mapper.Map<TEntity>(item);
@@ -60,7 +62,7 @@
             }
         }
 
-        public async Task<TDomain> GetByIdAsync(int id)
+        public async Task<TDomain> GetByIdAsync(string id)
         {
             TEntity entity = await this.dbSet.FindAsync(id);
             TDomain domainModel = Mapper.Map<TDomain>(entity);

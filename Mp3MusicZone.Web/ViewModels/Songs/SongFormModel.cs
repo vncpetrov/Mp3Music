@@ -1,9 +1,9 @@
 ﻿namespace Mp3MusicZone.Web.ViewModels.Songs
 {
     using AutoMapper;
+    using Common.Mappings;
+    using Domain.Models;
     using Microsoft.AspNetCore.Http;
-    using Mp3MusicZone.Common.Mappings;
-    using Mp3MusicZone.Domain.Models;
     using System;
     using System.ComponentModel.DataAnnotations;
 

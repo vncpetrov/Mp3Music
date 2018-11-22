@@ -40,7 +40,7 @@
 
         public async Task ExecuteAsync(UploadSong command)
         {
-            if (this.songRepository.All
+            if (this.songRepository.All()
                         .Any(s => s.Title.ToLower() == command.Title.ToLower()))
             {
                 throw new InvalidOperationException($"Song {command.Title} already exists!");

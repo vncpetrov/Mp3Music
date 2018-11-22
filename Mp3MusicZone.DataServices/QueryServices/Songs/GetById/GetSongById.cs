@@ -6,6 +6,6 @@
 
     public class GetSongById : IQuery<Song>
     {
-        public int SongId { get; set; }
+        public string SongId { get; set; }
     }
 }

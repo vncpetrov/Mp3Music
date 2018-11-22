@@ -8,7 +8,7 @@
 
     public class SongEf : IEntityModel
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [Required]
         [MinLength(StringMinLength)]

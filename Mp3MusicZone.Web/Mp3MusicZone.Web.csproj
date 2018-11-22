@@ -5,7 +5,6 @@
 	<DebugType>full</DebugType>
     <UserSecretsId>aspnet-Mp3MusicZone.Web-91AD226C-812B-4BD9-90FA-B7D44C3C6D33</UserSecretsId>
     <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
-
   </PropertyGroup>
 
   <ItemGroup>

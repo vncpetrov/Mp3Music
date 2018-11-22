@@ -50,7 +50,7 @@
 
             //services.AddScoped<Mp3MusicZoneDbContext>(c => new Mp3MusicZoneDbContext(Configuration.GetConnectionString("Mp3MusicZoneConnectionString")));
 
-            services.AddIdentity<UserEf, IdentityRole>(options =>
+            services.AddIdentity<UserEf, RoleEf>(options =>
             {
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
@@ -59,6 +59,8 @@
 
                 options.SignIn.RequireConfirmedEmail = true;
             })
+                //.AddUserStore<UserStore<UserEf, RoleEf, MusicZoneDbContext, string, IdentityUserClaim<string>, UserRole, IdentityUserLogin<string>, IdentityUserToken<string>, IdentityRoleClaim<string>>>()
+                //.AddRoleStore<RoleStore<IdentityRole<string>, MusicZoneDbContext, string, UserRole, IdentityRoleClaim<string>>>()
                 .AddEntityFrameworkStores<MusicZoneDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -90,7 +92,8 @@
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            GlobalDiagnosticsContext.Set("connectionString", Configuration.GetConnectionString(ConnectionStringSectionName));
+            GlobalDiagnosticsContext.Set("connectionString",
+                Configuration.GetConnectionString(ConnectionStringSectionName));
 
             //loggerFactory.AddNLog();
             //env.ConfigureNLog("web.config");
@@ -104,6 +107,7 @@
             }
             else
             {
+                app.UseDeveloperExceptionPage();
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
@@ -119,7 +123,7 @@
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            app.UseCookiePolicy(); 
+            app.UseCookiePolicy();
         }
     }
 }

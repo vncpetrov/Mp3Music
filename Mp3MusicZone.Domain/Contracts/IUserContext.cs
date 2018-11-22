@@ -5,6 +5,8 @@
 
     public interface IUserContext
     {
-        bool IsInRole(Role role);
+        bool IsInRole(RoleType role);
+
+        string GetCurrentUserId();
     }
 }
