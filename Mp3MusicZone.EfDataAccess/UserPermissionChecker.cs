@@ -1,6 +1,7 @@
 ﻿namespace Mp3MusicZone.DomainServices
 {
     using Domain.Contracts;
+    using Mp3MusicZone.Domain.Exceptions;
     using Mp3MusicZone.Domain.Models;
     using System;
     using System.Linq;
@@ -27,20 +28,21 @@
         public void CheckPermission(string permissionId)
         {
             string userId = this.userContext.GetCurrentUserId();
-            if (userId is null)
+            bool hasUserPermission = false;
+
+            if (userId != null)
             {
-                return;
+                hasUserPermission = this.userRepository.All(eagerLoading: true)
+                    .Where(u => u.Id == userId)
+                    .Any(u => u.Roles
+                               .Any(r => r.Permissions
+                                          .Any(p => p.Id == permissionId)));
             }
-
-            bool hasUserPermission = this.userRepository.All(eagerLoading: true)
-                .Where(u => u.Id == userId)
-                .Any(u => u.Roles
-                           .Any(r => r.Permissions
-                                      .Any(p => p.Id == permissionId)));
-
+            
             if (!hasUserPermission)
             {
-                throw new InvalidOperationException("User is not permitted to execute this action");
+                throw new NotAuthorizedException(
+                    "User is not permitted to execute this action");
             }
         }
     }

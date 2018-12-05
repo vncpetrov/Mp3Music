@@ -1,11 +1,14 @@
 ﻿namespace Mp3MusicZone.Web.Controllers
 {
     using AutoMapper;
+    using Domain.Exceptions;
     using Domain.Models;
+    using DomainServices.CommandServices.Songs.DeleteSong;
     using DomainServices.CommandServices.Songs.EditSong;
     using DomainServices.CommandServices.Songs.UploadSong;
     using DomainServices.Contracts;
-    using DomainServices.QueryServices.Songs.GetById;
+    using DomainServices.QueryServices.Songs.GetForDeleteById;
+    using DomainServices.QueryServices.Songs.GetForEditById;
     using DomainServices.QueryServices.Songs.GetSongForPlaying;
     using Infrastructure.Extensions;
     using Infrastructure.Filters;
@@ -24,14 +27,20 @@
     {
         private readonly ICommandService<EditSong> editSong;
         private readonly ICommandService<UploadSong> uploadSong;
+        private readonly ICommandService<DeleteSong> deleteSong;
 
-        private readonly IQueryService<GetSongById, Song> getSong;
+
+        private readonly IQueryService<GetSongForEditById, Song> getSongForEdit;
+        private readonly IQueryService<GetSongForDeleteById, Song> getSongForDelete;
         private readonly IQueryService<GetSongForPlaying, SongForPlayingDTO> getSongForPlaying;
-        
+
         public SongsController(
             ICommandService<EditSong> editSong,
             ICommandService<UploadSong> uploadSong,
-            IQueryService<GetSongById, Song> getSong,
+            ICommandService<DeleteSong> deleteSong,
+
+            IQueryService<GetSongForEditById, Song> getSongForEdit,
+            IQueryService<GetSongForDeleteById, Song> getSongForDelete,
             IQueryService<GetSongForPlaying, SongForPlayingDTO> getSongForPlaying)
         {
             if (editSong is null)
@@ -40,16 +49,25 @@
             if (uploadSong is null)
                 throw new ArgumentNullException(nameof(uploadSong));
 
-            if (getSong is null)
-                throw new ArgumentException(nameof(getSong));
+            if (deleteSong is null)
+                throw new ArgumentNullException(nameof(deleteSong));
+
+
+            if (getSongForEdit is null)
+                throw new ArgumentException(nameof(getSongForEdit));
+
+            if (getSongForDelete is null)
+                throw new ArgumentException(nameof(getSongForDelete));
 
             if (getSongForPlaying is null)
                 throw new ArgumentException(nameof(getSongForPlaying));
 
             this.editSong = editSong;
             this.uploadSong = uploadSong;
+            this.deleteSong = deleteSong;
 
-            this.getSong = getSong;
+            this.getSongForEdit = getSongForEdit;
+            this.getSongForDelete = getSongForDelete;
             this.getSongForPlaying = getSongForPlaying;
         }
 
@@ -90,7 +108,6 @@
                     SongFile = model.File.ToByteArray()
                 };
 
-
                 await this.uploadSong.ExecuteAsync(command);
             });
 
@@ -130,17 +147,22 @@
         public async Task<IActionResult> Edit(string id)
         {
             Song song = null;
-            
-            GetSongById query = new GetSongById()
+            GetSongForEditById query = new GetSongForEditById()
             {
                 SongId = id
             };
 
             string message = await this.CallServiceAsync(
-                async () => song = await this.getSong.ExecuteAsync(query));
+                async () => song = await this.getSongForEdit.ExecuteAsync(query));
 
             if (message != null)
             {
+                if (message.Contains("do not have permissions"))
+                {
+                    return RedirectToAction(nameof(HomeController.Index), "Home")
+                        .WithErrorMessage(message);
+                }
+
                 return View()
                     .WithErrorMessage(message);
             }
@@ -178,35 +200,69 @@
 
             if (message != null)
             {
-                return View(model)
+                if (message.Contains("do not have permissions"))
+                {
+                    return RedirectToAction(nameof(HomeController.Index), "Home")
+                        .WithErrorMessage(message);
+                }
+
+                return View()
                     .WithErrorMessage(message);
             }
 
-            //try
-            //{
-            //    string songExtension = model.File
-            //        .GetFileExtension();
-
-            //    await this.songService.EditAsync(
-            //        id,
-            //        model.Title,
-            //        songExtension,
-            //        model.Singer,
-            //        model.ReleasedYear,
-            //        model.File?.ToByteArray());
-            //}
-            //catch (Exception ex)
-            //{
-            //    string message = ex.GetType() == typeof(InvalidOperationException) ?
-            //        ex.Message :
-            //        "We're sorry, something went wrong. Please try again later.";
-
-            //    return View(model)
-            //        .WithErrorMessage(message);
-            //}
-
             return View()
                 .WithSuccessMessage("Song edited successfully.");
+        }
+
+        public async Task<IActionResult> Delete(string id, string returnUrl = null)
+        {
+            Song song = null;
+            GetSongForDeleteById query = new GetSongForDeleteById()
+            {
+                SongId = id
+            };
+
+            string message = await this.CallServiceAsync(
+               async () => song = await this.getSongForDelete.ExecuteAsync(query));
+
+            if (message != null)
+            {
+                if (message.Contains("do not have permissions"))
+                {
+                    return RedirectToAction(nameof(HomeController.Index), "Home")
+                        .WithErrorMessage(message);
+                }
+
+                return View()
+                    .WithErrorMessage(message);
+            }
+
+            DeleteSongViewModel model = Mapper.Map<DeleteSongViewModel>(song);
+            ViewData["ReturnUrl"] = returnUrl;
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        public async Task<IActionResult> ConfirmDelete(string id, string returnUrl = null)
+        {
+            DeleteSong command = new DeleteSong()
+            {
+                SongId = id
+            };
+
+            string message = await this.CallServiceAsync(
+                async () => await this.deleteSong.ExecuteAsync(command));
+
+            if (message != null)
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home")
+                               .WithErrorMessage(message);
+            }
+
+            return RedirectToAction(nameof(HomeController.Index), "Home")
+                .WithSuccessMessage("Song deleted successfully.");
         }
 
         [AllowAnonymous]
@@ -245,6 +301,10 @@
             {
                 message = ex.Message;
             }
+            catch (NotAuthorizedException ex)
+            {
+                message = "You do not have permissions to perform this action.";
+            }
             catch (Exception)
             {
                 message = "We're sorry, something went wrong. Please try again later.";
@@ -264,6 +324,10 @@
             catch (InvalidOperationException ex)
             {
                 message = ex.Message;
+            }
+            catch (NotAuthorizedException ex)
+            {
+                message = "You do not have permissions to perform this action.";
             }
             catch (Exception ex)
             {

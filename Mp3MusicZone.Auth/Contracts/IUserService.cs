@@ -67,5 +67,7 @@
         Task<IdentityResult> AddToRoleAsync(UserEf user, string role);
 
         Task<IdentityResult> UpdateAsync(UserEf user);
+
+        bool CheckPermission(string permissionId);
     }
-} 
+}

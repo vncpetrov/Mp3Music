@@ -4,7 +4,8 @@
 
     public enum RoleType
     {
-        Administrator = 1,
-        Uploader = 2
+        RegularUser = 1,
+        Administrator = 2,
+        Uploader = 3
     }
 }

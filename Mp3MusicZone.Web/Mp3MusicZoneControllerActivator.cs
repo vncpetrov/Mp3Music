@@ -8,7 +8,7 @@
     using DomainServices.CommandServices.Songs.EditSong;
     using DomainServices.CommandServices.Songs.UploadSong;
     using DomainServices.CommandServicesAspects;
-    using DomainServices.QueryServices.Songs.GetById;
+    using DomainServices.QueryServices.Songs.GetForEditById;
     using DomainServices.QueryServices.Songs.GetLastApproved;
     using DomainServices.QueryServices.Songs.GetSongForPlaying;
     using EfDataAccess;
@@ -19,6 +19,12 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.Extensions.Logging;
+    using Mp3MusicZone.Domain.Models;
+    using Mp3MusicZone.DomainServices;
+    using Mp3MusicZone.DomainServices.CommandServices.Songs.DeleteSong;
+    using Mp3MusicZone.DomainServices.Contracts;
+    using Mp3MusicZone.DomainServices.QueryServices.Songs.GetForDeleteById;
+    using Mp3MusicZone.DomainServices.QueryServicesAspects;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -140,21 +146,52 @@
             //        new SongEfRepository(this.CreateContext(scope))));
 
             return new SongsController(
-                new TransactionCommandServiceDecorator<EditSong>(
-                    new EditSongCommandService(
-                        this.CreateSongRepository(scope),
-                        new SongProvider("../Music"),
-                        this.CreateContext(scope))),
-                new TransactionCommandServiceDecorator<UploadSong>(
-                    new UploadSongCommandService(
-                        this.CreateSongRepository(scope),
-                        new SongProvider("../Music"),
-                        this.dateTimeProvider,
-                        this.CreateContext(scope))),
-                new GetSongByIdQueryService(
-                    this.CreateSongRepository(scope)),
+                new PermissionCommandServiceDecorator<EditSong>(
+                    new ServicePermissionChecker<EditSong>(
+                        new UserPermissionChecker(
+                            this.CreateUserRepository(scope),
+                            this.CreateUserContext(scope))),
+                    new TransactionCommandServiceDecorator<EditSong>(
+                        new EditSongCommandService(
+                            this.CreateSongRepository(scope),
+                            this.CreateSongProvider(scope),
+                            this.CreateContext(scope)))),
+
+                new PermissionCommandServiceDecorator<UploadSong>(
+                    new ServicePermissionChecker<UploadSong>(
+                        new UserPermissionChecker(
+                            this.CreateUserRepository(scope),
+                            this.CreateUserContext(scope))),
+                    new TransactionCommandServiceDecorator<UploadSong>(
+                        new UploadSongCommandService(
+                            this.CreateSongRepository(scope),
+                            this.CreateSongProvider(scope),
+                            this.dateTimeProvider,
+                            this.CreateContext(scope)))),
+
+                new PermissionCommandServiceDecorator<DeleteSong>(
+                    new ServicePermissionChecker<DeleteSong>(
+                        new UserPermissionChecker(
+                            this.CreateUserRepository(scope),
+                            this.CreateUserContext(scope))),
+                    new TransactionCommandServiceDecorator<DeleteSong>(
+                        new DeleteSongCommandService(
+                            this.CreateSongRepository(scope),
+                            this.CreateSongProvider(scope),
+                            this.CreateContext(scope)))),
+
+                this.CreatePermissionQueryService<GetSongForEditById, Song>(
+                    new GetSongForEditByIdQueryService(
+                        this.CreateSongRepository(scope)),
+                    scope),
+
+                this.CreatePermissionQueryService<GetSongForDeleteById, Song>(
+                    new GetSongForDeleteByIdQueryService(
+                        this.CreateSongRepository(scope)),
+                    scope),
+
                 new GetSongForPlayingQueryService(
-                    new SongProvider("../Music"),
+                    this.CreateSongProvider(scope),
                     this.CreateSongRepository(scope)));
         }
 
@@ -186,15 +223,47 @@
         }
 
         private HomeController CreateHomeController(Scope scope)
-        {
-            return new HomeController(
-                new GetLastApprovedSongsQueryService(
-                    this.CreateSongRepository(scope)));
-        }
+            => new HomeController(
+                    new GetLastApprovedSongsQueryService(
+                        this.CreateSongRepository(scope)));
+
+        private IUserPermissionChecker CreateUserPermissionChecker(Scope scope)
+            => new UserPermissionChecker(
+                this.CreateUserRepository(scope),
+                this.CreateUserContext(scope));
+
+        private PermissionQueryServiceDecorator<TQuery, TResult>
+            CreatePermissionQueryService<TQuery, TResult>(
+                IQueryService<TQuery, TResult> queryService,
+                Scope scope)
+            where TQuery : IQuery<TResult>
+            => scope.Get(_ =>
+                  new PermissionQueryServiceDecorator<TQuery, TResult>(
+                      this.CreateServicePermissionChecker<TQuery>(scope), queryService));
+
+        private ServicePermissionChecker<T> CreateServicePermissionChecker<T>(Scope scope)
+            => scope.Get<ServicePermissionChecker<T>>(_ =>
+                  new ServicePermissionChecker<T>(
+                        new UserPermissionChecker(
+                            this.CreateUserRepository(scope),
+                            this.CreateUserContext(scope))));
+
+        private SongProvider CreateSongProvider(Scope scope)
+            => scope.Get<SongProvider>(_ =>
+                  new SongProvider("../Music"));
+
+        private AspNetUserContext CreateUserContext(Scope scope)
+            => scope.Get<AspNetUserContext>(_ =>
+                  new AspNetUserContext());
 
         private SongEfRepository CreateSongRepository(Scope scope)
             => scope.Get<SongEfRepository>(_ =>
                   new SongEfRepository(
+                      this.CreateContext(scope)));
+
+        private UserEfRepository CreateUserRepository(Scope scope)
+            => scope.Get<UserEfRepository>(_ =>
+                  new UserEfRepository(
                       this.CreateContext(scope)));
 
         private MusicZoneDbContext CreateContext(Scope scope)

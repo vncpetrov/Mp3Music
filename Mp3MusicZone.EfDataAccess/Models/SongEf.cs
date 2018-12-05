@@ -30,6 +30,8 @@
         [Required]
         public string FileExtension { get; set; }
 
+        public bool IsApproved { get; set; }
+
         public string UploaderId { get; set; }
         public UserEf Uploader { get; set; }
 

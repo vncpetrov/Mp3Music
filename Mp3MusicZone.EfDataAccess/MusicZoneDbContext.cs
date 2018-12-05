@@ -48,7 +48,8 @@
 
         public DbSet<SongEf> Songs { get; set; }
         public DbSet<PermissionEf> Permissions { get; set; }
-        
+        public DbSet<RolePermission> RolePermissions { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)

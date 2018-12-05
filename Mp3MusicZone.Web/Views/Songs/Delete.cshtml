@@ -1,0 +1,48 @@
+﻿@model DeleteSongViewModel
+
+@{
+    ViewData["Title"] = "Delete song";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h2 class="heading">@ViewData["Title"]</h2>
+            <hr />
+
+            <h4 class="center-block">Are you sure you want to permanently delete this song?</h4>
+
+            <form method="post">
+                <label asp-for="SongSummaryText">Song</label>
+                <div class="form-group form-field music-icon">
+                    <input readonly
+                           class="form-control"
+                           value="@Model.SongSummaryText" />
+                </div>
+
+                <input type="submit"
+                       class="btn
+                              btn-default 
+                              hvr-red
+                              hvr-back-pulse
+                              col-md-6"
+                       value="Delete" />
+
+                <a asp-controller="Home"
+                   asp-action="Index"
+                   asp-route-returnurl="@ViewData["ReturnUrl"]"
+                   class="btn
+                          btn-default
+                          hvr-back-pulse
+                          col-md-5
+                          col-md-offset-1">
+                    Cancel
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

@@ -17,6 +17,11 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+    using Mp3MusicZone.Domain.Contracts;
+    using Mp3MusicZone.Domain.Models;
+    using Mp3MusicZone.DomainServices;
+    using Mp3MusicZone.EfDataAccess.EfRepositories;
+    using Mp3MusicZone.Web.Infrastructure;
     using NLog;
     using System;
 
@@ -64,9 +69,12 @@
                 .AddEntityFrameworkStores<MusicZoneDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddTransient<ISignInService, SignInService>();
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IRoleService, RoleService>();
+            services.AddScoped<IUserContext, AspNetUserContext>();
+            services.AddScoped<IEfRepository<User>, UserEfRepository>();
+            services.AddScoped<IUserPermissionChecker, UserPermissionChecker>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ISignInService, SignInService>();
+            services.AddScoped<IRoleService, RoleService>();
 
             services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 

@@ -1,6 +1,6 @@
 ﻿namespace Mp3MusicZone.DomainServices.CommandServices.OnStartup
 {
-    using Mp3MusicZone.DomainServices.Contracts;
+    using Contracts;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;

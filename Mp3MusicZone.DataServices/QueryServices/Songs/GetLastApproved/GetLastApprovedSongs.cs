@@ -5,7 +5,7 @@
     using System;
     using System.Collections.Generic;
 
-    public class GetLastApprovedSongs:IQuery<IEnumerable<Song>>
+    public class GetLastApprovedSongs : IQuery<IEnumerable<Song>>
     {
         public int Count { get; set; }
     }

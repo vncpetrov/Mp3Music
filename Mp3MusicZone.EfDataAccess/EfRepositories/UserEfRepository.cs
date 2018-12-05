@@ -16,7 +16,7 @@
 
         public override IQueryable<User> All(bool eagerLoading = false)
         {
-            var users = this.dbSet.AsQueryable();
+            IQueryable<UserEf> users = this.dbSet.AsQueryable();
 
             if (eagerLoading)
             {
@@ -44,7 +44,7 @@
                 .ProjectTo<User>();
             }
 
-            return base.dbSet.ProjectTo<User>();
+            return users.ProjectTo<User>();
         }
     }
 }

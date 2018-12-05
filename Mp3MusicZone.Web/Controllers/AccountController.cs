@@ -14,6 +14,7 @@
     using System.Security.Claims;
     using System.Threading.Tasks;
     using Web.Infrastructure.Extensions;
+    using Mp3MusicZone.Domain.Models.Enums;
 
     [Authorize]
     [Route("[controller]/[action]")]
@@ -81,7 +82,7 @@
                 if (!isEmailConfirmed)
                 {
                     return View(model)
-                        .WithErrorMessage($@"Please, confirm your email address, to activate your account. If you cannot find your confirmation email <a href=""/account/resendemailconfirmation?email={user.Email}"">click here to resend it.</a>");
+                        .WithErrorMessage($"Please, confirm your email address, to activate your account. If you cannot find your confirmation email <a href=\"/account/resendemailconfirmation?email={user.Email}\">click here to resend it.</a>");
                 }
             }
 
@@ -141,10 +142,14 @@
                 Birthdate = model.Birthdate
             };
 
-            IdentityResult result =
+            IdentityResult createUserResult =
                 await this.userService.CreateAsync(user, model.Password);
 
-            if (result.Succeeded)
+            IdentityResult addRoleResult = await this.userService.AddToRoleAsync(
+                user,
+                RoleType.RegularUser.ToString());
+
+            if (createUserResult.Succeeded && addRoleResult.Succeeded)
             {
                 logger.LogInformation("User created a new account with password.");
 
@@ -161,7 +166,7 @@
                 return this.RedirectToLocal(returnUrl);
             }
 
-            string errors = this.GetErrorsDescription(result);
+            string errors = this.GetErrorsDescription(createUserResult);
 
             // If we got this far, something failed, redisplay form
             return View(model)
@@ -182,7 +187,7 @@
 
             await this.SendEmailConfirmationToken(user);
 
-            return View(nameof(this.Login))
+            return RedirectToAction(nameof(this.Login))
                 .WithSuccessMessage($"A verification link has been sent to email address {email}. Please verify your email.");
         }
 
@@ -209,6 +214,13 @@
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{userId}'.");
+            }
+            
+
+            if (user.EmailConfirmed)
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home")
+                    .WithErrorMessage($"Email address {user.Email} is already confirmed.");
             }
 
             IdentityResult result = await this.userService.ConfirmEmailAsync(user, code);

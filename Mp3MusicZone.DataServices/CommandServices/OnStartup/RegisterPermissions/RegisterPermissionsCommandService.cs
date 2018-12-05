@@ -35,13 +35,30 @@
                 .GetTypes()
                 .Where(t => t.GetCustomAttribute<PermissionAttribute>() != null)
                 .ToList();
-
+        
             List<Permission> existingPermissions = this.permissionRepository
                 .All()
                 .ToList();
 
+           List<Type> commands = Assembly.GetExecutingAssembly()
+                .GetTypes()
+                .Where(t => t.Namespace.Contains("CommandService")
+                            && t.GetCustomAttribute<PermissionAttribute>() != null)
+                .ToList();
+
             foreach (var type in types)
             {
+                // Check if Command and Query require the same Permission
+                if (type.GetInterfaces()
+                        .Any(i => i.IsGenericType
+                                  && i.GetGenericTypeDefinition() == typeof(IQuery<>))
+                    && commands.Any(c => 
+                        c.GetCustomAttribute<PermissionAttribute>().PermissionId == 
+                        type.GetCustomAttribute<PermissionAttribute>().PermissionId))
+                {
+                    continue;
+                }
+
                 string permissionName = type.Name;
 
                 if (!existingPermissions.Any(p => p.Name == permissionName))

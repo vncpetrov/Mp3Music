@@ -1,18 +1,18 @@
-﻿namespace Mp3MusicZone.DomainServices.CommandServices.Songs.EditSong
+﻿namespace Mp3MusicZone.DomainServices.CommandServices.Songs.DeleteSong
 {
     using Contracts;
     using Domain.Contracts;
-    using Domain.Models;
+    using Mp3MusicZone.Domain.Models;
     using System;
     using System.Threading.Tasks;
 
-    public class EditSongCommandService : ICommandService<EditSong>
+    public class DeleteSongCommandService : ICommandService<DeleteSong>
     {
         private readonly IEfRepository<Song> songRepository;
         private readonly ISongProvider songProvider;
         private readonly IEfDbContextSaveChanges contextSaveChanges;
 
-        public EditSongCommandService(
+        public DeleteSongCommandService(
             IEfRepository<Song> songRepository,
             ISongProvider songProvider,
             IEfDbContextSaveChanges contextSaveChanges)
@@ -22,7 +22,7 @@
 
             if (songProvider is null)
                 throw new ArgumentNullException(nameof(songProvider));
-            
+
             if (contextSaveChanges is null)
                 throw new ArgumentNullException(nameof(contextSaveChanges));
 
@@ -31,33 +31,20 @@
             this.contextSaveChanges = contextSaveChanges;
         }
 
-        public async Task ExecuteAsync(EditSong command)
+        public async Task ExecuteAsync(DeleteSong command)
         {
             Song song = await this.songRepository
                 .GetByIdAsync(command.SongId);
 
-            command.FileExtension = command.FileExtension is null ?
-                song.FileExtension :
-                command.FileExtension;
-
-            if (command.SongFile is null && song.Title != command.Title)
+            if (song is null)
             {
-                this.songProvider.Rename(song.Title, command.Title, command.FileExtension);
-            }
-            else if (command.SongFile != null)
-            {
-                this.songProvider.Delete(song.Title, command.FileExtension);
-                await this.songProvider.WriteAsync(command.Title, command.FileExtension, command.SongFile);
+                throw new InvalidOperationException(
+                    $"Song with id {command.SongId} does not exists!");
             }
 
-            song.Title = command.Title;
-            song.Singer = command.Singer;
-            song.ReleasedYear = command.ReleasedYear;
-            song.FileExtension = command.FileExtension;
-
-            this.songRepository.Update(song);
+            this.songProvider.Delete(song.Title, song.FileExtension);
+            this.songRepository.Delete(song);
             this.contextSaveChanges.SaveChanges();
         }
-
     }
 }

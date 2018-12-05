@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Mp3MusicZone.EfDataAccess;
 
 namespace Mp3MusicZone.EfDataAccess.Migrations
 {
     [DbContext(typeof(MusicZoneDbContext))]
-    partial class MusicZoneDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181205180422_Added IsApproved column to Songs")]
+    partial class AddedIsApprovedcolumntoSongs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

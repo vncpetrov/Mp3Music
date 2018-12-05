@@ -8,24 +8,21 @@
 
     public class AspNetUserContext : IUserContext
     {
-        private readonly IHttpContextAccessor accessor;
+        private readonly IHttpContextAccessor accessor = new HttpContextAccessor();
 
-        public AspNetUserContext(IHttpContextAccessor accessor)
+        public AspNetUserContext()
         {
-            if (accessor is null)
-                throw new ArgumentNullException(nameof(accessor));
-
-            this.accessor = accessor;
         }
 
         public bool IsInRole(RoleType role)
-        {
-            return this.accessor.HttpContext.User.IsInRole(role.ToString());
-        }
+            => this.accessor.HttpContext
+                .User
+                .IsInRole(role.ToString());
 
         public string GetCurrentUserId()
-        {
-            return this.accessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        }
+            => this.accessor.HttpContext
+                .User
+                .FindFirstValue(ClaimTypes.NameIdentifier);
+        
     }
 }

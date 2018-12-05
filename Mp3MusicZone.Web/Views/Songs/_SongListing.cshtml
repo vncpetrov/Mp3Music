@@ -1,4 +1,8 @@
 ﻿@model IEnumerable<SongListingViewModel>
+@inject IUserService userService
+
+@using Mp3MusicZone.Common.Constants
+
 
 <ul class="list-group">
     @foreach (var song in Model)
@@ -15,6 +19,43 @@
                    onclick="document.getElementById('@audioId').play()">
                     @song.HeadingText
                 </a>
+
+                <ul class="song-actions">
+                    @if (this.userService.CheckPermission(Permissions.EditSong))
+                    {
+                        <li class="song-action">
+                            <a asp-controller="Songs"
+                               asp-action="Edit"
+                               asp-route-id="@song.Id"
+                               class="edit-icon
+                                      btn 
+                                      btn-default 
+                                      hvr-warning
+                                      hvr-back-pulse">
+                                Edit
+                            </a>
+                        </li>
+                    }
+
+                    @if (this.userService.CheckPermission(Permissions.DeleteSong))
+                    {
+                        <li class="song-action">
+                            <a asp-controller="Songs"
+                               asp-action="Delete"
+                               asp-route-id="@song.Id"
+                               class="delete-icon
+                                      btn 
+                                      btn-default 
+                                      hvr-red
+                                      hvr-back-pulse">
+                                Delete
+                            </a>
+                        </li>
+                    }
+                </ul>
+
+
+
 
                 <div class="song-uploader">
                     <small>@song.UploaderName</small>

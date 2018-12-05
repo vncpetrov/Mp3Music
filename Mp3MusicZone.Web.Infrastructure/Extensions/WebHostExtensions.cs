@@ -4,6 +4,7 @@
     using AspNetOnStartupCommandServices.RegisterRoles;
     using Auth.Contracts;
     using DomainServices.CommandServices.OnStartup;
+    using DomainServices.CommandServices.OnStartup.AddAdministratorRolePermissions;
     using DomainServices.CommandServices.OnStartup.RegisterPermissions;
     using DomainServices.Contracts;
     using EfDataAccess;
@@ -28,7 +29,7 @@
                     .GetConnectionString(ConnectionStringSectionName);
 
                 MusicZoneDbContext efDbContext = new MusicZoneDbContext(connectionString);
-                efDbContext.Database.EnsureDeleted();
+                //efDbContext.Database.EnsureDeleted();
                 EfDbContextUtils.UseDatabaseMigration(efDbContext);
                 //efDbContext.Database.Migrate();
             }
@@ -60,7 +61,11 @@
                                 new PermissionEfRepository(efDbContext),
                                 efDbContext),
                             new RegisterRolesCommandService(roleService),
-                            new RegisterAdministratorCommandService(userService)
+                            new RegisterAdministratorCommandService(userService),
+                            new AddAministratorRolePermissionsCommandService(
+                                new RoleEfRepository(efDbContext),
+                                new PermissionEfRepository(efDbContext),
+                                efDbContext)
                         });
 
                 await startupCommandServices.ExecuteAsync(new OnStartupNullObject());

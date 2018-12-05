@@ -7,7 +7,7 @@
     {
         public PermissionAttribute(string permissionId)
         {
-            this.PermissionId = PermissionId;
+            this.PermissionId = permissionId;
         }
 
         public string PermissionId { get; }
