@@ -9,7 +9,7 @@
     {
         public string Id { get; set; }
 
-        public DateTime PublishedOn { get; set; }
+        public string PublishedOn { get; set; }
 
         public string FileExtension { get; set; }
 

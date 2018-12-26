@@ -1,9 +1,9 @@
 ﻿namespace Mp3MusicZone.DomainServices.CommandServices.Uploader.RejectSong
 {
-    using CommandServices.Songs.DeleteSong;
+    using Contracts;
     using Domain.Contracts;
     using Domain.Models;
-    using Mp3MusicZone.DomainServices.Contracts;
+    using Songs.DeleteSong;
     using System;
     using System.Threading.Tasks;
 

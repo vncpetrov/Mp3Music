@@ -706,10 +706,7 @@ table.songs.table > thead > tr > th {
 }
 
 table.songs tr > td {
-    padding-top: 10px;
-    padding-bottom: 2px;
-    padding-left: 0;
-    padding-right: 0;
+    padding: 10px 0 2px 0;
 }
 
 table.songs.table-hover > tbody > tr:hover {
@@ -864,11 +861,6 @@ table.songs.table-hover > tbody > tr:hover {
     border-radius: 5px;
     background-color: transparent;
 }
-
-    .navbar-inverse .navbar-nav > .open > a,
-    .navbar-inverse .navbar-nav > .open > a:hover,
-    .navbar-inverse .navbar-nav > .open > a:focus {
-    }
 
 @media all and (max-width: 393px) {
     form .btn.manage-btn:first-of-type {

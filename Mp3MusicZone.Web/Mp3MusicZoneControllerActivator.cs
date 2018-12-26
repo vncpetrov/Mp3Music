@@ -202,6 +202,7 @@
                 .GetService(typeof(ILogger<ManageController>));
 
             return new ManageController(
+                this.CreateUserRepository(scope),
                 this.CreateUserService(scope),
                 this.CreateSignInService(scope),
                 this.emailSender,

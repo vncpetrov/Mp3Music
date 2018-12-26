@@ -84,14 +84,19 @@
             <div class="contact-info">
                 <h1>general information</h1>
 
-                <div class="">
+                <div>
                     <label>genre:</label>
                     @Model.Genre
                 </div>
 
-                <div class="">
+                <div>
                     <label>birthdate:</label>
-                    @Model.Birthdate.ToString("dd MMMM, yyyy")
+                    @Model.Birthdate
+                </div>
+
+                <div>
+                    <label>Name:</label>
+                    @Model.Name
                 </div>
             </div>
         </section>

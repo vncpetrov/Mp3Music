@@ -23,6 +23,8 @@
 
         public string LastName { get; set; }
 
+        public byte[] ProfileImage { get; set; }
+
         public ICollection<Role> Roles { get; set; } = new HashSet<Role>();
     }
 }

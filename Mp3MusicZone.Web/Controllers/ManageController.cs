@@ -19,11 +19,15 @@
 
     using static Common.Constants.ModelConstants;
     using static Common.Constants.WebConstants;
-    
+    using Mp3MusicZone.Domain.Models;
+    using System.Security.Claims;
+
     [Authorize]
     [Route("[controller]/[action]")]
     public class ManageController : Controller
     {
+        private readonly IEfRepository<User> userRepository;
+
         private readonly IUserService userService;
         private readonly ISignInService signInService;
         private readonly IEmailSenderService emailSender;
@@ -35,12 +39,17 @@
         private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
 
         public ManageController(
-          IUserService userService,
-          ISignInService signInService,
-          IEmailSenderService emailSender,
-          ILogger<ManageController> logger,
-          UrlEncoder urlEncoder)
+            IEfRepository<User> userRepository,
+
+            IUserService userService,
+            ISignInService signInService,
+            IEmailSenderService emailSender,
+            ILogger<ManageController> logger,
+            UrlEncoder urlEncoder)
         {
+            if (userRepository is null)
+                throw new ArgumentNullException(nameof(userRepository));
+
             if (userService is null)
                 throw new ArgumentNullException(nameof(userService));
 
@@ -49,6 +58,8 @@
 
             if (emailSender is null)
                 throw new ArgumentNullException(nameof(emailSender));
+
+            this.userRepository = userRepository;
 
             this.userService = userService;
             this.signInService = signInService;
@@ -131,8 +142,6 @@
             {
                 messageType = ErrorsMessageType;
                 messageText = $"Your submission should be a image file and no more than 5 MBs in size!";
-
-                //this.TempData.AddErrorMessage($"Your submission should be a image file and no more than 5 MBs in size!");
             }
             else
             {
@@ -144,15 +153,11 @@
                 {
                     messageType = SuccessMessageType;
                     messageText = "Profile Picture uploaded successfully.";
-
-                    //this.TempData.AddSuccessMessage("Profile Picture uploaded successfully.");
                 }
                 else
                 {
                     messageType = ErrorsMessageType;
                     messageText = "We're sorry, something went wrong. Please try again later.";
-
-                    //this.TempData.AddErrorMessage("We're sorry, something went wrong. Please try again later.");
                 }
             }
 
@@ -163,20 +168,16 @@
         [HttpGet]
         public async Task<IActionResult> Profile()
         {
-            UserEf user = await this.userService.GetUserAsync(User);
+            string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            User user = await this.userRepository.GetByIdAsync(userId);
 
             if (user is null)
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home")
-                    .WithErrorMessage($"Unable to load user with ID '{this.userService.GetUserId(User)}'.");
+                return RedirectToAction(nameof(HomeController.Index), "Home", new { area = "" })
+                    .WithErrorMessage($"Unable to load user with ID '{userId}'.");
             }
 
-            string profileImageSource = user.ProfileImage == null ?
-            "../images/NoImage.png"
-            : string.Format("data:{0};base64,{1}",
-                "image/*",
-                 Convert.ToBase64String(user.ProfileImage));
-
+            string profileImageSource = this.GetProfileImageSource(user);
             string mostSignificantRole = GetCurrentUserRole();
             string genre = user.Genre == 0 ? "-" : user.Genre.ToString();
 
@@ -187,8 +188,9 @@
                 StatusMessage = StatusMessage,
                 ProfileImageSource = profileImageSource,
                 Role = mostSignificantRole,
-                Birthdate = user.Birthdate,
-                Genre = genre
+                Birthdate = user.Birthdate.ToString("dd MMM, yyyy"),
+                Genre = genre,
+                Name = $"{user.FirstName} {user.LastName}"
             };
 
             return View(model);
@@ -316,6 +318,13 @@
             return mostSignificantRole;
         }
 
+        private string GetProfileImageSource(User user)
+            => user.ProfileImage == null ?
+                "../images/NoImage.png"
+                : string.Format("data:{0};base64,{1}",
+                    "image/*",
+                     Convert.ToBase64String(user.ProfileImage));
+
         //private async Task LoadSharedKeyAndQrCodeUriAsync(UserEf user, EnableAuthenticatorViewModel model)
         //{
         //    var unformattedKey = await this.userService.GetAuthenticatorKeyAsync(user);
@@ -331,24 +340,24 @@
         #endregion
 
         //External login
-       //[HttpGet]
-       // public async Task<IActionResult> ExternalLogins()
-       // {
-       //     var user = await this.userService.GetUserAsync(User);
-       //     if (user == null)
-       //     {
-       //         throw new ApplicationException($"Unable to load user with ID '{this.userService.GetUserId(User)}'.");
-       //     }
+        //[HttpGet]
+        // public async Task<IActionResult> ExternalLogins()
+        // {
+        //     var user = await this.userService.GetUserAsync(User);
+        //     if (user == null)
+        //     {
+        //         throw new ApplicationException($"Unable to load user with ID '{this.userService.GetUserId(User)}'.");
+        //     }
 
-       //     var model = new ExternalLoginsViewModel { CurrentLogins = await this.userService.GetLoginsAsync(user) };
-       //     model.OtherLogins = (await signInService.GetExternalAuthenticationSchemesAsync())
-       //         .Where(auth => model.CurrentLogins.All(ul => auth.Name != ul.LoginProvider))
-       //         .ToList();
-       //     model.ShowRemoveButton = await this.userService.HasPasswordAsync(user) || model.CurrentLogins.Count > 1;
-       //     model.StatusMessage = StatusMessage;
+        //     var model = new ExternalLoginsViewModel { CurrentLogins = await this.userService.GetLoginsAsync(user) };
+        //     model.OtherLogins = (await signInService.GetExternalAuthenticationSchemesAsync())
+        //         .Where(auth => model.CurrentLogins.All(ul => auth.Name != ul.LoginProvider))
+        //         .ToList();
+        //     model.ShowRemoveButton = await this.userService.HasPasswordAsync(user) || model.CurrentLogins.Count > 1;
+        //     model.StatusMessage = StatusMessage;
 
-       //     return View(model);
-       // }
+        //     return View(model);
+        // }
 
         //[HttpPost]
         //public async Task<IActionResult> LinkLogin(string provider)

@@ -1,8 +1,8 @@
 ﻿namespace Mp3MusicZone.DomainServices.CommandServices.Uploader.RejectSong
 {
-    using CommandServices.Songs.DeleteSong;
     using Common.Constants;
     using Domain.Attributes;
+    using Songs.DeleteSong;
     using System;
 
     [Permission(Permissions.RejectSong)]
