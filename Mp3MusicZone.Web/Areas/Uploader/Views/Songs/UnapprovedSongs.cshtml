@@ -1,0 +1,118 @@
+﻿@model IEnumerable<SongListingViewModel>
+
+@{
+    ViewData["Title"] = "Unapproved Songs";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h2 class="heading">@ViewData["Title"]</h2>
+            <hr />
+
+            <table class="songs table table-responsive table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            Song
+                        </th>
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var song in this.Model)
+                    {
+                        string urlPath = Url.Action(
+                            controller: "Songs",
+                            action: "Play",
+                            values: new { id = song.Id, area = "" });
+
+                        string audioId = $"audio{song.Id}";
+
+                        <tr>
+                            <td class="col-md-9">
+                                <div class="col-md-6
+                                    song-data">
+                                    <a href="javascript:void(0)"
+                                       class="song-heading-text"
+                                       title="SongTitle"
+                                       onclick="document.getElementById('@audioId').play()">
+                                        @song.HeadingText
+                                    </a>
+
+                                    <div class="song-uploader">
+                                        <small>@song.UploaderName</small>
+                                    </div>
+
+                                    <div class="song-published-date">
+                                        <small>
+                                            Published on @song.PublishedOn
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 audio-table">
+                                    <audio id="@audioId"
+                                           controls
+                                           controlsList="nodownload"
+                                           preload="metadata">
+                                        <source src="@urlPath"
+                                                type="audio/@song.FileExtension">
+                                        Your browser does not support the audio element.
+                                    </audio>
+                                </div>
+                            </td>
+
+                            <td class="col-md-3">
+                                <a asp-area="Uploader"
+                                   asp-controller="Songs"
+                                   asp-action="Approve"
+                                   asp-route-id="@song.Id"
+                                   title="Approve"
+                                   class="check
+                                          btn
+                                          btn-default
+                                          hvr-green
+                                          hvr-back-pulse">
+                                    <i class="fas fa-check"></i>
+                                </a>
+
+                                <a asp-area=""
+                                   asp-controller="Songs"
+                                   asp-action="Edit"
+                                   asp-route-id="@song.Id"
+                                   title="Edit"
+                                   class="edit
+                                          btn
+                                          btn-default
+                                          hvr-warning
+                                          hvr-back-pulse">
+                                    <i class="far fa-edit"></i>
+                                </a>
+
+                                <a asp-controller="Songs"
+                                   asp-action="Reject"
+                                   asp-route-id="@song.Id"
+                                   title="Reject"
+                                   class="times
+                                          btn
+                                          btn-default
+                                          hvr-red
+                                          hvr-back-pulse">
+                                    <i class="fas fa-times"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

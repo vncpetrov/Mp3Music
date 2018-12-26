@@ -45,18 +45,17 @@
 
     <input type="submit"
            class="btn
-                   btn-default
-                   hvr-back-pulse
-                   col-md-6"
+                  btn-default
+                  hvr-back-pulse
+                  col-md-6"
            value="Submit" />
 
-    <a asp-controller="Home"
-       asp-action="Index"
+    <a onclick="history.go(-1)"
        class="btn
-                          btn-default
-                          hvr-back-pulse
-                          col-md-5
-                          col-md-offset-1">
+              btn-default
+              hvr-back-pulse
+              col-md-5
+              col-md-offset-1">
         Cancel
     </a>
 </form>

@@ -11,9 +11,11 @@
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
         <link rel="stylesheet" href="~/css/hover.css" />
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" 
-              integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
-              crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/solid.css" integrity="sha384-aj0h5DVQ8jfwc8DA7JiM+Dysv7z+qYrFYZR+Qd/TwnmpDI6UaB3GJRRTdY8jYGS4" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/regular.css" integrity="sha384-l+NpTtA08hNNeMp0aMBg/cqPh507w3OvQSRoGnHcVoDCS9OtgxqgR7u8mLQv8poF" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/fontawesome.css" integrity="sha384-WK8BzK0mpgOdhCxq86nInFqSWLzR5UAsNg0MGX9aDaIIrFWQ38dGdhwnNCAoXFxL" crossorigin="anonymous">
+
+
     </environment>
 
     <environment exclude="Development">
@@ -57,6 +59,33 @@
 
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+
+                    @if (User.IsInRole("Uploader") || User.IsInRole("Administrator"))
+                    {
+                        <li class="dropdown">
+                            <a href="#"
+                               class="dropdown"
+                               data-toggle="dropdown"
+                               role="button"
+                               aria-haspopup="true"
+                               aria-expanded="true">
+                                Uploader<span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                @if (this.UserService.CheckPermission(GetUnapprovedSongs))
+                                {
+                                    <li>
+                                        <a asp-area="Uploader"
+                                           asp-controller="Songs"
+                                           asp-action="UnapprovedSongs">
+                                            Unapproved songs
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    }
+
                     <li>
                         <a asp-area=""
                            asp-controller="Home"

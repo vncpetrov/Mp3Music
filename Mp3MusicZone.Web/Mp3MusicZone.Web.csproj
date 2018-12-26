@@ -49,6 +49,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Areas\Uploader\Views\_ViewImports.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Uploader\Views\_ViewStart.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="nlog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -58,5 +64,10 @@
     <None Update="C:\Users\Venci\.nuget\packages\nlog.config\4.5.6\contentFiles\any\any\NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Uploader\Data\" />
+    <Folder Include="Areas\Uploader\ViewModels\" />
   </ItemGroup>
 </Project>

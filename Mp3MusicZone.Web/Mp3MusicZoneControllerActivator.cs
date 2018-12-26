@@ -5,12 +5,19 @@
     using Common.Providers;
     using Controllers;
     using Domain.Contracts;
+    using Domain.Models;
+    using DomainServices;
+    using DomainServices.CommandServices.Songs.DeleteSong;
     using DomainServices.CommandServices.Songs.EditSong;
     using DomainServices.CommandServices.Songs.UploadSong;
     using DomainServices.CommandServicesAspects;
+    using DomainServices.Contracts;
+    using DomainServices.QueryServices.Songs.GetForDeleteById;
     using DomainServices.QueryServices.Songs.GetForEditById;
     using DomainServices.QueryServices.Songs.GetLastApproved;
     using DomainServices.QueryServices.Songs.GetSongForPlaying;
+    using DomainServices.QueryServices.Uploader.GetUnapprovedSongs;
+    using DomainServices.QueryServicesAspects;
     using EfDataAccess;
     using EfDataAccess.EfRepositories;
     using FileAccess;
@@ -19,12 +26,8 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.Extensions.Logging;
-    using Mp3MusicZone.Domain.Models;
-    using Mp3MusicZone.DomainServices;
-    using Mp3MusicZone.DomainServices.CommandServices.Songs.DeleteSong;
-    using Mp3MusicZone.DomainServices.Contracts;
-    using Mp3MusicZone.DomainServices.QueryServices.Songs.GetForDeleteById;
-    using Mp3MusicZone.DomainServices.QueryServicesAspects;
+    using Mp3MusicZone.DomainServices.CommandServices.Uploader.ApproveSong;
+    using Mp3MusicZone.DomainServices.CommandServices.Uploader.RejectSong;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -108,43 +111,40 @@
             //should be in singleton scope?
             //IEmailSenderService emailSender = new EmailSenderService(this.emailSettings);
 
-            switch (type.Name)
+            Controller controller = this.CheckAreasControllers(type, scope);
+
+            if (controller is null)
             {
-                case "HomeController":
-                    return this.CreateHomeController(scope);
-
-                case "AccountController":
-                    return this.CreateAccountController(scope);
-
-                case "ManageController":
-                    return this.CreateManageController(scope);
-
-                case "SongsController":
-                    return this.CreateSongsController(scope);
-
-                default:
-                    throw new Exception("Unknown controller " + type.Name);
+                controller = this.CheckNormalControllers(type, scope);
             }
+
+            return controller;
+        }
+
+        private Controller CreateUploaderSongsController(Scope scope)
+        {
+            return new Areas.Uploader.Controllers.SongsController(
+                this.CreatePermissionCommandService<ApproveSong>(
+                    new ApproveSongCommandService(
+                        this.CreateSongRepository(scope),
+                        this.CreateContext(scope)),
+                    scope),
+
+                this.CreatePermissionCommandService<RejectSong>(
+                    new RejectSongCommandService(
+                        this.CreateSongRepository(scope),
+                        this.CreateSongProvider(scope),
+                        this.CreateContext(scope)),
+                    scope),
+
+                this.CreatePermissionQueryService<GetUnapprovedSongs, IEnumerable<Song>>(
+                    new GetUnapprovedSongsQueryService(
+                        this.CreateSongRepository(scope)),
+                    scope));
         }
 
         private Controller CreateSongsController(Scope scope)
         {
-            //return new SongsController(
-            //    new TransactionCommandServiceDecorator<EditSong>(new EditSongCommandService(
-            //        new SongEfRepository(this.CreateContext(scope)),
-            //        new SongProvider("../Music"),
-            //        this.CreateContext(scope))),
-            //    new TransactionCommandServiceDecorator<UploadSong>(new UploadSongCommandService(
-            //        new SongEfRepository(this.CreateContext(scope)),
-            //        new SongProvider("../Music"),
-            //        this.dateTimeProvider,
-            //        this.CreateContext(scope))),
-            //    new GetSongByIdQueryService(
-            //        new SongEfRepository(this.CreateContext(scope))),
-            //    new GetSongForPlayingQueryService(
-            //        new SongProvider("../Music"),
-            //        new SongEfRepository(this.CreateContext(scope))));
-
             return new SongsController(
                 new PermissionCommandServiceDecorator<EditSong>(
                     new ServicePermissionChecker<EditSong>(
@@ -211,9 +211,11 @@
 
         private Controller CreateAccountController(Scope scope)
         {
-            ILogger<AccountController> logger = (ILogger<AccountController>)this.accessor.HttpContext
-            .RequestServices
-            .GetService(typeof(ILogger<AccountController>));
+            ILogger<AccountController> logger =
+                (ILogger<AccountController>)this.accessor
+                .HttpContext
+                .RequestServices
+                .GetService(typeof(ILogger<AccountController>));
 
             return new AccountController(
                this.CreateUserService(scope),
@@ -239,7 +241,16 @@
             where TQuery : IQuery<TResult>
             => scope.Get(_ =>
                   new PermissionQueryServiceDecorator<TQuery, TResult>(
-                      this.CreateServicePermissionChecker<TQuery>(scope), queryService));
+                      this.CreateServicePermissionChecker<TQuery>(scope),
+                      queryService));
+
+        private PermissionCommandServiceDecorator<TCommand> CreatePermissionCommandService<TCommand>(
+                ICommandService<TCommand> commandService,
+                Scope scope)
+            => scope.Get(_ =>
+                  new PermissionCommandServiceDecorator<TCommand>(
+                      this.CreateServicePermissionChecker<TCommand>(scope),
+                      commandService));
 
         private ServicePermissionChecker<T> CreateServicePermissionChecker<T>(Scope scope)
             => scope.Get<ServicePermissionChecker<T>>(_ =>
@@ -283,7 +294,8 @@
                     .RequestServices
                     .GetService(typeof(IUserService)));
 
-        private static void TrackDisposable(ControllerContext context,
+        private static void TrackDisposable(
+            ControllerContext context,
             IDisposable disposable)
         {
             IDictionary<object, object> contextItems = context.HttpContext.Items;
@@ -296,6 +308,47 @@
             IList<IDisposable> disposableItems =
                 (IList<IDisposable>)contextItems["Disposables"];
             disposableItems.Add(disposable);
+        }
+
+        private Controller CheckNormalControllers(Type type, Scope scope)
+        {
+            switch (type.Name)
+            {
+                case "HomeController":
+                    return this.CreateHomeController(scope);
+
+                case "AccountController":
+                    return this.CreateAccountController(scope);
+
+                case "ManageController":
+                    return this.CreateManageController(scope);
+
+                case "SongsController":
+                    return this.CreateSongsController(scope);
+
+                default:
+                    throw new Exception("Unknown controller " + type.Name);
+            }
+        }
+
+        private Controller CheckAreasControllers(Type type, Scope scope)
+        {
+            if (type.FullName.Contains("Areas"))
+            {
+                if (type.FullName.Contains("Uploader"))
+                {
+                    switch (type.Name)
+                    {
+                        case "SongsController":
+                            return this.CreateUploaderSongsController(scope);
+
+                        default:
+                            throw new Exception("Unknown controller " + type.Name);
+                    }
+                }
+            }
+
+            return null;
         }
     }
 }

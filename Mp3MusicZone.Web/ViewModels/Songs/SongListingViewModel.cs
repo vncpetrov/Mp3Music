@@ -23,7 +23,9 @@
                 .ForMember(s => s.UploaderName,
                     cfg => cfg.MapFrom(s => s.Uploader.UserName))
                 .ForMember(s => s.HeadingText,
-                    cfg => cfg.MapFrom(s => $"{s.Singer} - {s.Title}, {s.ReleasedYear}"));
+                    cfg => cfg.MapFrom(s => $"{s.Singer} - {s.Title}, {s.ReleasedYear}"))
+                .ForMember(s => s.PublishedOn,
+                    cfg => cfg.MapFrom(s => s.PublishedOn.ToString("dd MMM, yyyy")));
         }
     }
 }

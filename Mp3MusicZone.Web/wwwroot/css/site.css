@@ -326,6 +326,10 @@ form .btn.manage-btn {
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px red;
 }
 
+.btn.btn-default.hvr-green:hover {
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px #00ff00;
+}
+
 .btn.upload-btn:hover {
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgb(120, 120, 120);
     background-color: rgba(0, 180, 199, 0.85) !important;
@@ -561,10 +565,7 @@ li a.upload {
     border-radius: 10px;
     padding: 0;
     margin-top: 9px;
-    padding-left: 30px;
-    padding-top: 6px;
-    padding-bottom: 6px;
-    padding-right: 5px;
+    padding: 6px 5px 6px 30px;
     color: #00B4C7 !important;
     position: relative;
 }
@@ -627,10 +628,106 @@ li.song-action {
             content: "\f1f8";
         }
 
+.audio-table {
+    line-height: 60px;
+}
+
+    .audio-table audio {
+        width: 250px;
+        height: 35px;
+    }
+
+table.songs {
+    width: 100%;
+}
+
+    table.songs td {
+        text-align: center;
+    }
+
+    table.songs song-published-date,
+    table.songs song-uploader {
+        font-size: 0.95em;
+    }
+
+    table.songs a.song-heading-text {
+        font-size: 1em;
+    }
+
+a.times,
+a.check,
+a.edit {
+    border-radius: 50%;
+    background-color: #F1F3F4;
+    width: 50px;
+    height: 50px;
+}
+
+    a.times i,
+    a.check i,
+    a.edit i {
+        font-size: 25px;
+        color: #CCCCCC;
+        margin-top: 5px;
+    }
+
+    a.times i {
+        font-size: 27px;
+    }
+
+    a.times:hover i {
+        color: #ff7a7a;
+    }
+
+    a.check i {
+        margin-top: 6px;
+    }
+
+    a.check:hover i {
+        color: #82ff82;
+    }
+
+    a.edit:hover i {
+        color: #ffc052;
+    }
+
+div.song-data {
+    text-align: left;
+}
+
+table.songs th {
+    text-align: center;
+    padding: 8px;
+    border-bottom: 2px solid #ddd;
+}
+
+table.songs.table > thead > tr > th {
+    font-size: 1.2em;
+}
+
+table.songs tr > td {
+    padding-top: 10px;
+    padding-bottom: 2px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+table.songs.table-hover > tbody > tr:hover {
+    background-color: #EBEAEA;
+}
+
 @media all and (max-width: 1200px) {
-    /*.navbar-profile-image {
-        left: 73%;
-    }*/
+    table.songs td.col-md-9 {
+        width: 70%;
+    }
+
+    table.songs td.col-md-3 {
+        width: 30%;
+    }
+
+    .audio-table audio {
+        width: 100%;
+    }
 }
 
 @media all and (max-width: 1000px) {
@@ -648,10 +745,27 @@ li.song-action {
     /*.navbar-profile-image {
         left: 65%;
     }*/
-
     .profile-details-section {
         margin-top: 30px;
     }
+
+    table.songs {
+        font-size: 1.1em;
+    }
+
+        table.songs td.col-md-9 {
+            width: 50%;
+        }
+
+        table.songs div.song-data {
+            display: block;
+            width: 100%;
+        }
+
+        table.songs div.audio-table {
+            display: block;
+            width: 70%;
+        }
 }
 
 @media all and (max-width: 833px) {
@@ -664,10 +778,7 @@ li.song-action {
     }
 
     li a.upload {
-        padding-left: 30px;
-        padding-top: 6px;
-        padding-bottom: 6px;
-        padding-right: 5px;
+        padding: 6px 5px 6px 30px;
     }
 }
 
@@ -679,6 +790,10 @@ li.song-action {
 
     .navbar-profile-image {
         display: none;
+    }
+
+    table.songs {
+        border: none;
     }
 }
 
@@ -699,6 +814,10 @@ li.song-action {
         text-align: center;
         margin: 0 auto;
     }
+
+    table.songs div.audio-table audio {
+        width: 250px;
+    }
 }
 
 @media all and (max-width: 530px) {
@@ -709,7 +828,47 @@ li.song-action {
     body a.brand {
         margin-right: 0;
     }
+
+    table.songs div.col-md-8 {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    table.songs div.col-md-6 {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    a.times,
+    a.check,
+    a.edit {
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 5px;
+    }
+
+    table.songs div.audio-table {
+        width: 100%;
+    }
+
+        table.songs div.audio-table audio {
+            width: 100%;
+        }
 }
+
+.navbar-inverse .navbar-nav > .open > a,
+.navbar-inverse .navbar-nav > .open > a:hover,
+.navbar-inverse .navbar-nav > .open > a:focus {
+    color: #00b4c7;
+    box-shadow: 0px 0px 0px 2px rgba(235, 234, 234, 1);
+    border-radius: 5px;
+    background-color: transparent;
+}
+
+    .navbar-inverse .navbar-nav > .open > a,
+    .navbar-inverse .navbar-nav > .open > a:hover,
+    .navbar-inverse .navbar-nav > .open > a:focus {
+    }
 
 @media all and (max-width: 393px) {
     form .btn.manage-btn:first-of-type {
