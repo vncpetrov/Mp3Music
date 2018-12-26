@@ -6,6 +6,6 @@
     {
         RegularUser = 1,
         Administrator = 2,
-        Uploader = 3
+        Uploader = 4
     }
 }

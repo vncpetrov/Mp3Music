@@ -4,7 +4,7 @@
     using AspNetOnStartupCommandServices.RegisterRoles;
     using Auth.Contracts;
     using DomainServices.CommandServices.OnStartup;
-    using DomainServices.CommandServices.OnStartup.AddAdministratorRolePermissions;
+    using DomainServices.CommandServices.OnStartup.AddRolesPermissions;
     using DomainServices.CommandServices.OnStartup.RegisterPermissions;
     using DomainServices.Contracts;
     using EfDataAccess;
@@ -62,7 +62,7 @@
                                 efDbContext),
                             new RegisterRolesCommandService(roleService),
                             new RegisterAdministratorCommandService(userService),
-                            new AddAministratorRolePermissionsCommandService(
+                            new AddRolesPermissionsCommandService(
                                 new RoleEfRepository(efDbContext),
                                 new PermissionEfRepository(efDbContext),
                                 efDbContext)
