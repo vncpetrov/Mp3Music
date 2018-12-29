@@ -7,6 +7,7 @@
     using Domain.Models.Contracts;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.ChangeTracking;
+    using Mp3MusicZone.EfDataAccess.Models;
     using System;
     using System.Linq;
     using System.Threading.Tasks;
@@ -70,9 +71,10 @@
             return domainModel;
         }
 
-        public void Update(TDomain item)
+        public virtual void Update(TDomain item)
         {
             TEntity entity = this.dbSet.Find(item.Id);
+
             entity = Mapper.Map<TDomain, TEntity>(item, entity);
 
             EntityEntry entry = this.context.Entry(entity);

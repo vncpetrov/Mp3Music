@@ -11,6 +11,13 @@
         // Uploader
         public const string GetUnapprovedSongs = "34346c1f-5974-4c50-8dd4-a108625d8d4e";
         public const string ApproveSong = "ca516131-965c-43b7-8341-c2c7b0ff0ba2";
-        public const string RejectSong = "e3c5cfda-c058-45ac-9653-ba363c5bebf7"; 
+        public const string RejectSong = "e3c5cfda-c058-45ac-9653-ba363c5bebf7";
+
+        // Admin
+        public const string GetUsers = "7cc1d750-6226-4aa7-b0bb-0796f03951df";
+        public const string PromoteUserToRole = "22fa81b1-6dd1-4524-81ab-78e22e211ba9";
+        public const string DemoteUserFromRole = "a44d5791-7fda-4a2f-8749-347435890281";
+
+
     }
 }

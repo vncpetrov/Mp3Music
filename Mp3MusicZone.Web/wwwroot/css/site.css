@@ -495,6 +495,7 @@ div.form-field.edit::before {
 
 label.input-label {
     font-weight: 400;
+    width: 100%;
 }
 
 p.disclaimer.song {
@@ -637,7 +638,7 @@ li.song-action {
         height: 35px;
     }
 
-table.songs {
+table {
     width: 100%;
 }
 
@@ -654,67 +655,109 @@ table.songs {
         font-size: 1em;
     }
 
-a.times,
-a.check,
-a.edit {
+.times,
+.check,
+.song-edit {
     border-radius: 50%;
     background-color: #F1F3F4;
     width: 50px;
     height: 50px;
 }
 
-    a.times i,
-    a.check i,
-    a.edit i {
+    .times i,
+    .check i,
+    .edit i {
         font-size: 25px;
         color: #CCCCCC;
         margin-top: 5px;
     }
 
-    a.times i {
+    .times i {
         font-size: 27px;
     }
 
-    a.times:hover i {
+    .times:hover i {
         color: #ff7a7a;
     }
 
-    a.check i {
+    .check i {
         margin-top: 6px;
     }
 
-    a.check:hover i {
+    .check:hover i {
         color: #82ff82;
     }
 
-    a.edit:hover i {
-        color: #ffc052;
-    }
+.edit:hover i {
+    color: #ffc052;
+}
 
 div.song-data {
     text-align: left;
 }
 
-table.songs th {
+table th {
     text-align: center;
     padding: 8px;
     border-bottom: 2px solid #ddd;
 }
 
-table.songs.table > thead > tr > th {
-    font-size: 1.2em;
+table.table > thead > tr > th {
+    font-size: 1.1em;
 }
 
-table.songs tr > td {
+table tr > td {
     padding: 10px 0 2px 0;
 }
 
-table.songs.table-hover > tbody > tr:hover {
+table.table-hover > tbody > tr:hover {
     background-color: #EBEAEA;
 }
 
+.times.role,
+.check.role {
+    width: 47px;
+    height: 47px;
+}
+
+
+    .check.role i {
+        font-size: 23px;
+        margin-top: 4px;
+    }
+
+    .times.role i {
+        position: relative;
+        top: -1px;
+        font-size: 25px;
+    }
+
+.check-reverse:hover i {
+    color: #ff7a7a;
+}
+
+.times-reverse:hover i {
+    color: #82ff82;
+}
+
+form .btn.check,
+form .btn.times {
+    padding: 6px 12px;
+    border-radius: 50%;
+    margin-top: 0;
+    box-shadow: none;
+}
+
+
+
+table.users tr > td {
+    padding: 8px;
+    line-height: 45px;
+    text-align: center;
+}
+
 @media all and (max-width: 1200px) {
-    table.songs td.col-md-9 {
+    table .songs td.col-md-9 {
         width: 70%;
     }
 
@@ -853,9 +896,7 @@ table.songs.table-hover > tbody > tr:hover {
         }
 }
 
-.navbar-inverse .navbar-nav > .open > a,
-.navbar-inverse .navbar-nav > .open > a:hover,
-.navbar-inverse .navbar-nav > .open > a:focus {
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
     color: #00b4c7;
     box-shadow: 0px 0px 0px 2px rgba(235, 234, 234, 1);
     border-radius: 5px;

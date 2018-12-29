@@ -1,8 +1,11 @@
 ﻿namespace Mp3MusicZone.EfDataAccess.EfRepositories
 {
+    using AutoMapper;
+    using AutoMapper.Configuration;
     using AutoMapper.QueryableExtensions;
     using Domain.Models;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.ChangeTracking;
     using Models;
     using System;
     using System.Linq;
@@ -20,31 +23,33 @@
 
             if (eagerLoading)
             {
-                return users.Select(u => new
-                {
-                    u.Id,
-                    u.UserName,
-                    u.Email,
-                    u.Genre,
-                    u.FirstName,
-                    u.LastName,
-                    u.Birthdate,
-                    Roles = u.Roles.Select(r => new
-                    {
-                        r.Role.Id,
-                        r.Role.Name,
-                        Permissions = r.Role.Permissions
-                            .Select(p => new
-                            {
-                                p.Permission.Id,
-                                p.Permission.Name
-                            })
-                    })
-                })
-                .ProjectTo<User>();
+                return context.Users
+                    .Include(u => u.Roles)
+                    .ThenInclude(ur => ur.Role)
+                    .ThenInclude(r => r.Permissions)
+                    .ThenInclude(rp => rp.Permission)
+                    .ProjectTo<User>();
             }
 
-            return users.ProjectTo<User>();
+            return users.ProjectTo<User>(
+                new MapperConfiguration(
+                    new MapperConfigurationExpression()));
+        }
+
+        public override void Update(User item)
+        {
+            UserEf entity = this.dbSet.Find(item.Id);
+            this.context.Entry(entity).Collection(u => u.Roles).Load();
+
+            entity = Mapper.Map<User, UserEf>(item, entity);
+
+            EntityEntry entry = this.context.Entry(entity);
+            if (entry.State == EntityState.Detached)
+            {
+                this.dbSet.Add(entity);
+            }
+
+            entry.State = EntityState.Modified;
         }
     }
 }

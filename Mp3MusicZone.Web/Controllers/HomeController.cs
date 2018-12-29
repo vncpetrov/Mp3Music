@@ -1,7 +1,6 @@
 ﻿namespace Mp3MusicZone.Web.Controllers
 {
     using AutoMapper;
-    using Domain.Contracts;
     using Domain.Models;
     using DomainServices.Contracts;
     using DomainServices.QueryServices.Songs.GetLastApproved;
@@ -25,7 +24,6 @@
         public HomeController(
             IQueryService<GetLastApprovedSongs, IEnumerable<Song>> getSongs)
         {
-        
             if (getSongs is null)
                 throw new ArgumentNullException(nameof(getSongs));
 
@@ -57,7 +55,7 @@
             // Testing loggin
             //ViewData["Message"] = "Your application description page.";
             //throw new ArgumentException("Testing NLog db");
-            
+
             return View();
         }
 

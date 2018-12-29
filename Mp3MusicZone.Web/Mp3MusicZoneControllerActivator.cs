@@ -7,11 +7,15 @@
     using Domain.Contracts;
     using Domain.Models;
     using DomainServices;
+    using DomainServices.CommandServices.Admin.PromoteUserToRole;
     using DomainServices.CommandServices.Songs.DeleteSong;
     using DomainServices.CommandServices.Songs.EditSong;
     using DomainServices.CommandServices.Songs.UploadSong;
+    using DomainServices.CommandServices.Uploader.ApproveSong;
+    using DomainServices.CommandServices.Uploader.RejectSong;
     using DomainServices.CommandServicesAspects;
     using DomainServices.Contracts;
+    using DomainServices.QueryServices.Admin.GetUsers;
     using DomainServices.QueryServices.Songs.GetForDeleteById;
     using DomainServices.QueryServices.Songs.GetForEditById;
     using DomainServices.QueryServices.Songs.GetLastApproved;
@@ -26,12 +30,12 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.Extensions.Logging;
-    using Mp3MusicZone.DomainServices.CommandServices.Uploader.ApproveSong;
-    using Mp3MusicZone.DomainServices.CommandServices.Uploader.RejectSong;
+    using Mp3MusicZone.DomainServices.CommandServices.Admin.DemoteUserFromRole;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.Encodings.Web;
+    using Web.Areas.Admin.Controllers;
 
     public class Mp3MusicZoneControllerActivator : IControllerActivator
     {
@@ -143,42 +147,70 @@
                     scope));
         }
 
+        private Controller CreateAdminUsersController(Scope scope)
+        {
+            return new UsersController(
+                this.CreatePermissionCommandService<PromoteUserToRole>(
+                     new TransactionCommandServiceDecorator<PromoteUserToRole>(
+                        new PromoteUserToRoleCommandService(
+                            this.CreateUserRepository(scope),
+                            this.CreateRoleRepository(scope),
+                            this.CreateContext(scope))),
+                     scope),
+
+                 this.CreatePermissionCommandService<DemoteUserFromRole>(
+                     new TransactionCommandServiceDecorator<DemoteUserFromRole>(
+                        new DemoteUserFromRoleCommandService(
+                            this.CreateUserRepository(scope),
+                            this.CreateRoleRepository(scope),
+                            this.CreateContext(scope))),
+                     scope),
+
+                this.CreatePermissionQueryService<GetUsers, IEnumerable<User>>(
+                    new GetUsersQueryService(
+                        this.CreateUserRepository(scope)),
+                    scope));
+        }
+
         private Controller CreateSongsController(Scope scope)
         {
             return new SongsController(
-                new PermissionCommandServiceDecorator<EditSong>(
-                    new ServicePermissionChecker<EditSong>(
-                        new UserPermissionChecker(
-                            this.CreateUserRepository(scope),
-                            this.CreateUserContext(scope))),
-                    new TransactionCommandServiceDecorator<EditSong>(
+                this.CreatePermissionCommandService<EditSong>(
+                     new TransactionCommandServiceDecorator<EditSong>(
                         new EditSongCommandService(
                             this.CreateSongRepository(scope),
                             this.CreateSongProvider(scope),
-                            this.CreateContext(scope)))),
+                            this.CreateContext(scope))),
+                     scope),
 
-                new PermissionCommandServiceDecorator<UploadSong>(
-                    new ServicePermissionChecker<UploadSong>(
-                        new UserPermissionChecker(
-                            this.CreateUserRepository(scope),
-                            this.CreateUserContext(scope))),
-                    new TransactionCommandServiceDecorator<UploadSong>(
+                //new PermissionCommandServiceDecorator<EditSong>(
+                //    new ServicePermissionChecker<EditSong>(
+                //        new UserPermissionChecker(
+                //            this.CreateUserRepository(scope),
+                //            this.CreateUserContext(scope))),
+                //    new TransactionCommandServiceDecorator<EditSong>(
+                //        new EditSongCommandService(
+                //            this.CreateSongRepository(scope),
+                //            this.CreateSongProvider(scope),
+                //            this.CreateContext(scope)))),
+
+                this.CreatePermissionCommandService<UploadSong>(
+                     new TransactionCommandServiceDecorator<UploadSong>(
                         new UploadSongCommandService(
                             this.CreateSongRepository(scope),
                             this.CreateSongProvider(scope),
                             this.dateTimeProvider,
-                            this.CreateContext(scope)))),
+                            this.CreateContext(scope))),
+                     scope),
 
-                new PermissionCommandServiceDecorator<DeleteSong>(
-                    new ServicePermissionChecker<DeleteSong>(
-                        new UserPermissionChecker(
-                            this.CreateUserRepository(scope),
-                            this.CreateUserContext(scope))),
-                    new TransactionCommandServiceDecorator<DeleteSong>(
+                this.CreatePermissionCommandService<DeleteSong>(
+                     new TransactionCommandServiceDecorator<DeleteSong>(
                         new DeleteSongCommandService(
                             this.CreateSongRepository(scope),
                             this.CreateSongProvider(scope),
-                            this.CreateContext(scope)))),
+                            this.CreateContext(scope))),
+                     scope),
+
 
                 this.CreatePermissionQueryService<GetSongForEditById, Song>(
                     new GetSongForEditByIdQueryService(
@@ -268,6 +300,16 @@
             => scope.Get<AspNetUserContext>(_ =>
                   new AspNetUserContext());
 
+        private T CreateRepository<T>(Scope scope)
+            where T : class
+            => scope.Get<T>(_ =>
+                  (T)Activator.CreateInstance(typeof(T), this.CreateContext(scope)));
+
+        private RoleEfRepository CreateRoleRepository(Scope scope)
+            => scope.Get<RoleEfRepository>(_ =>
+                  new RoleEfRepository(
+                      this.CreateContext(scope)));
+
         private SongEfRepository CreateSongRepository(Scope scope)
             => scope.Get<SongEfRepository>(_ =>
                   new SongEfRepository(
@@ -342,6 +384,17 @@
                     {
                         case "SongsController":
                             return this.CreateUploaderSongsController(scope);
+
+                        default:
+                            throw new Exception("Unknown controller " + type.Name);
+                    }
+                }
+                else if (type.FullName.Contains("Admin"))
+                {
+                    switch (type.Name)
+                    {
+                        case "UsersController":
+                            return this.CreateAdminUsersController(scope);
 
                         default:
                             throw new Exception("Unknown controller " + type.Name);

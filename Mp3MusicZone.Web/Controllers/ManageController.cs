@@ -173,7 +173,8 @@
 
             if (user is null)
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home", new { area = "" })
+                return RedirectToAction(
+                    nameof(HomeController.Index), "Home", new { area = "" })
                     .WithErrorMessage($"Unable to load user with ID '{userId}'.");
             }
 
@@ -197,13 +198,9 @@
         }
 
         [HttpPost]
+        [ValidateModelState]
         public async Task<IActionResult> SendVerificationEmail(ProfileViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
             var user = await this.userService.GetUserAsync(User);
             if (user == null)
             {
@@ -319,7 +316,7 @@
         }
 
         private string GetProfileImageSource(User user)
-            => user.ProfileImage == null ?
+            => user.ProfileImage.Length == 0 ?
                 "../images/NoImage.png"
                 : string.Format("data:{0};base64,{1}",
                     "image/*",

@@ -1,16 +1,20 @@
 ﻿namespace Mp3MusicZone.EfDataAccess.Models
 {
     using AutoMapper;
+    using Common.Mappings;
+    using Domain.Models;
     using EfRepositories.Contracts;
     using Microsoft.AspNetCore.Identity;
     using Models.MappingTables;
-    using Mp3MusicZone.Common.Mappings;
-    using Mp3MusicZone.Domain.Models;
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
-    public class RoleEf : IdentityRole, IEntityModel, IHaveCustomMappings
+    public class RoleEf : IdentityRole,
+        IEntityModel,
+        IMapTo<Role>, 
+        IMapFrom<Role>, 
+        IHaveCustomMappings
     {
         public ICollection<RolePermission> Permissions { get; set; } =
             new HashSet<RolePermission>();
@@ -20,17 +24,24 @@
 
         public void Configure(Profile config)
         {
+            config.CreateMap<RoleEf, Role>()
+                .ForMember(d => d.Permissions, cfg => cfg.MapFrom(
+                    s => s.Permissions.Select(
+                        p => new
+                        {
+                            p.Permission.Id,
+                            p.Permission.Name
+                        })));
+
             config.CreateMap<Role, RoleEf>()
                 .ForMember(dest => dest.NormalizedName, opt => opt.Ignore())
                 .ForMember(dest => dest.Users, opt => opt.Ignore())
                 .ForMember(dest => dest.Permissions, opt => opt.Condition(src => src.Permissions != null));
 
             config.CreateMap<Permission, RolePermission>()
-                .ForMember(dest => dest.PermissionId, opt => opt.MapFrom(p => p.Id));
-            config.CreateMap<Role, RolePermission>()
-                .ForMember(dest => dest.RoleId, opt => opt.MapFrom(r => r.Id));
-
-            config.CreateMap<RoleEf, Role>();
+                .ForMember(dest => dest.PermissionId, opt => opt.MapFrom(src => src.Id));
+            //config.CreateMap<Role, RolePermission>()
+            //    .ForMember(dest => dest.RoleId, opt => opt.MapFrom(r => r.Id));
         }
     }
 }

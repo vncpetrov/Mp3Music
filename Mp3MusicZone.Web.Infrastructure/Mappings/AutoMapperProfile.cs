@@ -30,10 +30,12 @@
                          {
                              Source = t,
                              Destination = t.GetInterfaces()
-                                .First(i => i.GetGenericTypeDefinition() == typeof(IMapTo<>))
+                                .First(i => i.IsGenericType 
+                                            && i.GetGenericTypeDefinition() == typeof(IMapTo<>))
                                 .GetGenericArguments()
                                 .First()
-                         });
+                         })
+                         .ToList();
 
             foreach (var mapping in toMappings)
             {
@@ -53,7 +55,8 @@
                       {
                           Destination = t,
                           Source = t.GetInterfaces()
-                            .First(i => i.GetGenericTypeDefinition() == typeof(IMapFrom<>))
+                            .First(i => i.IsGenericType 
+                                        && i.GetGenericTypeDefinition() == typeof(IMapFrom<>))
                             .GetGenericArguments().First()
                       });
 

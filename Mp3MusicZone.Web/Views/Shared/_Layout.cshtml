@@ -60,6 +60,30 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
 
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <li class="dropdown">
+                            <a href="#"
+                               class="dropdown"
+                               data-toggle="dropdown"
+                               role="button"
+                               aria-haspopup="true"
+                               aria-expanded="true">
+                                Admin<span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a asp-area="Admin"
+                                       asp-controller="Users"
+                                       asp-action="Index">
+                                        Users
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+
                     @if (User.IsInRole("Uploader") || User.IsInRole("Administrator"))
                     {
                         <li class="dropdown">
