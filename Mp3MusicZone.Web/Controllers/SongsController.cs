@@ -14,7 +14,9 @@
     using Infrastructure.Filters;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Mp3MusicZone.DomainServices.QueryServices.Songs.GetLastApproved;
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -33,6 +35,9 @@
         private readonly IQueryService<GetSongForEditById, Song> getSongForEdit;
         private readonly IQueryService<GetSongForDeleteById, Song> getSongForDelete;
         private readonly IQueryService<GetSongForPlaying, SongForPlayingDTO> getSongForPlaying;
+        private readonly IQueryService<GetLastApprovedSongs, IEnumerable<Song>>
+            getLastApprovedSongs;
+
 
         public SongsController(
             ICommandService<EditSong> editSong,
@@ -41,7 +46,8 @@
 
             IQueryService<GetSongForEditById, Song> getSongForEdit,
             IQueryService<GetSongForDeleteById, Song> getSongForDelete,
-            IQueryService<GetSongForPlaying, SongForPlayingDTO> getSongForPlaying)
+            IQueryService<GetSongForPlaying, SongForPlayingDTO> getSongForPlaying,
+            IQueryService<GetLastApprovedSongs, IEnumerable<Song>> getLastApprovedSongs)
         {
             if (editSong is null)
                 throw new ArgumentNullException(nameof(editSong));
@@ -62,6 +68,9 @@
             if (getSongForPlaying is null)
                 throw new ArgumentException(nameof(getSongForPlaying));
 
+            if (getLastApprovedSongs is null)
+                throw new ArgumentException(nameof(getLastApprovedSongs));
+
             this.editSong = editSong;
             this.uploadSong = uploadSong;
             this.deleteSong = deleteSong;
@@ -69,6 +78,33 @@
             this.getSongForEdit = getSongForEdit;
             this.getSongForDelete = getSongForDelete;
             this.getSongForPlaying = getSongForPlaying;
+            this.getLastApprovedSongs = getLastApprovedSongs;
+
+        }
+
+        public async Task<IActionResult> All()
+        {
+            IEnumerable<Song> songs = null;
+
+            GetLastApprovedSongs query = new GetLastApprovedSongs()
+            {
+                Count = int.MaxValue
+            };
+
+            string message = await this.CallServiceAsync(
+                async () => songs = await this.getLastApprovedSongs.ExecuteAsync(query));
+
+            if (message != null)
+            {
+                return RedirectToAction(
+                    nameof(HomeController.Index), "Home", new { area = "" })
+                    .WithErrorMessage(message);
+            }
+
+            IEnumerable<SongListingViewModel> model =
+                Mapper.Map<IEnumerable<SongListingViewModel>>(songs);
+
+            return View(model);
         }
 
         public IActionResult Upload()

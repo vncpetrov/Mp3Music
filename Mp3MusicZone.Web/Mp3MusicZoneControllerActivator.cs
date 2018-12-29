@@ -224,7 +224,10 @@
 
                 new GetSongForPlayingQueryService(
                     this.CreateSongProvider(scope),
-                    this.CreateSongRepository(scope)));
+                    this.CreateSongRepository(scope)),
+
+                new GetLastApprovedSongsQueryService(
+                        this.CreateSongRepository(scope)));
         }
 
         private ManageController CreateManageController(Scope scope)

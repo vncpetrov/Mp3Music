@@ -1,0 +1,23 @@
+﻿@model IEnumerable<SongListingViewModel>
+
+@{
+    ViewData["Title"] = "Songs";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="jumbotron">
+                <h3 class="heading">All Songs</h3>
+                <hr />
+
+                <partial name="~/Views/Songs/_SongListing.cshtml"
+                         model="Model" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

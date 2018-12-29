@@ -42,10 +42,10 @@
                 Count = DefaultHomePageLastApprovedSongsCount
             };
 
-            IEnumerable<Song> lastSongs = await this.getSongs.ExecuteAsync(query);
+            IEnumerable<Song> songs = await this.getSongs.ExecuteAsync(query);
 
             IEnumerable<SongListingViewModel> model =
-                Mapper.Map<IEnumerable<SongListingViewModel>>(lastSongs);
+                Mapper.Map<IEnumerable<SongListingViewModel>>(songs);
 
             return View(model);
         }
