@@ -1,4 +1,4 @@
-﻿@model IEnumerable<UserListingViewModel>
+﻿@model SearchViewModel<IEnumerable<UserListingViewModel>>
 
 @{
     ViewData["Title"] = "Users";
@@ -9,6 +9,10 @@
         <div class="col-md-10 col-md-offset-1">
             <h2 class="heading">@ViewData["Title"]</h2>
             <hr />
+
+
+            <partial name="~/Views/Shared/_Search.cshtml"
+                     model="Model" />
 
             <table class="users table table-responsive table-hover">
                 <thead>
@@ -23,7 +27,7 @@
                 </thead>
 
                 <tbody>
-                    @foreach (var user in Model)
+                    @foreach (var user in Model.DecoratedModel)
                     {
                         bool isAdmin = user.Roles.Any(
                                 r => r == RoleType.Administrator.ToString());

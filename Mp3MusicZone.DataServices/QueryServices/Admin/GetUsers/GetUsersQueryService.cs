@@ -24,7 +24,9 @@
         public async Task<IEnumerable<User>> ExecuteAsync(GetUsers query)
         {
             IEnumerable<User> users = await this.userRepository.All(eagerLoading: true)
-                        .ToListAsync();
+                .Where(u => u.UserName.ToLower().Contains(
+                    query.SearchInfo.SearchTerm.ToLower()))
+                .ToListAsync();
 
             return users;
         }

@@ -92,10 +92,7 @@
             GetLastApprovedSongs query = new GetLastApprovedSongs()
             {
                 Count = int.MaxValue,
-                SearchInfo = new SearchInfo()
-                {
-                    SearchTerm = searchTerm
-                }
+                SearchInfo = new SearchInfo(searchTerm)
             };
 
             string message = await this.CallServiceAsync(
@@ -112,7 +109,10 @@
                 Mapper.Map<IEnumerable<SongListingViewModel>>(songs);
 
             SearchViewModel<IEnumerable<SongListingViewModel>> model =
-                new SearchViewModel<IEnumerable<SongListingViewModel>>(songsModel, searchTerm, "songs");
+                new SearchViewModel<IEnumerable<SongListingViewModel>>(
+                    songsModel,
+                    searchTerm,
+                    "songs");
 
             return View(model);
         }

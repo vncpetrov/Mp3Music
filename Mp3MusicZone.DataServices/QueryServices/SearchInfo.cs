@@ -7,6 +7,11 @@
     {
         private string searchTerm;
 
+        public SearchInfo(string searchTerm)
+        {
+            this.SearchTerm = searchTerm;
+        }
+
         public string SearchTerm
         {
             get => this.searchTerm is null ? string.Empty : this.searchTerm;

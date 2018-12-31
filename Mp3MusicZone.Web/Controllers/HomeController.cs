@@ -41,10 +41,7 @@
             GetLastApprovedSongs query = new GetLastApprovedSongs()
             {
                 Count = DefaultHomePageLastApprovedSongsCount,
-                SearchInfo = new SearchInfo()
-                {
-                    SearchTerm = ""
-                }
+                SearchInfo = new SearchInfo(string.Empty)
             };
 
             IEnumerable<Song> songs = await this.getSongs.ExecuteAsync(query);

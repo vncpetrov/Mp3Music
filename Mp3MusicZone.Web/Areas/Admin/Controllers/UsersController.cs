@@ -1,22 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Mp3MusicZone.Domain.Models;
-using Mp3MusicZone.DomainServices.CommandServices.Admin.DemoteUserFromRole;
-using Mp3MusicZone.DomainServices.CommandServices.Admin.PromoteUserToRole;
-using Mp3MusicZone.DomainServices.Contracts;
-using Mp3MusicZone.DomainServices.QueryServices.Admin.GetUsers;
-using Mp3MusicZone.Web.Areas.Admin.ViewModels;
-using Mp3MusicZone.Web.Controllers;
-using Mp3MusicZone.Web.Infrastructure.Extensions;
-using Mp3MusicZone.Web.Infrastructure.Filters;
-
-namespace Mp3MusicZone.Web.Areas.Admin.Controllers
+﻿namespace Mp3MusicZone.Web.Areas.Admin.Controllers
 {
+    using AutoMapper;
+    using Domain.Models;
+    using DomainServices.CommandServices.Admin.DemoteUserFromRole;
+    using DomainServices.CommandServices.Admin.PromoteUserToRole;
+    using DomainServices.Contracts;
+    using DomainServices.QueryServices.Admin.GetUsers;
+    using Infrastructure.Extensions;
+    using Infrastructure.Filters;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Mp3MusicZone.DomainServices.QueryServices;
+    using Mp3MusicZone.Web.ViewModels;
+    using System;
+    using System.Collections.Generic;
+    using System.Security.Claims;
+    using System.Threading.Tasks;
+    using ViewModels;
+    using Web.Controllers;
+
     [Authorize]
     [Area("Admin")]
     public class UsersController : Controller
@@ -45,10 +47,13 @@ namespace Mp3MusicZone.Web.Areas.Admin.Controllers
             this.getUsers = getUsers;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchTerm = null)
         {
             IEnumerable<User> users = null;
-            GetUsers query = new GetUsers();
+            GetUsers query = new GetUsers()
+            {
+                SearchInfo = new SearchInfo(searchTerm)
+            };
 
             string message = await this.CallServiceAsync(
                 async () => users = await this.getUsers.ExecuteAsync(query));
@@ -60,8 +65,14 @@ namespace Mp3MusicZone.Web.Areas.Admin.Controllers
                     .WithErrorMessage(message);
             }
 
-            IEnumerable<UserListingViewModel> model =
+            IEnumerable<UserListingViewModel> usersModel =
                 Mapper.Map<IEnumerable<UserListingViewModel>>(users);
+
+            SearchViewModel<IEnumerable<UserListingViewModel>> model = 
+                new SearchViewModel<IEnumerable<UserListingViewModel>>(
+                    usersModel,
+                    searchTerm,
+                    "users");
 
             return View(model);
         }
