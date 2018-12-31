@@ -58,6 +58,24 @@
             </div>
 
             <div class="navbar-collapse collapse">
+                <form method="get"
+                      asp-area=""
+                      asp-controller="Songs"
+                      asp-action="All"
+                      class="search
+                             search-menu-item">
+                    <div>
+                        <input name="searchTerm"
+                               type="text"
+                               class="form-control"
+                               placeholder="Search songs..." />
+
+                        <button type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+
                 <ul class="nav navbar-nav">
 
                     @if (User.IsInRole("Administrator"))
@@ -110,22 +128,10 @@
                             </ul>
                         </li>
                     }
-
-                    <li>
-                        <a asp-area=""
-                           asp-controller="Home"
-                           asp-action="About">
-                            About
-                        </a>
-                    </li>
-                    <li>
-                        <a asp-area=""
-                           asp-controller="Home"
-                           asp-action="Contact">
-                            Contact
-                        </a>
-                    </li>
                 </ul>
+
+
+
 
                 @await Html.PartialAsync("_LoginPartial")
             </div>

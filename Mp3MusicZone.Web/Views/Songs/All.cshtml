@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SongListingViewModel>
+﻿@model SearchViewModel<IEnumerable<SongListingViewModel>>
 
 @{
     ViewData["Title"] = "Songs";
@@ -11,8 +11,20 @@
                 <h3 class="heading">All Songs</h3>
                 <hr />
 
-                <partial name="~/Views/Songs/_SongListing.cshtml"
-                         model="Model" />
+                <partial name="~/Views/Shared/_Search.cshtml" 
+                         model="Model"/>
+
+                @if (Model.DecoratedModel.Count() == 0)
+                {
+                    <div class="no-match">
+                        Your search did not match any songs.
+                    </div>
+                }
+                else
+                {
+                    <partial name="~/Views/Songs/_SongListing.cshtml"
+                             model="Model.DecoratedModel" />
+                }
             </div>
         </div>
     </div>

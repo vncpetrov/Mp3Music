@@ -14,7 +14,9 @@
     using Infrastructure.Filters;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Mp3MusicZone.DomainServices.QueryServices;
     using Mp3MusicZone.DomainServices.QueryServices.Songs.GetLastApproved;
+    using Mp3MusicZone.Web.ViewModels;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -82,13 +84,18 @@
 
         }
 
-        public async Task<IActionResult> All()
+        [AllowAnonymous]
+        public async Task<IActionResult> All(string searchTerm = null)
         {
             IEnumerable<Song> songs = null;
 
             GetLastApprovedSongs query = new GetLastApprovedSongs()
             {
-                Count = int.MaxValue
+                Count = int.MaxValue,
+                SearchInfo = new SearchInfo()
+                {
+                    SearchTerm = searchTerm
+                }
             };
 
             string message = await this.CallServiceAsync(
@@ -101,8 +108,11 @@
                     .WithErrorMessage(message);
             }
 
-            IEnumerable<SongListingViewModel> model =
+            IEnumerable<SongListingViewModel> songsModel =
                 Mapper.Map<IEnumerable<SongListingViewModel>>(songs);
+
+            SearchViewModel<IEnumerable<SongListingViewModel>> model =
+                new SearchViewModel<IEnumerable<SongListingViewModel>>(songsModel, searchTerm, "songs");
 
             return View(model);
         }

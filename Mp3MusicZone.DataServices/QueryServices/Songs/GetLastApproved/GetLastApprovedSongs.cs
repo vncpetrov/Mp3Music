@@ -8,5 +8,7 @@
     public class GetLastApprovedSongs : IQuery<IEnumerable<Song>>
     {
         public int Count { get; set; }
+
+        public SearchInfo SearchInfo { get; set; }
     }
 }

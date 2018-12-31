@@ -748,12 +748,83 @@ form .btn.times {
     box-shadow: none;
 }
 
-
-
 table.users tr > td {
     padding: 8px;
     line-height: 45px;
     text-align: center;
+}
+
+form.search {
+    border-color: #C0C0C0;
+}
+
+form.search-menu-item {
+    display: inline-block;
+    margin-top: 11px;   
+    float: left;
+}
+
+.search div {
+    position: relative;
+}
+
+form.search input {
+    border-radius: 30px;
+    border-color: #C0C0C0;
+}
+
+form.search-menu-item input {
+    width: 200px;
+}
+
+.search div button {
+    position: absolute;
+    top: 7px;
+    left: 165px;
+    background: transparent;
+    border: none;
+    outline: none;
+}
+
+form.search input::placeholder {
+    color: #BFC3C6;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+.search i {
+    color: #C0C0C0;
+}
+
+    .search i:hover {
+        color: #00B4C7;
+    }
+
+form.search-page-item {
+    width: 500px;
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 21px;
+}
+
+    form.search-page-item input {
+        font-size: 1.5em;
+        height: 40px;
+    } 
+
+    form.search-page-item button {
+        left: 463px;
+        top: 10px;
+    }
+
+.search-page-item i {
+    font-size: 1.4em;
+}
+
+div.no-match {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5em;
 }
 
 @media all and (max-width: 1200px) {

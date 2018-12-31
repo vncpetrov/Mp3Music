@@ -1,0 +1,23 @@
+﻿@model ISearchViewModel
+
+<div class="row">
+    <form method="get"
+          asp-area=""
+          asp-controller="Songs"
+          asp-action="All"
+          class="search
+                 search-page-item">
+        <div>
+            <input name="searchTerm"
+                   type="text"
+                   class="form-control"
+                   value="@Model.SearchTerm"
+                   placeholder="Search @Model.SearchIn..." />
+
+            <button type="submit">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </form>
+</div>
+

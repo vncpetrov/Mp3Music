@@ -24,9 +24,12 @@
 
         public async Task<IEnumerable<Song>> ExecuteAsync(GetLastApprovedSongs query)
              => await this.songRepository.All()
-                    .Where(s => s.IsApproved == true)
+                    .Where(s => s.IsApproved == true
+                                && s.Title.ToLower().Contains(
+                                    query.SearchInfo.SearchTerm.ToLower()))
                     .OrderByDescending(s => s.Id)
                     .Take(query.Count)
                     .ToListAsync();
+
     }
 }

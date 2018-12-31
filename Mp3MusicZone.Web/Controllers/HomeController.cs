@@ -8,6 +8,7 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
+    using Mp3MusicZone.DomainServices.QueryServices;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
@@ -39,7 +40,11 @@
 
             GetLastApprovedSongs query = new GetLastApprovedSongs()
             {
-                Count = DefaultHomePageLastApprovedSongsCount
+                Count = DefaultHomePageLastApprovedSongsCount,
+                SearchInfo = new SearchInfo()
+                {
+                    SearchTerm = ""
+                }
             };
 
             IEnumerable<Song> songs = await this.getSongs.ExecuteAsync(query);
@@ -48,6 +53,11 @@
                 Mapper.Map<IEnumerable<SongListingViewModel>>(songs);
 
             return View(model);
+        }
+
+        private SearchInfo SearchInfo()
+        {
+            throw new NotImplementedException();
         }
 
         public IActionResult About()
