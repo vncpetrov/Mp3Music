@@ -1,4 +1,4 @@
-﻿namespace Mp3MusicZone.DomainServices.QueryServices.Songs.GetLastApproved
+﻿namespace Mp3MusicZone.DomainServices.QueryServices.Songs.GetSongs
 {
     using Contracts;
     using Domain.Contracts;
@@ -9,12 +9,11 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class GetLastApprovedSongsQueryService
-        : IQueryService<GetLastApprovedSongs, IEnumerable<Song>>
+    public class GetSongsQueryService : IQueryService<GetSongs, IEnumerable<Song>>
     {
         private readonly IEfRepository<Song> songRepository;
 
-        public GetLastApprovedSongsQueryService(IEfRepository<Song> songRepository)
+        public GetSongsQueryService(IEfRepository<Song> songRepository)
         {
             if (songRepository is null)
                 throw new ArgumentNullException(nameof(songRepository));
@@ -22,11 +21,14 @@
             this.songRepository = songRepository;
         }
 
-        public async Task<IEnumerable<Song>> ExecuteAsync(GetLastApprovedSongs query)
+        public async Task<IEnumerable<Song>> ExecuteAsync(GetSongs query)
              => await this.songRepository.All()
-                    .Where(s => s.IsApproved == true)
+                    .Where(s => s.IsApproved == true
+                                && s.Title.ToLower().Contains(
+                                    query.SearchInfo.SearchTerm.ToLower()))
                     .OrderByDescending(s => s.Id)
-                    .Take(query.Count)
+                    .Skip((query.PageInfo.Page - 1) * query.PageInfo.Page)
+                    .Take(query.PageInfo.PageSize)
                     .ToListAsync();
     }
 }

@@ -1,4 +1,4 @@
-﻿@model SearchViewModel<IEnumerable<SongListingViewModel>>
+﻿@model SearchViewModel<PaginatedViewModel<SongListingViewModel>>
 
 @{
     ViewData["Title"] = "Songs";
@@ -11,10 +11,10 @@
                 <h3 class="heading">All Songs</h3>
                 <hr />
 
-                <partial name="~/Views/Shared/_Search.cshtml" 
-                         model="Model"/>
+                <partial name="~/Views/Shared/_Search.cshtml"
+                         model="Model" />
 
-                @if (Model.DecoratedModel.Count() == 0)
+                @if (Model.DecoratedModel.Items.Count() == 0)
                 {
                     <div class="no-match">
                         Your search did not match any songs.
@@ -23,7 +23,14 @@
                 else
                 {
                     <partial name="~/Views/Songs/_SongListing.cshtml"
-                             model="Model.DecoratedModel" />
+                             model="Model.DecoratedModel.Items" />
+
+                    @(await Component.InvokeAsync<PaginationComponent>(
+                        new
+                        {
+                            pageInfo = Model.DecoratedModel,
+                            searchTerm = Model.SearchTerm
+                        }))
                 }
             </div>
         </div>

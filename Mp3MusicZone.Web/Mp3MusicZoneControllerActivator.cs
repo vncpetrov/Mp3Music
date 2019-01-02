@@ -7,6 +7,7 @@
     using Domain.Contracts;
     using Domain.Models;
     using DomainServices;
+    using DomainServices.CommandServices.Admin.DemoteUserFromRole;
     using DomainServices.CommandServices.Admin.PromoteUserToRole;
     using DomainServices.CommandServices.Songs.DeleteSong;
     using DomainServices.CommandServices.Songs.EditSong;
@@ -20,7 +21,10 @@
     using DomainServices.QueryServices.Songs.GetForEditById;
     using DomainServices.QueryServices.Songs.GetLastApproved;
     using DomainServices.QueryServices.Songs.GetSongForPlaying;
+    using DomainServices.QueryServices.Songs.GetSongs;
+    using DomainServices.QueryServices.Songs.GetSongsCount;
     using DomainServices.QueryServices.Uploader.GetUnapprovedSongs;
+    using DomainServices.QueryServices.Users.GetUsersCount;
     using DomainServices.QueryServicesAspects;
     using EfDataAccess;
     using EfDataAccess.EfRepositories;
@@ -30,7 +34,6 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.Extensions.Logging;
-    using Mp3MusicZone.DomainServices.CommandServices.Admin.DemoteUserFromRole;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -144,7 +147,10 @@
                 this.CreatePermissionQueryService<GetUnapprovedSongs, IEnumerable<Song>>(
                     new GetUnapprovedSongsQueryService(
                         this.CreateSongRepository(scope)),
-                    scope));
+                    scope),
+
+                new GetSongsCountQueryService(
+                    this.CreateSongRepository(scope)));
         }
 
         private Controller CreateAdminUsersController(Scope scope)
@@ -169,7 +175,10 @@
                 this.CreatePermissionQueryService<GetUsers, IEnumerable<User>>(
                     new GetUsersQueryService(
                         this.CreateUserRepository(scope)),
-                    scope));
+                    scope),
+                
+                new GetUsersCountQueryService(
+                    this.CreateUserRepository(scope)));
         }
 
         private Controller CreateSongsController(Scope scope)
@@ -181,18 +190,7 @@
                             this.CreateSongRepository(scope),
                             this.CreateSongProvider(scope),
                             this.CreateContext(scope))),
-                     scope),
-
-                //new PermissionCommandServiceDecorator<EditSong>(
-                //    new ServicePermissionChecker<EditSong>(
-                //        new UserPermissionChecker(
-                //            this.CreateUserRepository(scope),
-                //            this.CreateUserContext(scope))),
-                //    new TransactionCommandServiceDecorator<EditSong>(
-                //        new EditSongCommandService(
-                //            this.CreateSongRepository(scope),
-                //            this.CreateSongProvider(scope),
-                //            this.CreateContext(scope)))),
+                     scope), 
 
                 this.CreatePermissionCommandService<UploadSong>(
                      new TransactionCommandServiceDecorator<UploadSong>(
@@ -226,7 +224,10 @@
                     this.CreateSongProvider(scope),
                     this.CreateSongRepository(scope)),
 
-                new GetLastApprovedSongsQueryService(
+                new GetSongsCountQueryService(
+                    this.CreateSongRepository(scope)),
+
+                new GetSongsQueryService(
                         this.CreateSongRepository(scope)));
         }
 

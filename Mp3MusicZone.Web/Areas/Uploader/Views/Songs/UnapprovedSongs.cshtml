@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SongListingViewModel>
+﻿@model PaginatedViewModel<SongListingViewModel>
 
 @{
     ViewData["Title"] = "Unapproved Songs";
@@ -23,7 +23,7 @@
                 </thead>
 
                 <tbody>
-                    @foreach (var song in this.Model)
+                    @foreach (var song in this.Model.Items)
                     {
                         string urlPath = Url.Action(
                             controller: "Songs",
@@ -110,6 +110,13 @@
                     }
                 </tbody>
             </table>
+
+            @(await Component.InvokeAsync<PaginationComponent>(
+                new
+                {
+                    pageInfo = Model,
+                    searchTerm = ""
+                }))
         </div>
     </div>
 </div>

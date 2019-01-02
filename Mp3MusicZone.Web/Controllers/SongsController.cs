@@ -7,22 +7,24 @@
     using DomainServices.CommandServices.Songs.EditSong;
     using DomainServices.CommandServices.Songs.UploadSong;
     using DomainServices.Contracts;
+    using DomainServices.QueryServices;
     using DomainServices.QueryServices.Songs.GetForDeleteById;
     using DomainServices.QueryServices.Songs.GetForEditById;
+    using DomainServices.QueryServices.Songs.GetLastApproved;
     using DomainServices.QueryServices.Songs.GetSongForPlaying;
     using Infrastructure.Extensions;
     using Infrastructure.Filters;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Mp3MusicZone.DomainServices.QueryServices;
-    using Mp3MusicZone.DomainServices.QueryServices.Songs.GetLastApproved;
-    using Mp3MusicZone.Web.ViewModels;
+    using Mp3MusicZone.DomainServices.QueryServices.Songs.GetSongs;
+    using Mp3MusicZone.DomainServices.QueryServices.Songs.GetSongsCount;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Security.Claims;
     using System.Threading.Tasks;
     using ViewModels.Songs;
+    using Web.ViewModels.Shared;
 
     using static Common.Constants.ModelConstants;
 
@@ -33,12 +35,11 @@
         private readonly ICommandService<UploadSong> uploadSong;
         private readonly ICommandService<DeleteSong> deleteSong;
 
-
         private readonly IQueryService<GetSongForEditById, Song> getSongForEdit;
         private readonly IQueryService<GetSongForDeleteById, Song> getSongForDelete;
         private readonly IQueryService<GetSongForPlaying, SongForPlayingDTO> getSongForPlaying;
-        private readonly IQueryService<GetLastApprovedSongs, IEnumerable<Song>>
-            getLastApprovedSongs;
+        private readonly IQueryService<GetSongsCount, int> getSongsCount;
+        private readonly IQueryService<GetSongs, IEnumerable<Song>> getSongs;
 
 
         public SongsController(
@@ -49,7 +50,8 @@
             IQueryService<GetSongForEditById, Song> getSongForEdit,
             IQueryService<GetSongForDeleteById, Song> getSongForDelete,
             IQueryService<GetSongForPlaying, SongForPlayingDTO> getSongForPlaying,
-            IQueryService<GetLastApprovedSongs, IEnumerable<Song>> getLastApprovedSongs)
+            IQueryService<GetSongsCount, int> getSongsCount,
+            IQueryService<GetSongs, IEnumerable<Song>> getSongs)
         {
             if (editSong is null)
                 throw new ArgumentNullException(nameof(editSong));
@@ -70,8 +72,11 @@
             if (getSongForPlaying is null)
                 throw new ArgumentException(nameof(getSongForPlaying));
 
-            if (getLastApprovedSongs is null)
-                throw new ArgumentException(nameof(getLastApprovedSongs));
+            if (getSongsCount is null)
+                throw new ArgumentException(nameof(getSongsCount));
+
+            if (getSongs is null)
+                throw new ArgumentException(nameof(getSongs));
 
             this.editSong = editSong;
             this.uploadSong = uploadSong;
@@ -80,23 +85,23 @@
             this.getSongForEdit = getSongForEdit;
             this.getSongForDelete = getSongForDelete;
             this.getSongForPlaying = getSongForPlaying;
-            this.getLastApprovedSongs = getLastApprovedSongs;
-
+            this.getSongsCount = getSongsCount;
+            this.getSongs = getSongs;
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> All(string searchTerm = null)
+        public async Task<IActionResult> All(int page = 1, string searchTerm = null)
         {
             IEnumerable<Song> songs = null;
 
-            GetLastApprovedSongs query = new GetLastApprovedSongs()
+            GetSongs query = new GetSongs()
             {
-                Count = int.MaxValue,
+                PageInfo = new PageInfo(page, 2),
                 SearchInfo = new SearchInfo(searchTerm)
             };
 
             string message = await this.CallServiceAsync(
-                async () => songs = await this.getLastApprovedSongs.ExecuteAsync(query));
+                async () => songs = await this.getSongs.ExecuteAsync(query));
 
             if (message != null)
             {
@@ -105,12 +110,23 @@
                     .WithErrorMessage(message);
             }
 
+            int songsCount = await this.getSongsCount.ExecuteAsync(
+                new GetSongsCount()
+                {
+                    Approved = true,
+                    SearchInfo = new SearchInfo(searchTerm)
+                });
+
             IEnumerable<SongListingViewModel> songsModel =
                 Mapper.Map<IEnumerable<SongListingViewModel>>(songs);
 
-            SearchViewModel<IEnumerable<SongListingViewModel>> model =
-                new SearchViewModel<IEnumerable<SongListingViewModel>>(
-                    songsModel,
+            SearchViewModel<PaginatedViewModel<SongListingViewModel>> model =
+                new SearchViewModel<PaginatedViewModel<SongListingViewModel>>(
+                    new PaginatedViewModel<SongListingViewModel>(
+                        songsModel,
+                        page,
+                        2,
+                        songsCount),
                     searchTerm,
                     "songs");
 

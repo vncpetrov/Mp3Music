@@ -1,4 +1,4 @@
-﻿namespace Mp3MusicZone.Web.ViewModels
+﻿namespace Mp3MusicZone.Web.ViewModels.Shared
 {
     using System;
      

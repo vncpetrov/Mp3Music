@@ -1,9 +1,9 @@
 ﻿namespace Mp3MusicZone.DomainServices.QueryServices.Admin.GetUsers
 {
     using Contracts;
+    using Domain.Contracts;
+    using Domain.Models;
     using Microsoft.EntityFrameworkCore;
-    using Mp3MusicZone.Domain.Contracts;
-    using Mp3MusicZone.Domain.Models;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -22,13 +22,11 @@
         }
 
         public async Task<IEnumerable<User>> ExecuteAsync(GetUsers query)
-        {
-            IEnumerable<User> users = await this.userRepository.All(eagerLoading: true)
-                .Where(u => u.UserName.ToLower().Contains(
-                    query.SearchInfo.SearchTerm.ToLower()))
-                .ToListAsync();
-
-            return users;
-        }
+            => await this.userRepository.All(eagerLoading: true)
+                         .Where(u => u.UserName.ToLower().Contains(
+                             query.SearchInfo.SearchTerm.ToLower()))
+                        .Skip((query.Page - 1) * 2)
+                        .Take(2)
+                        .ToListAsync();
     }
 }

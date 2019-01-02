@@ -1,4 +1,4 @@
-﻿@model SearchViewModel<IEnumerable<UserListingViewModel>>
+﻿@model SearchViewModel<PaginatedViewModel<UserListingViewModel>>
 
 @{
     ViewData["Title"] = "Users";
@@ -9,7 +9,6 @@
         <div class="col-md-10 col-md-offset-1">
             <h2 class="heading">@ViewData["Title"]</h2>
             <hr />
-
 
             <partial name="~/Views/Shared/_Search.cshtml"
                      model="Model" />
@@ -27,7 +26,7 @@
                 </thead>
 
                 <tbody>
-                    @foreach (var user in Model.DecoratedModel)
+                    @foreach (var user in Model.DecoratedModel.Items)
                     {
                         bool isAdmin = user.Roles.Any(
                                 r => r == RoleType.Administrator.ToString());
@@ -157,6 +156,13 @@
                     }
                 </tbody>
             </table>
+
+            @(await Component.InvokeAsync<PaginationComponent>(
+                new
+                {
+                    pageInfo = Model.DecoratedModel,
+                    searchTerm = Model.SearchTerm
+                }))
         </div>
     </div>
 </div>

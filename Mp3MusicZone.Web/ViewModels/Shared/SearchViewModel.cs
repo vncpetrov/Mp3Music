@@ -1,12 +1,12 @@
-﻿namespace Mp3MusicZone.Web.ViewModels
+﻿namespace Mp3MusicZone.Web.ViewModels.Shared
 {
     using System;
 
-    public class SearchViewModel<T> : ISearchViewModel
-        where T : class
+    public class SearchViewModel<TModel> : ISearchViewModel
+        where TModel : class
     {
         public SearchViewModel(
-            T decoratedModel,
+            TModel decoratedModel,
             string searchTerm,
             string searchIn)
         {
@@ -18,7 +18,7 @@
             this.SearchIn = searchIn;
         }
 
-        public T DecoratedModel { get; set; }
+        public TModel DecoratedModel { get; set; }
 
         public string SearchTerm { get; set; }
 

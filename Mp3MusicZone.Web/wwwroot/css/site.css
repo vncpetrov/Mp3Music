@@ -841,6 +841,10 @@ div.no-match {
     }
 }
 
+.pagination li.disabled {
+    pointer-events: none;
+}
+
 @media all and (max-width: 1000px) {
     section.profile-image-section {
         text-align: center;

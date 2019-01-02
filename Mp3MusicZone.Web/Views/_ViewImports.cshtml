@@ -1,16 +1,18 @@
 @using System.Collections.Generic
-@using Mp3MusicZone.Web
-@using Mp3MusicZone.Web.ViewModels
-@using Mp3MusicZone.Web.ViewModels.Account
-@using Mp3MusicZone.Web.ViewModels.Manage
-@using Mp3MusicZone.Web.ViewModels.Songs
 @using Mp3MusicZone.Auth.Contracts
 @using Mp3MusicZone.Domain.Models.Enums
 @using Mp3MusicZone.EfDataAccess
+@using Mp3MusicZone.Web
+@using Mp3MusicZone.Web.Components;
+@using Mp3MusicZone.Web.Components.Models
+@using Mp3MusicZone.Web.ViewModels
+@using Mp3MusicZone.Web.ViewModels.Account
+@using Mp3MusicZone.Web.ViewModels.Manage
+@using Mp3MusicZone.Web.ViewModels.Shared
+@using Mp3MusicZone.Web.ViewModels.Songs
 @using Microsoft.EntityFrameworkCore
 
 @using static Mp3MusicZone.Common.Constants.WebConstants
 @using static Mp3MusicZone.Common.Constants.Permissions
-
 
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

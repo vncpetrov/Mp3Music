@@ -5,19 +5,20 @@
     using DomainServices.CommandServices.Admin.DemoteUserFromRole;
     using DomainServices.CommandServices.Admin.PromoteUserToRole;
     using DomainServices.Contracts;
+    using DomainServices.QueryServices;
     using DomainServices.QueryServices.Admin.GetUsers;
     using Infrastructure.Extensions;
     using Infrastructure.Filters;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Mp3MusicZone.DomainServices.QueryServices;
-    using Mp3MusicZone.Web.ViewModels;
+    using Mp3MusicZone.DomainServices.QueryServices.Users.GetUsersCount;
     using System;
     using System.Collections.Generic;
     using System.Security.Claims;
     using System.Threading.Tasks;
     using ViewModels;
     using Web.Controllers;
+    using Web.ViewModels.Shared;
 
     [Authorize]
     [Area("Admin")]
@@ -27,11 +28,14 @@
         private readonly ICommandService<DemoteUserFromRole> demoteUser;
 
         private readonly IQueryService<GetUsers, IEnumerable<User>> getUsers;
+        private readonly IQueryService<GetUsersCount, int> getUsersCount;
 
         public UsersController(
             ICommandService<PromoteUserToRole> promoteUser,
             ICommandService<DemoteUserFromRole> demoteUser,
-            IQueryService<GetUsers, IEnumerable<User>> getUsers)
+
+            IQueryService<GetUsers, IEnumerable<User>> getUsers,
+            IQueryService<GetUsersCount, int> getUsersCount)
         {
             if (promoteUser is null)
                 throw new ArgumentNullException(nameof(promoteUser));
@@ -42,16 +46,22 @@
             if (getUsers is null)
                 throw new ArgumentNullException(nameof(getUsers));
 
+            if (getUsersCount is null)
+                throw new ArgumentNullException(nameof(getUsersCount));
+
             this.promoteUser = promoteUser;
             this.demoteUser = demoteUser;
             this.getUsers = getUsers;
+            this.getUsersCount = getUsersCount;
+
         }
 
-        public async Task<IActionResult> Index(string searchTerm = null)
+        public async Task<IActionResult> Index(int page = 1, string searchTerm = null)
         {
             IEnumerable<User> users = null;
             GetUsers query = new GetUsers()
             {
+                Page = page,
                 SearchInfo = new SearchInfo(searchTerm)
             };
 
@@ -65,12 +75,22 @@
                     .WithErrorMessage(message);
             }
 
+            int usersCount = await this.getUsersCount.ExecuteAsync(
+                new GetUsersCount()
+                {
+                    SearchInfo = new SearchInfo(searchTerm)
+                });
+
             IEnumerable<UserListingViewModel> usersModel =
                 Mapper.Map<IEnumerable<UserListingViewModel>>(users);
 
-            SearchViewModel<IEnumerable<UserListingViewModel>> model = 
-                new SearchViewModel<IEnumerable<UserListingViewModel>>(
-                    usersModel,
+            SearchViewModel<PaginatedViewModel<UserListingViewModel>> model =
+                new SearchViewModel<PaginatedViewModel<UserListingViewModel>>(
+                    new PaginatedViewModel<UserListingViewModel>(
+                        usersModel,
+                        page,
+                        2,
+                        usersCount),
                     searchTerm,
                     "users");
 

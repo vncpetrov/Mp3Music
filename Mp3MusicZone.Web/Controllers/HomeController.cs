@@ -3,19 +3,18 @@
     using AutoMapper;
     using Domain.Models;
     using DomainServices.Contracts;
+    using DomainServices.QueryServices;
     using DomainServices.QueryServices.Songs.GetLastApproved;
     using EfDataAccess;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
-    using Mp3MusicZone.DomainServices.QueryServices;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Threading.Tasks;
     using ViewModels.Songs;
     using Web.ViewModels;
-
     using static Common.Constants.WebConstants;
 
     public class HomeController : Controller
@@ -40,8 +39,7 @@
 
             GetLastApprovedSongs query = new GetLastApprovedSongs()
             {
-                Count = DefaultHomePageLastApprovedSongsCount,
-                SearchInfo = new SearchInfo(string.Empty)
+                Count = DefaultHomePageLastApprovedSongsCount
             };
 
             IEnumerable<Song> songs = await this.getSongs.ExecuteAsync(query);
