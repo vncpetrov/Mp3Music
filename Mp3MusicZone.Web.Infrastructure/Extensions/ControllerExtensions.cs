@@ -10,13 +10,13 @@
     public static class ControllerExtensions
     {
         public static string GetErrorsDescription(this Controller controller,
-            IdentityResult result)
+             IdentityResult result)
         {
             StringBuilder errors = new StringBuilder();
 
             foreach (var error in result.Errors)
             {
-                errors.AppendLine(error.Description);    
+                errors.AppendLine(error.Description);
             }
 
             return errors.ToString();

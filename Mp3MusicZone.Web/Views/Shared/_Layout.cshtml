@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Mp3MusicZone</title>
 
+    <link rel="shortcut icon" href="~/images/sound.png"/>
+
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
@@ -22,7 +24,7 @@
               integrity="sha384-l+NpTtA08hNNeMp0aMBg/cqPh507w3OvQSRoGnHcVoDCS9OtgxqgR7u8mLQv8poF"
               crossorigin="anonymous">
 
-        <link rel="stylesheet" 
+        <link rel="stylesheet"
               href="https://use.fontawesome.com/releases/v5.6.1/css/fontawesome.css"
               integrity="sha384-WK8BzK0mpgOdhCxq86nInFqSWLzR5UAsNg0MGX9aDaIIrFWQ38dGdhwnNCAoXFxL"
               crossorigin="anonymous">
@@ -53,7 +55,8 @@
                 <button type="button"
                         class="navbar-toggle"
                         data-toggle="collapse"
-                        data-target=".navbar-collapse">
+                        data-target="#nav-collapse"
+                        aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -68,7 +71,7 @@
                 </a>
             </div>
 
-            <div class="navbar-collapse collapse">
+            <div class="collapse navbar-collapse" id="nav-collapse">
                 <form method="get"
                       asp-area=""
                       asp-controller="Songs"
@@ -93,12 +96,12 @@
                     {
                         <li class="dropdown">
                             <a href="#"
-                               class="dropdown"
+                               class="dropdown-toggle"
                                data-toggle="dropdown"
                                role="button"
                                aria-haspopup="true"
-                               aria-expanded="true">
-                                Admin<span class="caret"></span>
+                               aria-expanded="false">
+                                Admin <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu">

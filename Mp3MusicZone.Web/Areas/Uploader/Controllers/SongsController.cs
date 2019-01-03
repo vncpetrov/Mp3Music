@@ -11,6 +11,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Mp3MusicZone.DomainServices.QueryServices;
+    using Mp3MusicZone.Web.ViewModels;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -18,6 +19,8 @@
     using Web.ViewModels.Shared;
     using Web.ViewModels.Songs;
 
+    using static Common.Constants.WebConstants;
+    
     [Authorize]
     [Area("Uploader")]
     public class SongsController : Controller
@@ -83,14 +86,14 @@
                 Mapper.Map<IEnumerable<SongListingViewModel>>(unapprovedSongs);
 
             PaginatedViewModel<SongListingViewModel> model =
-                new PaginatedViewModel<SongListingViewModel>(
+                ViewModelFactory.CreatePaginatedViewModel<SongListingViewModel>(
                     songsModel,
                     page,
-                    2, 
+                    DefaultPageSize, 
                     songsCount);
 
             return View(model);
-        }
+        } 
 
         public async Task<IActionResult> Approve(string id)
         {

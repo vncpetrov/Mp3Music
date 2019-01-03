@@ -27,7 +27,7 @@
                                 && s.Title.ToLower().Contains(
                                     query.SearchInfo.SearchTerm.ToLower()))
                     .OrderByDescending(s => s.Id)
-                    .Skip((query.PageInfo.Page - 1) * query.PageInfo.Page)
+                    .Skip((query.PageInfo.Page - 1) * query.PageInfo.PageSize)
                     .Take(query.PageInfo.PageSize)
                     .ToListAsync();
     }

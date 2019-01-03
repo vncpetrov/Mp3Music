@@ -10,7 +10,7 @@
     [Permission(Permissions.GetUsers)]
     public class GetUsers : IQuery<IEnumerable<User>>
     {
-        public int Page { get; set; }
+        public PageInfo PageInfo { get; set; }
 
         public SearchInfo SearchInfo { get; set; }
     }

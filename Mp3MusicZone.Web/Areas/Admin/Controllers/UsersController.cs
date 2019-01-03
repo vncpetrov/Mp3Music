@@ -7,11 +7,12 @@
     using DomainServices.Contracts;
     using DomainServices.QueryServices;
     using DomainServices.QueryServices.Admin.GetUsers;
+    using DomainServices.QueryServices.Users.GetUsersCount;
     using Infrastructure.Extensions;
     using Infrastructure.Filters;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Mp3MusicZone.DomainServices.QueryServices.Users.GetUsersCount;
+    using Mp3MusicZone.Web.ViewModels;
     using System;
     using System.Collections.Generic;
     using System.Security.Claims;
@@ -19,6 +20,8 @@
     using ViewModels;
     using Web.Controllers;
     using Web.ViewModels.Shared;
+
+    using static Common.Constants.WebConstants;
 
     [Authorize]
     [Area("Admin")]
@@ -61,7 +64,7 @@
             IEnumerable<User> users = null;
             GetUsers query = new GetUsers()
             {
-                Page = page,
+                PageInfo = new PageInfo(page, DefaultPageSize),
                 SearchInfo = new SearchInfo(searchTerm)
             };
 
@@ -85,13 +88,12 @@
                 Mapper.Map<IEnumerable<UserListingViewModel>>(users);
 
             SearchViewModel<PaginatedViewModel<UserListingViewModel>> model =
-                new SearchViewModel<PaginatedViewModel<UserListingViewModel>>(
-                    new PaginatedViewModel<UserListingViewModel>(
-                        usersModel,
-                        page,
-                        2,
-                        usersCount),
-                    searchTerm,
+                ViewModelFactory.CreateSearchPaginatedViewModel<UserListingViewModel>(
+                    usersModel, 
+                    page,
+                    DefaultPageSize, 
+                    usersCount,
+                    searchTerm, 
                     "users");
 
             return View(model);

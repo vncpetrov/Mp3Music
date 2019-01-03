@@ -1,6 +1,6 @@
 ﻿namespace Mp3MusicZone.Web.ViewModels.Shared
 {
-    using System;
+    using System; 
 
     public class SearchViewModel<TModel> : ISearchViewModel
         where TModel : class

@@ -18,6 +18,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Mp3MusicZone.DomainServices.QueryServices.Songs.GetSongs;
     using Mp3MusicZone.DomainServices.QueryServices.Songs.GetSongsCount;
+    using Mp3MusicZone.Web.ViewModels;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -27,6 +28,8 @@
     using Web.ViewModels.Shared;
 
     using static Common.Constants.ModelConstants;
+    using static Common.Constants.WebConstants;
+
 
     [Authorize]
     public class SongsController : Controller
@@ -121,12 +124,11 @@
                 Mapper.Map<IEnumerable<SongListingViewModel>>(songs);
 
             SearchViewModel<PaginatedViewModel<SongListingViewModel>> model =
-                new SearchViewModel<PaginatedViewModel<SongListingViewModel>>(
-                    new PaginatedViewModel<SongListingViewModel>(
-                        songsModel,
-                        page,
-                        2,
-                        songsCount),
+                ViewModelFactory.CreateSearchPaginatedViewModel<SongListingViewModel>(
+                    songsModel,
+                    page,
+                    DefaultPageSize,
+                    songsCount,
                     searchTerm,
                     "songs");
 

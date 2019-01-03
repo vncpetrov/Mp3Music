@@ -16,5 +16,6 @@
         public const string ErrorsMessageType = "danger";
 
         public const int DefaultHomePageLastApprovedSongsCount = 10;
+        public const int DefaultPageSize = 2;
     }
 }
