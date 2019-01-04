@@ -49,7 +49,8 @@
         public DbSet<SongEf> Songs { get; set; }
         public DbSet<PermissionEf> Permissions { get; set; }
         public DbSet<RolePermission> RolePermissions { get; set; }
-
+        public DbSet<AuditEntryEf> AuditEntries { get; set; }
+         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -141,6 +142,11 @@
                 .HasMany(p => p.Roles)
                 .WithOne(rp => rp.Permission)
                 .HasForeignKey(rp => rp.PermissionId);
+
+            builder.Entity<AuditEntryEf>()
+                .HasOne(ae => ae.User)
+                .WithMany()
+                .HasForeignKey(ae => ae.UserId);
         }
     }
 }

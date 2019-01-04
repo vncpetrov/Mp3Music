@@ -160,25 +160,35 @@
             return new UsersController(
                 this.CreatePermissionCommandService<PromoteUserToRole>(
                      new TransactionCommandServiceDecorator<PromoteUserToRole>(
-                        new PromoteUserToRoleCommandService(
-                            this.CreateUserRepository(scope),
-                            this.CreateRoleRepository(scope),
-                            this.CreateContext(scope))),
+                         new AuditingCommandServiceDecorator<PromoteUserToRole>(
+                             this.CreateRepository<AuditEntryEfRepository>(scope),
+                             this.CreateContext(scope),
+                             this.dateTimeProvider,
+                             this.CreateUserContext(scope),
+                             new PromoteUserToRoleCommandService(
+                                 this.CreateUserRepository(scope),
+                                 this.CreateRoleRepository(scope),
+                                 this.CreateContext(scope)))),
                      scope),
 
-                 this.CreatePermissionCommandService<DemoteUserFromRole>(
+                this.CreatePermissionCommandService<DemoteUserFromRole>(
                      new TransactionCommandServiceDecorator<DemoteUserFromRole>(
-                        new DemoteUserFromRoleCommandService(
-                            this.CreateUserRepository(scope),
-                            this.CreateRoleRepository(scope),
-                            this.CreateContext(scope))),
+                         new AuditingCommandServiceDecorator<DemoteUserFromRole>(
+                             this.CreateRepository<AuditEntryEfRepository>(scope),
+                             this.CreateContext(scope),
+                             this.dateTimeProvider,
+                             this.CreateUserContext(scope),
+                             new DemoteUserFromRoleCommandService(
+                                 this.CreateUserRepository(scope),
+                                 this.CreateRoleRepository(scope),
+                                 this.CreateContext(scope)))),
                      scope),
 
                 this.CreatePermissionQueryService<GetUsers, IEnumerable<User>>(
                     new GetUsersQueryService(
                         this.CreateUserRepository(scope)),
                     scope),
-                
+
                 new GetUsersCountQueryService(
                     this.CreateUserRepository(scope)));
         }
@@ -192,7 +202,7 @@
                             this.CreateSongRepository(scope),
                             this.CreateSongProvider(scope),
                             this.CreateContext(scope))),
-                     scope), 
+                     scope),
 
                 this.CreatePermissionCommandService<UploadSong>(
                      new TransactionCommandServiceDecorator<UploadSong>(
@@ -227,7 +237,7 @@
 
                 new GetSongsQueryService(
                         this.CreateSongRepository(scope)),
-                
+
                 new SongPlayer(
                     new IncrementSongListeningsCommandService(
                         this.CreateSongRepository(scope),
