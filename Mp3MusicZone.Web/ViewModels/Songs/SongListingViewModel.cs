@@ -15,6 +15,8 @@
 
         public string UploaderName { get; set; }
 
+        public int Listenings { get; set; }
+
         public string HeadingText { get; set; }
 
         public void Configure(Profile config)

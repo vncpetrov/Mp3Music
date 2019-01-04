@@ -18,6 +18,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Mp3MusicZone.DomainServices.QueryServices.Songs.GetSongs;
     using Mp3MusicZone.DomainServices.QueryServices.Songs.GetSongsCount;
+    using Mp3MusicZone.Web.FacadeServices;
     using Mp3MusicZone.Web.ViewModels;
     using System;
     using System.Collections.Generic;
@@ -39,10 +40,11 @@
         private readonly ICommandService<DeleteSong> deleteSong;
 
         private readonly IQueryService<GetSongForEditById, Song> getSongForEdit;
-        private readonly IQueryService<GetSongForDeleteById, Song> getSongForDelete;
-        private readonly IQueryService<GetSongForPlaying, SongForPlayingDTO> getSongForPlaying;
+        private readonly IQueryService<GetSongForDeleteById, Song> getSongForDelete; 
         private readonly IQueryService<GetSongsCount, int> getSongsCount;
         private readonly IQueryService<GetSongs, IEnumerable<Song>> getSongs;
+
+        private readonly ISongPlayer songPlayer;
 
 
         public SongsController(
@@ -52,9 +54,10 @@
 
             IQueryService<GetSongForEditById, Song> getSongForEdit,
             IQueryService<GetSongForDeleteById, Song> getSongForDelete,
-            IQueryService<GetSongForPlaying, SongForPlayingDTO> getSongForPlaying,
             IQueryService<GetSongsCount, int> getSongsCount,
-            IQueryService<GetSongs, IEnumerable<Song>> getSongs)
+            IQueryService<GetSongs, IEnumerable<Song>> getSongs,
+            
+            ISongPlayer songPlayer)
         {
             if (editSong is null)
                 throw new ArgumentNullException(nameof(editSong));
@@ -71,15 +74,15 @@
 
             if (getSongForDelete is null)
                 throw new ArgumentException(nameof(getSongForDelete));
-
-            if (getSongForPlaying is null)
-                throw new ArgumentException(nameof(getSongForPlaying));
-
+              
             if (getSongsCount is null)
                 throw new ArgumentException(nameof(getSongsCount));
 
             if (getSongs is null)
                 throw new ArgumentException(nameof(getSongs));
+
+            if (songPlayer is null)
+                throw new ArgumentException(nameof(songPlayer));
 
             this.editSong = editSong;
             this.uploadSong = uploadSong;
@@ -87,9 +90,10 @@
 
             this.getSongForEdit = getSongForEdit;
             this.getSongForDelete = getSongForDelete;
-            this.getSongForPlaying = getSongForPlaying;
             this.getSongsCount = getSongsCount;
             this.getSongs = getSongs;
+
+            this.songPlayer = songPlayer;
         }
 
         [AllowAnonymous]
@@ -331,16 +335,11 @@
 
         [AllowAnonymous]
         public async Task<IActionResult> Play(string id)
-        {
-            GetSongForPlaying query = new GetSongForPlaying()
-            {
-                SongId = id
-            };
-
+        { 
             SongForPlayingDTO song = null;
 
             string message = await this.CallServiceAsync(
-                async () => song = await this.getSongForPlaying.ExecuteAsync(query));
+                async () => song = await this.songPlayer.GetSongAsync(id));
 
             if (message != null)
             {

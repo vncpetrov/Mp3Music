@@ -10,8 +10,8 @@ using Mp3MusicZone.EfDataAccess;
 namespace Mp3MusicZone.EfDataAccess.Migrations
 {
     [DbContext(typeof(MusicZoneDbContext))]
-    [Migration("20181121234656_Empty")]
-    partial class Empty
+    [Migration("20190103172535_Listenings column added to Songs")]
+    partial class ListeningscolumnaddedtoSongs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -165,6 +165,10 @@ namespace Mp3MusicZone.EfDataAccess.Migrations
 
                     b.Property<string>("FileExtension")
                         .IsRequired();
+
+                    b.Property<bool>("IsApproved");
+
+                    b.Property<int>("Listenings");
 
                     b.Property<DateTime>("PublishedOn")
                         .HasColumnType("date");

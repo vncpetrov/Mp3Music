@@ -34,6 +34,8 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.Extensions.Logging;
+    using Mp3MusicZone.DomainServices.CommandServices.Songs.IncrementSongListenings;
+    using Mp3MusicZone.Web.FacadeServices;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -220,15 +222,19 @@
                         this.CreateSongRepository(scope)),
                     scope),
 
-                new GetSongForPlayingQueryService(
-                    this.CreateSongProvider(scope),
-                    this.CreateSongRepository(scope)),
-
                 new GetSongsCountQueryService(
                     this.CreateSongRepository(scope)),
 
                 new GetSongsQueryService(
-                        this.CreateSongRepository(scope)));
+                        this.CreateSongRepository(scope)),
+                
+                new SongPlayer(
+                    new IncrementSongListeningsCommandService(
+                        this.CreateSongRepository(scope),
+                        this.CreateContext(scope)),
+                    new GetSongForPlayingQueryService(
+                        this.CreateSongProvider(scope),
+                        this.CreateSongRepository(scope))));
         }
 
         private ManageController CreateManageController(Scope scope)

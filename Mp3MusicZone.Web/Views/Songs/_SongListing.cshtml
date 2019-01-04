@@ -62,16 +62,20 @@
                     <small>@song.UploaderName</small>
                 </div>
 
-                <div class="song-published-date">
+                <div class="song-metadata">
+                    <small>Published on @song.PublishedOn</small>
+                </div> 
+
+                <div class="song-metadata">
                     <small>
-                        Published on @song.PublishedOn
+                        @song.Listenings listenings
                     </small>
                 </div>
             </div>
 
             <audio id="@audioId"
                    controls
-                   preload="metadata">
+                   preload="none">
                 <source src="@urlPath"
                         type="audio/@song.FileExtension">
                 Your browser does not support the audio element.

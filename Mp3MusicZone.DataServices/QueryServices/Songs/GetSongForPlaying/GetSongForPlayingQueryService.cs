@@ -30,9 +30,10 @@
         {
             Song song = await this.songRepository.GetByIdAsync(query.SongId);
 
-            if (song is null)
+            if (song is null || !song.IsApproved)
             {
-                throw new InvalidOperationException($"Song with id {query.SongId} does not exists!");
+                throw new InvalidOperationException(
+                    $"Song with id {query.SongId} does not exists or is not approved yet!");
             }
 
            byte[] songFile = await this.songProvider

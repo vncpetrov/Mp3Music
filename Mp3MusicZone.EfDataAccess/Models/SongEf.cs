@@ -32,8 +32,9 @@
 
         public bool IsApproved { get; set; }
 
+        public int Listenings { get; set; }
+
         public string UploaderId { get; set; }
         public UserEf Uploader { get; set; }
-
     }
 }

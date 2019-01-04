@@ -19,6 +19,8 @@
 
         public bool IsApproved { get; set; }
 
+        public int Listenings { get; set; }
+
         public string UploaderId { get; set; }
         public User Uploader { get; set; }
     }

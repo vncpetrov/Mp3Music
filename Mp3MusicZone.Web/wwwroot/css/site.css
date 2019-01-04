@@ -531,10 +531,9 @@ div.song-heading {
     font-weight: bold;
 }
 
-.song-published-date small {
+.song-metadata small {
     color: #707070;
-    position: relative;
-    bottom: 7px;
+    position: relative; 
 }
 
 li.list-group-item.song-listing {
@@ -834,6 +833,7 @@ div.in .open .dropdown-menu > li > a:hover {
 
     audio {
         margin-bottom: 5px;
+        width: 40%;
     }
 
     .audio-table audio {
@@ -986,6 +986,14 @@ div.in .open .dropdown-menu > li > a:hover {
     table.songs div.audio-table audio {
         width: 250px;
     }
+
+    form.search-page-item  {
+        max-width: 95%;
+    }
+
+    form.search-page-item button {
+        left: calc(100% - 45px);
+    }
 }
 
 @media all and (max-width: 530px) {
@@ -1034,20 +1042,18 @@ div.in .open .dropdown-menu > li > a:hover {
 
 @media all and (max-width: 420px) {
     audio {
+        text-align: center;
         width: 100%;
     }
 
     div.song-heading {
         padding-bottom: 0;
+        width: 100%;
+        max-width: 100%;
     }
 
     li.song-action a {
         width: 75px;
-    }
-
-    div.song-heading {
-        max-width: 100%;
-        width: 100%;
     }
 }
 

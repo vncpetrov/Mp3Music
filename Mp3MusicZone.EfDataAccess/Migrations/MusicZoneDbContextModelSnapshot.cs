@@ -166,6 +166,8 @@ namespace Mp3MusicZone.EfDataAccess.Migrations
 
                     b.Property<bool>("IsApproved");
 
+                    b.Property<int>("Listenings");
+
                     b.Property<DateTime>("PublishedOn")
                         .HasColumnType("date");
 
