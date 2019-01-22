@@ -38,14 +38,12 @@
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IConfiguration>(Configuration);
 
             services.Configure<CookiePolicyOptions>(options =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
@@ -77,10 +75,15 @@
             services.AddScoped<IRoleService, RoleService>();
 
             // unhandled exceptions logger
+            services.AddScoped<IEfDbContextSaveChanges>(
+                x => x.GetService<MusicZoneDbContext>());
+
             services.AddScoped<
                 IEfRepository<UnhandledExceptionEntry>, UnhandledExceptionEntryEfRepository>();
+
             services.AddScoped<IDateTimeProvider, SystemDateTimeProvider>();
-             
+            services.AddScoped<IExceptionLogger, UnhandledExceptionLogger>();
+
             services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
             services.AddRouting(options => options.LowercaseUrls = true);
@@ -104,14 +107,10 @@
             services.AddSingleton<IControllerActivator>(activator);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             GlobalDiagnosticsContext.Set("connectionString",
                 Configuration.GetConnectionString(ConnectionStringSectionName));
-
-            //loggerFactory.AddNLog();
-            //env.ConfigureNLog("web.config");
 
             LogManager.ThrowExceptions = true;
 

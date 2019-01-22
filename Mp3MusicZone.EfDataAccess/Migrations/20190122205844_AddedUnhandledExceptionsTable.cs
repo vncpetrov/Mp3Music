@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Mp3MusicZone.EfDataAccess.Migrations
 {
-    public partial class AddedUnhandledExceptionEntriesTable : Migration
+    public partial class AddedUnhandledExceptionsTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,7 @@ namespace Mp3MusicZone.EfDataAccess.Migrations
                     Id = table.Column<string>(nullable: false),
                     ExceptionMessage = table.Column<string>(nullable: true),
                     ExceptionType = table.Column<string>(nullable: true),
-                    Url = table.Column<string>(nullable: false),
+                    AdditionalInfo = table.Column<string>(nullable: true),
                     TimeOfExecution = table.Column<DateTime>(nullable: false),
                     StackTrace = table.Column<string>(nullable: false)
                 },

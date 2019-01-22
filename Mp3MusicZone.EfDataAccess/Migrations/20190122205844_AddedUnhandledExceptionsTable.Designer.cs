@@ -10,8 +10,8 @@ using Mp3MusicZone.EfDataAccess;
 namespace Mp3MusicZone.EfDataAccess.Migrations
 {
     [DbContext(typeof(MusicZoneDbContext))]
-    [Migration("20190107052007_AddedUnhandledExceptionEntriesTable")]
-    partial class AddedUnhandledExceptionEntriesTable
+    [Migration("20190122205844_AddedUnhandledExceptionsTable")]
+    partial class AddedUnhandledExceptionsTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -219,6 +219,8 @@ namespace Mp3MusicZone.EfDataAccess.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("AdditionalInfo");
+
                     b.Property<string>("ExceptionMessage");
 
                     b.Property<string>("ExceptionType");
@@ -227,9 +229,6 @@ namespace Mp3MusicZone.EfDataAccess.Migrations
                         .IsRequired();
 
                     b.Property<DateTime>("TimeOfExecution");
-
-                    b.Property<string>("Url")
-                        .IsRequired();
 
                     b.HasKey("Id");
 

@@ -10,10 +10,10 @@
         public string ExceptionMessage { get; set; }
 
         public string ExceptionType { get; set; }
-         
-        public string Url { get; set; }
-         
+        
         public DateTime TimeOfExecution { get; set; }
+         
+        public string AdditionalInfo { get; set; }
          
         public string StackTrace { get; set; }
     }

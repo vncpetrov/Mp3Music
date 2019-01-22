@@ -12,8 +12,7 @@
 
         public string ExceptionType { get; set; }
 
-        [Required]
-        public string Url { get; set; }
+        public string AdditionalInfo { get; set; }
 
         [Required]
         public DateTime TimeOfExecution { get; set; }

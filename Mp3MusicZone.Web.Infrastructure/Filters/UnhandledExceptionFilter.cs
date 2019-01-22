@@ -1,45 +1,32 @@
 ﻿namespace Mp3MusicZone.Web.Infrastructure.Filters
 {
+    using Domain.Contracts;
+    using Domain.Models;
+    using EfDataAccess;
     using Extensions;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
-    using Mp3MusicZone.Domain.Contracts;
-    using Mp3MusicZone.Domain.Models;
-    using Mp3MusicZone.EfDataAccess;
+    using Newtonsoft.Json;
     using System;
 
     public class UnhandledExceptionFilter : IExceptionFilter
     {
-        private readonly IEfRepository<UnhandledExceptionEntry> unhandledExceptionRepository;
-        private readonly IEfDbContextSaveChanges contextSaveChanges;
-        private readonly IDateTimeProvider timeProvider;
+        private readonly IExceptionLogger logger;
 
-        public UnhandledExceptionFilter(
-            IEfRepository<UnhandledExceptionEntry> unhandledExceptionRepository,
-            MusicZoneDbContext efDbContext,
-            IDateTimeProvider timeProvider)
+        public UnhandledExceptionFilter(IExceptionLogger logger)
         {
-            if (unhandledExceptionRepository is null)
-                throw new ArgumentNullException(nameof(unhandledExceptionRepository));
+            if (logger is null)
+                throw new ArgumentNullException(nameof(logger));
 
-            if (efDbContext is null)
-                throw new ArgumentNullException(nameof(efDbContext));
-
-            if (timeProvider is null)
-                throw new ArgumentNullException(nameof(timeProvider));
-
-            this.unhandledExceptionRepository = unhandledExceptionRepository;
-            this.contextSaveChanges = efDbContext;
-            this.timeProvider = timeProvider;
+            this.logger = logger;
         }
 
         public void OnException(ExceptionContext context)
         {
             if (context.Result is null)
             {
-                // log exception
-                this.LogUnhandledException(context);
+                this.LogException(context);
 
                 IActionResult result = new RedirectToActionResult(
                         "Index", "Home", new { area = "" });
@@ -56,32 +43,13 @@
             }
         }
 
-        private void LogUnhandledException(ExceptionContext context)
+        private void LogException(ExceptionContext context)
         {
-            string url = this.GetUrl(context.HttpContext);
-            string exceptionMessage =
-                context.Exception.Message ?? context.Exception.InnerException.Message;
-
-            UnhandledExceptionEntry entry = new UnhandledExceptionEntry()
-            {
-                ExceptionMessage = exceptionMessage,
-                TimeOfExecution = this.timeProvider.UtcNow,
-                ExceptionType = context.Exception.GetType().Name,
-                StackTrace = context.Exception.StackTrace,
-                Url = url
-            };
-
-            this.unhandledExceptionRepository.Add(entry);
-            this.contextSaveChanges.SaveChanges();
-        }
-
-        private string GetUrl(HttpContext httpContext)
-        {
-            string protocol = httpContext.Request.Scheme;
-            string host = httpContext.Request.Host.Value;
-            string path = httpContext.Request.Path;
-
-            return $"{protocol}://{host}{path}";
+            string url = context.HttpContext.GetRequestUrl();
+            string method = context.HttpContext.Request.Method;
+            string additionalInfo = $"url: {url} | method: {method}";
+            
+            this.logger.Log(context.Exception, additionalInfo);
         }
     }
 }

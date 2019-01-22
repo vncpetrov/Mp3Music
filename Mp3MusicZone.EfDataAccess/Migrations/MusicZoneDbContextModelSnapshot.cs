@@ -217,6 +217,8 @@ namespace Mp3MusicZone.EfDataAccess.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("AdditionalInfo");
+
                     b.Property<string>("ExceptionMessage");
 
                     b.Property<string>("ExceptionType");
@@ -225,9 +227,6 @@ namespace Mp3MusicZone.EfDataAccess.Migrations
                         .IsRequired();
 
                     b.Property<DateTime>("TimeOfExecution");
-
-                    b.Property<string>("Url")
-                        .IsRequired();
 
                     b.HasKey("Id");
 

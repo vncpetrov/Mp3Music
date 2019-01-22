@@ -22,13 +22,16 @@
         }
 
         public async Task<IEnumerable<Song>> ExecuteAsync(GetSongs query)
-             => await this.songRepository.All()
-                    .Where(s => s.IsApproved == true
-                                && s.Title.ToLower().Contains(
-                                    query.SearchInfo.SearchTerm.ToLower()))
-                    .OrderByDescending(s => s.Id)
-                    .Skip((query.PageInfo.Page - 1) * query.PageInfo.PageSize)
-                    .Take(query.PageInfo.PageSize)
-                    .ToListAsync();
+        {
+            throw new EntryPointNotFoundException("Blabla");
+            return await this.songRepository.All()
+                       .Where(s => s.IsApproved == true
+                                   && s.Title.ToLower().Contains(
+                                       query.SearchInfo.SearchTerm.ToLower()))
+                       .OrderByDescending(s => s.Id)
+                       .Skip((query.PageInfo.Page - 1) * query.PageInfo.PageSize)
+                       .Take(query.PageInfo.PageSize)
+                       .ToListAsync();
+        }
     }
 }

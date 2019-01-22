@@ -55,7 +55,7 @@
             AuditEntry entry = new AuditEntry()
             {
                 UserId = this.userContext.GetCurrentUserId(),
-                TimeOfExecution=this.timeProvider.UtcNow,
+                TimeOfExecution = this.timeProvider.UtcNow,
                 Operation = command.GetType().Name,
                 OperationData = JsonConvert.SerializeObject(command)
             };
