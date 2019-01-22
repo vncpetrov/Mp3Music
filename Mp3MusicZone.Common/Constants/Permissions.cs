@@ -17,7 +17,5 @@
         public const string GetUsers = "7cc1d750-6226-4aa7-b0bb-0796f03951df";
         public const string PromoteUserToRole = "22fa81b1-6dd1-4524-81ab-78e22e211ba9";
         public const string DemoteUserFromRole = "a44d5791-7fda-4a2f-8749-347435890281";
-
-
     }
 }

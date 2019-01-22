@@ -95,7 +95,7 @@
             uploaderRole.Permissions.Add(new Permission() { Id = ApproveSong });
             uploaderRole.Permissions.Add(new Permission() { Id = RejectSong });
             uploaderRole.Permissions.Add(new Permission() { Id = UploadSong });
-
+            
             this.roleRepository.Update(uploaderRole);
         }
 
