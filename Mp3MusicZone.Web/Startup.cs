@@ -76,7 +76,7 @@
             services.AddScoped<ISignInService, SignInService>();
             services.AddScoped<IRoleService, RoleService>();
 
-            // exception unhandled exceptions logger
+            // unhandled exceptions logger
             services.AddScoped<
                 IEfRepository<UnhandledExceptionEntry>, UnhandledExceptionEntryEfRepository>();
             services.AddScoped<IDateTimeProvider, SystemDateTimeProvider>();

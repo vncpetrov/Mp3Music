@@ -12,12 +12,12 @@
     using Infrastructure.Filters;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Mp3MusicZone.Web.Components;
     using System;
     using System.Collections.Generic;
     using System.Security.Claims;
     using System.Threading.Tasks;
     using ViewModels;
+    using Web.Components;
     using Web.ViewModels;
     using Web.ViewModels.Shared;
 
@@ -90,8 +90,9 @@
             return View(model);
         }
 
+        [AjaxOnly]
         [AllowAnonymous]
-        public async Task<IActionResult> FilteredUsers(string searchTerm = null)
+        public async Task<IActionResult> FilteredUsersAjax(string searchTerm = null)
         {
             IEnumerable<User> users = null;
 
@@ -111,6 +112,7 @@
             return PartialView("_UserListing", model);
         }
 
+        [AjaxOnly]
         [AllowAnonymous]
         public async Task<IActionResult> PaginationAjax(string searchTerm)
         {

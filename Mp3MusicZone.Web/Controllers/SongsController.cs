@@ -139,8 +139,9 @@
             return View(model);
         }
 
+        [AjaxOnly]
         [AllowAnonymous]
-        public async Task<IActionResult> FilteredSongs(string searchTerm)
+        public async Task<IActionResult> FilteredSongsAjax(string searchTerm)
         {
             IEnumerable<Song> songs = null;
 
@@ -160,6 +161,7 @@
             return PartialView("_SongListing", model);
         }
 
+        [AjaxOnly]
         [AllowAnonymous]
         public async Task<IActionResult> PaginationAjax(string searchTerm)
         {
