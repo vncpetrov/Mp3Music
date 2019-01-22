@@ -10,7 +10,6 @@
     using DomainServices.QueryServices;
     using DomainServices.QueryServices.Songs.GetForDeleteById;
     using DomainServices.QueryServices.Songs.GetForEditById;
-    using DomainServices.QueryServices.Songs.GetLastApproved;
     using DomainServices.QueryServices.Songs.GetSongForPlaying;
     using Infrastructure.Extensions;
     using Infrastructure.Filters;
@@ -18,6 +17,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Mp3MusicZone.DomainServices.QueryServices.Songs.GetSongs;
     using Mp3MusicZone.DomainServices.QueryServices.Songs.GetSongsCount;
+    using Mp3MusicZone.Web.Components;
     using Mp3MusicZone.Web.FacadeServices;
     using Mp3MusicZone.Web.ViewModels;
     using System;
@@ -31,7 +31,6 @@
     using static Common.Constants.ModelConstants;
     using static Common.Constants.WebConstants;
 
-
     [Authorize]
     public class SongsController : Controller
     {
@@ -40,7 +39,7 @@
         private readonly ICommandService<DeleteSong> deleteSong;
 
         private readonly IQueryService<GetSongForEditById, Song> getSongForEdit;
-        private readonly IQueryService<GetSongForDeleteById, Song> getSongForDelete; 
+        private readonly IQueryService<GetSongForDeleteById, Song> getSongForDelete;
         private readonly IQueryService<GetSongsCount, int> getSongsCount;
         private readonly IQueryService<GetSongs, IEnumerable<Song>> getSongs;
 
@@ -56,7 +55,7 @@
             IQueryService<GetSongForDeleteById, Song> getSongForDelete,
             IQueryService<GetSongsCount, int> getSongsCount,
             IQueryService<GetSongs, IEnumerable<Song>> getSongs,
-            
+
             ISongPlayer songPlayer)
         {
             if (editSong is null)
@@ -74,7 +73,7 @@
 
             if (getSongForDelete is null)
                 throw new ArgumentException(nameof(getSongForDelete));
-              
+
             if (getSongsCount is null)
                 throw new ArgumentException(nameof(getSongsCount));
 
@@ -101,14 +100,14 @@
         {
             IEnumerable<Song> songs = null;
 
-            GetSongs query = new GetSongs()
+            GetSongs songsQuery = new GetSongs()
             {
-                PageInfo = new PageInfo(page, 2),
+                PageInfo = new PageInfo(page, DefaultPageSize),
                 SearchInfo = new SearchInfo(searchTerm)
             };
 
             string message = await this.CallServiceAsync(
-                async () => songs = await this.getSongs.ExecuteAsync(query));
+                async () => songs = await this.getSongs.ExecuteAsync(songsQuery));
 
             if (message != null)
             {
@@ -117,12 +116,13 @@
                     .WithErrorMessage(message);
             }
 
-            int songsCount = await this.getSongsCount.ExecuteAsync(
-                new GetSongsCount()
-                {
-                    Approved = true,
-                    SearchInfo = new SearchInfo(searchTerm)
-                });
+            GetSongsCount songsCountQuery = new GetSongsCount()
+            {
+                Approved = true,
+                SearchInfo = new SearchInfo(searchTerm)
+            };
+
+            int songsCount = await this.getSongsCount.ExecuteAsync(songsCountQuery);
 
             IEnumerable<SongListingViewModel> songsModel =
                 Mapper.Map<IEnumerable<SongListingViewModel>>(songs);
@@ -137,6 +137,47 @@
                     "songs");
 
             return View(model);
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> FilteredSongs(string searchTerm)
+        {
+            IEnumerable<Song> songs = null;
+
+            GetSongs songsQuery = new GetSongs()
+            {
+                PageInfo = new PageInfo(1, DefaultPageSize),
+                SearchInfo = new SearchInfo(searchTerm)
+            };
+
+            string message = await this.CallServiceAsync(
+                async () => songs = await this.getSongs.ExecuteAsync(songsQuery));
+
+
+            IEnumerable<SongListingViewModel> model =
+                Mapper.Map<IEnumerable<SongListingViewModel>>(songs);
+
+            return PartialView("_SongListing", model);
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> PaginationAjax(string searchTerm)
+        {
+            int songsCount = await this.getSongsCount.ExecuteAsync(new GetSongsCount()
+            {
+                Approved = true,
+                SearchInfo = new SearchInfo(searchTerm)
+            });
+
+            return ViewComponent(
+                typeof(PaginationComponent),
+                new
+                {
+                    pageInfo = new PaginatedViewModel<string>(
+                        null, 1, DefaultPageSize, songsCount),
+                    searchTerm = searchTerm,
+                    actionToCall = "all"
+                });
         }
 
         public IActionResult Upload()
@@ -185,29 +226,6 @@
                     .WithErrorMessage(message);
             }
 
-            //try
-            //{
-            //    string songExtension = model.File
-            //        .GetFileExtension();
-
-            //    await this.songService.UploadAsync(
-            //         model.Title,
-            //         songExtension,
-            //         model.Singer,
-            //         model.ReleasedYear,
-            //         this.User.FindFirst(ClaimTypes.NameIdentifier).Value,
-            //         model.File.ToByteArray());
-            //}
-            //catch (Exception ex)
-            //{
-            //    string message = ex.GetType() == typeof(InvalidOperationException) ?
-            //        ex.Message :
-            //        "We're sorry, something went wrong. Please try again later.";
-
-            //    return View(model)
-            //        .WithErrorMessage(message);
-            //}
-
             return View()
                 .WithSuccessMessage("Song uploaded successfully.");
         }
@@ -225,12 +243,6 @@
 
             if (message != null)
             {
-                if (message.Contains("do not have permissions"))
-                {
-                    return RedirectToAction(nameof(HomeController.Index), "Home")
-                        .WithErrorMessage(message);
-                }
-
                 return View()
                     .WithErrorMessage(message);
             }
@@ -268,12 +280,6 @@
 
             if (message != null)
             {
-                if (message.Contains("do not have permissions"))
-                {
-                    return RedirectToAction(nameof(HomeController.Index), "Home")
-                        .WithErrorMessage(message);
-                }
-
                 return View()
                     .WithErrorMessage(message);
             }
@@ -295,12 +301,6 @@
 
             if (message != null)
             {
-                if (message.Contains("do not have permissions"))
-                {
-                    return RedirectToAction(nameof(HomeController.Index), "Home")
-                        .WithErrorMessage(message);
-                }
-
                 return View()
                     .WithErrorMessage(message);
             }
@@ -335,7 +335,7 @@
 
         [AllowAnonymous]
         public async Task<IActionResult> Play(string id)
-        { 
+        {
             SongForPlayingDTO song = null;
 
             string message = await this.CallServiceAsync(
@@ -350,54 +350,6 @@
             MemoryStream ms = new MemoryStream(song.File);
 
             return File(ms, $"audio/{song.FileExtension}", song.HeadingText);
-        }
-
-        private string CallService(Action action)
-        {
-            string message = null;
-
-            try
-            {
-                action();
-            }
-            catch (InvalidOperationException ex)
-            {
-                message = ex.Message;
-            }
-            catch (NotAuthorizedException ex)
-            {
-                message = "You do not have permissions to perform this action.";
-            }
-            catch (Exception)
-            {
-                message = "We're sorry, something went wrong. Please try again later.";
-            }
-
-            return message;
-        }
-
-        private async Task<string> CallServiceAsync(Func<Task> func)
-        {
-            string message = null;
-
-            try
-            {
-                await func();
-            }
-            catch (InvalidOperationException ex)
-            {
-                message = ex.Message;
-            }
-            catch (NotAuthorizedException ex)
-            {
-                message = "You do not have permissions to perform this action.";
-            }
-            catch (Exception ex)
-            {
-                message = "We're sorry, something went wrong. Please try again later.";
-            }
-
-            return message;
         }
     }
 }

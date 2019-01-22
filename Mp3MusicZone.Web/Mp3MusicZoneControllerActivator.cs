@@ -134,16 +134,24 @@
         {
             return new Areas.Uploader.Controllers.SongsController(
                 this.CreatePermissionCommandService<ApproveSong>(
-                    new ApproveSongCommandService(
-                        this.CreateSongRepository(scope),
-                        this.CreateContext(scope)),
+                    this.CreateTransactionCommandService<ApproveSong>(
+                        this.CreateAuditingCommandService<ApproveSong>(
+                            new ApproveSongCommandService(
+                                this.CreateSongRepository(scope),
+                                this.CreateContext(scope)),
+                            scope),
+                        scope),
                     scope),
 
                 this.CreatePermissionCommandService<RejectSong>(
-                    new RejectSongCommandService(
-                        this.CreateSongRepository(scope),
-                        this.CreateSongProvider(scope),
-                        this.CreateContext(scope)),
+                    this.CreateTransactionCommandService<RejectSong>(
+                        this.CreateAuditingCommandService<RejectSong>(
+                            new RejectSongCommandService(
+                                this.CreateSongRepository(scope),
+                                this.CreateSongProvider(scope),
+                                this.CreateContext(scope)),
+                            scope),
+                        scope),
                     scope),
 
                 this.CreatePermissionQueryService<GetUnapprovedSongs, IEnumerable<Song>>(
@@ -159,31 +167,27 @@
         {
             return new UsersController(
                 this.CreatePermissionCommandService<PromoteUserToRole>(
-                     new TransactionCommandServiceDecorator<PromoteUserToRole>(
-                         new AuditingCommandServiceDecorator<PromoteUserToRole>(
-                             this.CreateRepository<AuditEntryEfRepository>(scope),
-                             this.CreateContext(scope),
-                             this.dateTimeProvider,
-                             this.CreateUserContext(scope),
-                             new PromoteUserToRoleCommandService(
+                    this.CreateTransactionCommandService<PromoteUserToRole>(
+                        this.CreateAuditingCommandService<PromoteUserToRole>(
+                            new PromoteUserToRoleCommandService(
                                  this.CreateUserRepository(scope),
                                  this.CreateRoleRepository(scope),
-                                 this.CreateContext(scope)))),
-                     scope),
+                                 this.CreateContext(scope)),
+                            scope),
+                        scope),
+                    scope),
 
                 this.CreatePermissionCommandService<DemoteUserFromRole>(
-                     new TransactionCommandServiceDecorator<DemoteUserFromRole>(
-                         new AuditingCommandServiceDecorator<DemoteUserFromRole>(
-                             this.CreateRepository<AuditEntryEfRepository>(scope),
-                             this.CreateContext(scope),
-                             this.dateTimeProvider,
-                             this.CreateUserContext(scope),
-                             new DemoteUserFromRoleCommandService(
+                    this.CreateTransactionCommandService<DemoteUserFromRole>(
+                        this.CreateAuditingCommandService<DemoteUserFromRole>(
+                            new DemoteUserFromRoleCommandService(
                                  this.CreateUserRepository(scope),
                                  this.CreateRoleRepository(scope),
-                                 this.CreateContext(scope)))),
-                     scope),
-
+                                 this.CreateContext(scope)),
+                            scope),
+                        scope),
+                    scope),
+                
                 this.CreatePermissionQueryService<GetUsers, IEnumerable<User>>(
                     new GetUsersQueryService(
                         this.CreateUserRepository(scope)),
@@ -197,28 +201,38 @@
         {
             return new SongsController(
                 this.CreatePermissionCommandService<EditSong>(
-                     new TransactionCommandServiceDecorator<EditSong>(
-                        new EditSongCommandService(
-                            this.CreateSongRepository(scope),
-                            this.CreateSongProvider(scope),
-                            this.CreateContext(scope))),
+                     this.CreateTransactionCommandService<EditSong>(
+                         this.CreateAuditingCommandService<EditSong>(
+                             new EditSongCommandService(
+                                 this.CreateSongRepository(scope),
+                                 this.CreateSongProvider(scope),
+                                 this.CreateContext(scope)),
+                             scope),
+                         scope),
                      scope),
 
+
                 this.CreatePermissionCommandService<UploadSong>(
-                     new TransactionCommandServiceDecorator<UploadSong>(
-                        new UploadSongCommandService(
-                            this.CreateSongRepository(scope),
-                            this.CreateSongProvider(scope),
-                            this.dateTimeProvider,
-                            this.CreateContext(scope))),
+                     this.CreateTransactionCommandService<UploadSong>(
+                         this.CreateAuditingCommandService<UploadSong>(
+                             new UploadSongCommandService(
+                                 this.CreateSongRepository(scope),
+                                 this.CreateSongProvider(scope),
+                                 this.dateTimeProvider,
+                                 this.CreateContext(scope)),
+                             scope),
+                         scope),
                      scope),
 
                 this.CreatePermissionCommandService<DeleteSong>(
-                     new TransactionCommandServiceDecorator<DeleteSong>(
-                        new DeleteSongCommandService(
-                            this.CreateSongRepository(scope),
-                            this.CreateSongProvider(scope),
-                            this.CreateContext(scope))),
+                     this.CreateTransactionCommandService<DeleteSong>(
+                         this.CreateAuditingCommandService<DeleteSong>(
+                             new DeleteSongCommandService(
+                                 this.CreateSongRepository(scope),
+                                 this.CreateSongProvider(scope),
+                                 this.CreateContext(scope)),
+                             scope), 
+                         scope), 
                      scope),
 
 
@@ -297,12 +311,33 @@
                       this.CreateServicePermissionChecker<TQuery>(scope),
                       queryService));
 
-        private PermissionCommandServiceDecorator<TCommand> CreatePermissionCommandService<TCommand>(
+        private PermissionCommandServiceDecorator<TCommand>
+            CreatePermissionCommandService<TCommand>(
                 ICommandService<TCommand> commandService,
                 Scope scope)
             => scope.Get(_ =>
                   new PermissionCommandServiceDecorator<TCommand>(
                       this.CreateServicePermissionChecker<TCommand>(scope),
+                      commandService));
+
+        private TransactionCommandServiceDecorator<TCommand>
+            CreateTransactionCommandService<TCommand>(
+                ICommandService<TCommand> commandService,
+                Scope scope)
+            => scope.Get(_ =>
+                  new TransactionCommandServiceDecorator<TCommand>(
+                    commandService));
+
+        private AuditingCommandServiceDecorator<TCommand>
+            CreateAuditingCommandService<TCommand>(
+                ICommandService<TCommand> commandService,
+                Scope scope)
+            => scope.Get(_ =>
+                  new AuditingCommandServiceDecorator<TCommand>(
+                      this.CreateRepository<AuditEntryEfRepository>(scope),
+                      this.CreateContext(scope),
+                      this.dateTimeProvider,
+                      this.CreateUserContext(scope),
                       commandService));
 
         private ServicePermissionChecker<T> CreateServicePermissionChecker<T>(Scope scope)

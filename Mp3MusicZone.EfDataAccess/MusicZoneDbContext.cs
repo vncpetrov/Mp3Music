@@ -50,6 +50,7 @@
         public DbSet<PermissionEf> Permissions { get; set; }
         public DbSet<RolePermission> RolePermissions { get; set; }
         public DbSet<AuditEntryEf> AuditEntries { get; set; }
+        public DbSet<UnhandledExceptionEntryEf> UnhandledExceptionEntries { get; set; }
          
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

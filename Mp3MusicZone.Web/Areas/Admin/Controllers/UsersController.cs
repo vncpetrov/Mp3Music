@@ -12,13 +12,13 @@
     using Infrastructure.Filters;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Mp3MusicZone.Web.ViewModels;
+    using Mp3MusicZone.Web.Components;
     using System;
     using System.Collections.Generic;
     using System.Security.Claims;
     using System.Threading.Tasks;
     using ViewModels;
-    using Web.Controllers;
+    using Web.ViewModels;
     using Web.ViewModels.Shared;
 
     using static Common.Constants.WebConstants;
@@ -56,47 +56,80 @@
             this.demoteUser = demoteUser;
             this.getUsers = getUsers;
             this.getUsersCount = getUsersCount;
-
         }
 
         public async Task<IActionResult> Index(int page = 1, string searchTerm = null)
         {
-            IEnumerable<User> users = null;
-            GetUsers query = new GetUsers()
+            GetUsers getUsersQuery = new GetUsers()
             {
                 PageInfo = new PageInfo(page, DefaultPageSize),
                 SearchInfo = new SearchInfo(searchTerm)
             };
 
-            string message = await this.CallServiceAsync(
-                async () => users = await this.getUsers.ExecuteAsync(query));
+            IEnumerable<User> users = await this.getUsers.ExecuteAsync(getUsersQuery);
 
-            if (message != null)
+            GetUsersCount getUsersCountQuery = new GetUsersCount()
             {
-                return RedirectToAction(
-                    nameof(HomeController.Index), "Home", new { area = "" })
-                    .WithErrorMessage(message);
-            }
+                SearchInfo = new SearchInfo(searchTerm)
+            };
 
-            int usersCount = await this.getUsersCount.ExecuteAsync(
-                new GetUsersCount()
-                {
-                    SearchInfo = new SearchInfo(searchTerm)
-                });
+            int usersCount = await this.getUsersCount.ExecuteAsync(getUsersCountQuery);
 
             IEnumerable<UserListingViewModel> usersModel =
                 Mapper.Map<IEnumerable<UserListingViewModel>>(users);
 
             SearchViewModel<PaginatedViewModel<UserListingViewModel>> model =
                 ViewModelFactory.CreateSearchPaginatedViewModel<UserListingViewModel>(
-                    usersModel, 
+                    usersModel,
                     page,
-                    DefaultPageSize, 
+                    DefaultPageSize,
                     usersCount,
-                    searchTerm, 
+                    searchTerm,
                     "users");
 
             return View(model);
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> FilteredUsers(string searchTerm = null)
+        {
+            IEnumerable<User> users = null;
+
+            GetUsers query = new GetUsers()
+            {
+                PageInfo = new PageInfo(1, DefaultPageSize),
+                SearchInfo = new SearchInfo(searchTerm)
+            };
+
+            string message = await this.CallServiceAsync(
+                async () => users = await this.getUsers.ExecuteAsync(query));
+
+
+            IEnumerable<UserListingViewModel> model =
+                Mapper.Map<IEnumerable<UserListingViewModel>>(users);
+
+            return PartialView("_UserListing", model);
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> PaginationAjax(string searchTerm)
+        {
+            GetUsersCount query = new GetUsersCount()
+            {
+                SearchInfo = new SearchInfo(searchTerm)
+            };
+
+            int songsCount = await this.getUsersCount.ExecuteAsync(query);
+
+            return ViewComponent(
+                typeof(PaginationComponent),
+                new
+                {
+                    pageInfo = new PaginatedViewModel<string>(
+                        null, 1, DefaultPageSize, songsCount),
+                    searchTerm = searchTerm,
+                    actionToCall = "index"
+                });
         }
 
         [HttpPost]
@@ -110,13 +143,6 @@
 
             if (message != null)
             {
-                if (message.Contains("do not have permissions"))
-                {
-                    return RedirectToAction(
-                        nameof(HomeController.Index), "Home", new { area = "" })
-                        .WithErrorMessage(message);
-                }
-
                 return RedirectToAction(nameof(this.Index))
                     .WithErrorMessage(message);
             }
@@ -144,13 +170,6 @@
 
             if (message != null)
             {
-                if (message.Contains("do not have permissions"))
-                {
-                    return RedirectToAction(
-                        nameof(HomeController.Index), "Home", new { area = "" })
-                        .WithErrorMessage(message);
-                }
-
                 return RedirectToAction(nameof(this.Index))
                     .WithErrorMessage(message);
             }
@@ -158,6 +177,5 @@
             return RedirectToAction(nameof(this.Index))
                 .WithSuccessMessage($"User {model.Username} successfully demoted from {model.RoleName} role.");
         }
-
     }
 }

@@ -7,7 +7,10 @@
 
     public class PaginationComponent : ViewComponent
     {
-        public IViewComponentResult Invoke(IPagination pageInfo, string searchTerm)
+        public IViewComponentResult Invoke(
+            IPagination pageInfo,
+            string searchTerm,
+            string actionToCall)
         {
             int totalPages =
                 (int)Math.Ceiling((double)pageInfo.TotalItems / pageInfo.PageSize);
@@ -52,7 +55,8 @@
                 StartPage = startPage,
                 EndPage = endPage,
                 PreviousDisabled = previousDisabled,
-                NextDisabled = nextDisabled
+                NextDisabled = nextDisabled,
+                ActionToCall = actionToCall
             };
 
             return View("_Pagination", model);

@@ -47,14 +47,14 @@
             {
                 message = ex.Message;
             }
-            catch (NotAuthorizedException ex)
-            {
-                message = "You do not have permissions to perform this action.";
-            }
-            catch (Exception ex)
-            {
-                message = "We're sorry, something went wrong. Please try again later.";
-            }
+            //catch (NotAuthorizedException ex)
+            //{
+            //    message = "You do not have permissions to perform this action.";
+            //}
+            //catch (Exception ex)
+            //{
+            //    message = "We're sorry, something went wrong. Please try again later.";
+            //}
 
             return message;
         }

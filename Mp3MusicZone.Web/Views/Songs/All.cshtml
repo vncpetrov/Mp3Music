@@ -22,15 +22,20 @@
                 }
                 else
                 {
-                    <partial name="~/Views/Songs/_SongListing.cshtml"
-                             model="Model.DecoratedModel.Items" />
+                        <partial name="~/Views/Songs/_SongListing.cshtml"
+                                 model="Model.DecoratedModel.Items" />
+                        @*<partial name="~/Views/Songs/_SongListing.cshtml"
+                            model="Model" />*@
 
-                    @(await Component.InvokeAsync<PaginationComponent>(
-                        new
-                        {
-                            pageInfo = Model.DecoratedModel,
-                            searchTerm = Model.SearchTerm
-                        }))
+                    <div class="pagination-menu">
+                        @(await Component.InvokeAsync<PaginationComponent>(
+                            new
+                            {
+                                pageInfo = Model.DecoratedModel,
+                                searchTerm = Model.SearchTerm,
+                                actionToCall = "all"
+                            }))
+                    </div>
                 }
             </div>
         </div>

@@ -9,12 +9,14 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
+    using Mp3MusicZone.Web.ViewModels.Shared;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Threading.Tasks;
     using ViewModels.Songs;
     using Web.ViewModels;
+
     using static Common.Constants.WebConstants;
 
     public class HomeController : Controller
@@ -47,12 +49,16 @@
             IEnumerable<SongListingViewModel> model =
                 Mapper.Map<IEnumerable<SongListingViewModel>>(songs);
 
-            return View(model);
-        }
+            //SearchViewModel<PaginatedViewModel<SongListingViewModel>> model =
+            //   ViewModelFactory.CreateSearchPaginatedViewModel<SongListingViewModel>(
+            //       songsModel,
+            //       default(int),
+            //       default(int),
+            //       default(int),
+            //       null,
+            //       null);
 
-        private SearchInfo SearchInfo()
-        {
-            throw new NotImplementedException();
+            return View(model);
         }
 
         public IActionResult About()

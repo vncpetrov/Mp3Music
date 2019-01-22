@@ -16,6 +16,8 @@
 
         public string NextDisabled { get; set; }
 
+        public string ActionToCall { get; set; }
+
         public int Previous
             => this.Current == 1 ? 1 : this.Current - 1;
 

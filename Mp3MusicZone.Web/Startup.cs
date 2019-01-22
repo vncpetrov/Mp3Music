@@ -4,7 +4,11 @@
     using Auth.Contracts;
     using Auth.Identity;
     using AutoMapper;
+    using Domain.Contracts;
+    using Domain.Models;
+    using DomainServices;
     using EfDataAccess;
+    using EfDataAccess.EfRepositories;
     using EfDataAccess.Models;
     using Infrastructure.Mappings;
     using Microsoft.AspNetCore.Builder;
@@ -17,15 +21,13 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
-    using Mp3MusicZone.Domain.Contracts;
-    using Mp3MusicZone.Domain.Models;
-    using Mp3MusicZone.DomainServices;
-    using Mp3MusicZone.EfDataAccess.EfRepositories;
-    using Mp3MusicZone.Web.Infrastructure;
     using NLog;
+    using Web.Infrastructure;
     using System;
 
     using static Common.Constants.WebConstants;
+    using Mp3MusicZone.Web.Infrastructure.Filters;
+    using Mp3MusicZone.Common.Providers;
 
     public class Startup
     {
@@ -53,7 +55,7 @@
             services.AddDbContext<MusicZoneDbContext>(
                 options => options.UseSqlServer(connectionString));
 
-            //services.AddScoped<Mp3MusicZoneDbContext>(c => new Mp3MusicZoneDbContext(Configuration.GetConnectionString("Mp3MusicZoneConnectionString")));
+            //services.AddScoped<MusicZoneDbContext>(c => new MusicZoneDbContext(Configuration.GetConnectionString("MusicZoneConnectionString")));
 
             services.AddIdentity<UserEf, RoleEf>(options =>
             {
@@ -64,10 +66,8 @@
 
                 options.SignIn.RequireConfirmedEmail = true;
             })
-                //.AddUserStore<UserStore<UserEf, RoleEf, MusicZoneDbContext, string, IdentityUserClaim<string>, UserRole, IdentityUserLogin<string>, IdentityUserToken<string>, IdentityRoleClaim<string>>>()
-                //.AddRoleStore<RoleStore<IdentityRole<string>, MusicZoneDbContext, string, UserRole, IdentityRoleClaim<string>>>()
-                .AddEntityFrameworkStores<MusicZoneDbContext>()
-                .AddDefaultTokenProviders();
+            .AddEntityFrameworkStores<MusicZoneDbContext>()
+            .AddDefaultTokenProviders();
 
             services.AddScoped<IUserContext, AspNetUserContext>();
             services.AddScoped<IEfRepository<User>, UserEfRepository>();
@@ -76,6 +76,11 @@
             services.AddScoped<ISignInService, SignInService>();
             services.AddScoped<IRoleService, RoleService>();
 
+            // exception unhandled exceptions logger
+            services.AddScoped<
+                IEfRepository<UnhandledExceptionEntry>, UnhandledExceptionEntryEfRepository>();
+            services.AddScoped<IDateTimeProvider, SystemDateTimeProvider>();
+             
             services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
             services.AddRouting(options => options.LowercaseUrls = true);
@@ -83,6 +88,8 @@
             services.AddMvc(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                options.Filters.Add<CommonExceptionFilter>(1);
+                options.Filters.Add<UnhandledExceptionFilter>(0);
             })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -115,7 +122,6 @@
             }
             else
             {
-                app.UseDeveloperExceptionPage();
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }

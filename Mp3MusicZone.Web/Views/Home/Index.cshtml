@@ -1,4 +1,5 @@
-﻿@model IEnumerable<SongListingViewModel>
+﻿@*@model SearchViewModel<PaginatedViewModel<SongListingViewModel>>*@
+@model IEnumerable<SongListingViewModel>
 
 @{
     ViewData["Title"] = "Home Page";
@@ -17,6 +18,11 @@
         </div>
     </div>
 </div>
+
+@*<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    $('.pagination').remove();
+</script>*@
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")

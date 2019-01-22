@@ -2,10 +2,12 @@
 
 <div class="row">
     <form method="get"
+          id="search-form"
           class="search
                  search-page-item">
         <div>
             <input name="searchTerm"
+                   id="search-term"
                    type="text"
                    class="form-control"
                    value="@Model.SearchTerm"
@@ -18,3 +20,53 @@
     </form>
 </div>
 
+<script type="text/javascript">
+
+    function scriptToExecute() {
+        $('#search-form').bind('submit', function(e) {
+            e.preventDefault();
+
+            @{
+                string area = this.ViewContext.RouteData.Values["area"]?.ToString();
+                string controller = ViewContext.RouteData.Values["controller"].ToString();
+                string filterAction = $"Filtered{controller}";
+                string paginationAction = "PaginationAjax";
+                string path = string.Empty;
+
+                if (area != null)
+                {
+                    path = $"/{area}";
+                }
+
+                path += $"/{controller}/";
+             }
+
+            $.ajax({
+                url: '@(path + filterAction)',
+                data: { 'searchTerm': $('#search-term').val() },
+                type: 'GET',
+                success: function (result) {
+                    console.log(result)
+                    $('#@Model.SearchIn').html(result); 
+                }
+            });
+
+            $.ajax({
+                url: '@(path + paginationAction)',
+                data: { searchTerm: $('#search-term').val()},
+                type: 'GET',
+                success: function (result) {
+                    $('#pagination-menu').html(result); 
+                }
+            });
+        })
+    }
+
+    function runWhenReady() {
+        if (window.$)
+            scriptToExecute();
+        else
+            setTimeout(runWhenReady, 100);
+    }
+    runWhenReady();
+</script>

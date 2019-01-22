@@ -37,7 +37,7 @@
         {
             User user = await this.userRepository.All(eagerLoading: true)
                 .FirstOrDefaultAsync(u => u.Id == command.UserId);
-
+            
             if (user is null)
             {
                 throw new InvalidOperationException(

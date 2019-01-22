@@ -1,0 +1,147 @@
+﻿@model IEnumerable<UserListingViewModel>
+
+<div id="users">
+    <table class="users table table-responsive table-hover">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>E-mail</th>
+                <th>Name</th>
+                <th>Confirmed</th>
+                <th>Admin</th>
+                <th>Uploader</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var user in Model)
+            {
+                bool isAdmin = user.Roles.Any(
+                        r => r == RoleType.Administrator.ToString());
+
+                bool isUploader = user.Roles.Any(
+                    r => r == RoleType.Uploader.ToString());
+
+                <tr>
+                    <td class="col-md-2">
+                        @user.Username
+                    </td>
+
+                    <td class="col-md-3">
+                        @user.Email
+                    </td>
+
+                    <td class="col-md-3">
+                        @user.Name
+                    </td>
+
+                    <td class="col-md-1">
+                        @(user.EmailConfirmed ? "Yes" : "No")
+                    </td>
+
+                    <td class="col-md-1">
+                        <form method="post">
+                            @if (isAdmin)
+                            {
+                                <button type="submit"
+                                        asp-area="Admin"
+                                        asp-controller="Users"
+                                        asp-action="DemoteUser"
+                                        title="Demote"
+                                        class="btn
+                                                       btn-default
+                                                       check
+                                                       check-reverse
+                                                       role
+                                                       hvr-red
+                                                       hvr-back-pulse">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                            }
+                            else
+                            {
+                                <button type="submit"
+                                        asp-area="Admin"
+                                        asp-controller="Users"
+                                        asp-action="PromoteUser"
+                                        title="Promote"
+                                        class="btn
+                                                       btn-default
+                                                       times
+                                                       times-reverse
+                                                       role
+                                                       hvr-green
+                                                       hvr-back-pulse">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            }
+
+                            <input type="hidden"
+                                   name="userId"
+                                   value="@user.Id" />
+
+                            <input type="hidden"
+                                   name="username"
+                                   value="@user.Username" />
+
+                            <input type="hidden"
+                                   name="roleName"
+                                   value="@RoleType.Administrator.ToString()" />
+                        </form>
+                    </td>
+
+                    <td class="col-md-1">
+                        <form method="post">
+                            @if (isAdmin || isUploader)
+                            {
+                                <button type="submit"
+                                        asp-area="Admin"
+                                        asp-controller="Users"
+                                        asp-action="DemoteUser"
+                                        title="Demote"
+                                        class="check
+                                                       check-reverse
+                                                       role
+                                                       btn
+                                                       btn-default
+                                                       hvr-red
+                                                       hvr-back-pulse">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                            }
+                            else
+                            {
+                                <button type="submit"
+                                        asp-area="Admin"
+                                        asp-controller="Users"
+                                        asp-action="PromoteUser"
+                                        title="Promote"
+                                        class="times
+                                                       times-reverse
+                                                       role
+                                                       btn
+                                                       btn-default
+                                                       hvr-green
+                                                       hvr-back-pulse">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            }
+
+                            <input type="hidden"
+                                   name="userId"
+                                   value="@user.Id" />
+
+                            <input type="hidden"
+                                   name="username"
+                                   value="@user.Username" />
+
+                            <input type="hidden"
+                                   name="roleName"
+                                   value="@RoleType.Uploader.ToString()" />
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

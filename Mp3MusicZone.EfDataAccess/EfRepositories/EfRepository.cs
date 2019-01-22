@@ -18,12 +18,12 @@
         protected MusicZoneDbContext context;
         protected DbSet<TEntity> dbSet;
 
-        protected EfRepository(MusicZoneDbContext context)
+        protected EfRepository(MusicZoneDbContext efDbContext)
         {
-            if (context is null) throw new ArgumentNullException(nameof(context));
+            if (efDbContext is null) throw new ArgumentNullException(nameof(efDbContext));
 
-            this.context = context;
-            this.dbSet = context.Set<TEntity>();
+            this.context = efDbContext;
+            this.dbSet = efDbContext.Set<TEntity>();
         }
 
         public virtual IQueryable<TDomain> All(bool eagerLoading = false)

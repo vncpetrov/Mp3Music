@@ -20,7 +20,7 @@
     using Web.ViewModels.Songs;
 
     using static Common.Constants.WebConstants;
-    
+
     [Authorize]
     [Area("Uploader")]
     public class SongsController : Controller
@@ -59,28 +59,20 @@
 
         public async Task<IActionResult> UnapprovedSongs(int page = 1)
         {
-            IEnumerable<Song> unapprovedSongs = null;
-            GetUnapprovedSongs query = new GetUnapprovedSongs()
+            GetUnapprovedSongs getSongsQuery = new GetUnapprovedSongs()
             {
                 Page = page
             };
 
-            string message = await this.CallServiceAsync(
-                async () => unapprovedSongs = await this.getUnapprovedSongs.ExecuteAsync(query));
+            IEnumerable<Song> unapprovedSongs = await this.getUnapprovedSongs.ExecuteAsync(getSongsQuery);
 
-            if (message != null)
+            GetSongsCount getSongsCountQuery = new GetSongsCount()
             {
-                return RedirectToAction(
-                    nameof(HomeController.Index), "Home", new { area = "" })
-                    .WithErrorMessage(message);
-            }
+                Approved = false,
+                SearchInfo = new SearchInfo(null)
+            };
 
-            int songsCount = await this.getSongsCount.ExecuteAsync(
-                new GetSongsCount()
-                {
-                    Approved = false,
-                    SearchInfo = new SearchInfo(null)
-                });
+            int songsCount = await this.getSongsCount.ExecuteAsync(getSongsCountQuery);
 
             IEnumerable<SongListingViewModel> songsModel =
                 Mapper.Map<IEnumerable<SongListingViewModel>>(unapprovedSongs);
@@ -89,11 +81,11 @@
                 ViewModelFactory.CreatePaginatedViewModel<SongListingViewModel>(
                     songsModel,
                     page,
-                    DefaultPageSize, 
+                    DefaultPageSize,
                     songsCount);
 
             return View(model);
-        } 
+        }
 
         public async Task<IActionResult> Approve(string id)
         {
@@ -107,13 +99,6 @@
 
             if (message != null)
             {
-                if (message.Contains("do not have permissions"))
-                {
-                    return RedirectToAction(
-                        nameof(HomeController.Index), "Home", new { area = "" })
-                        .WithErrorMessage(message);
-                }
-
                 return RedirectToAction(nameof(UnapprovedSongs))
                     .WithErrorMessage(message);
             }
@@ -134,13 +119,6 @@
 
             if (message != null)
             {
-                if (message.Contains("do not have permissions"))
-                {
-                    return RedirectToAction(
-                        nameof(HomeController.Index), "Home", new { area = "" })
-                        .WithErrorMessage(message);
-                }
-
                 return RedirectToAction(nameof(UnapprovedSongs))
                     .WithErrorMessage(message);
             }

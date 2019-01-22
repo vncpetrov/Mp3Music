@@ -1,85 +1,89 @@
 ﻿@model IEnumerable<SongListingViewModel>
+@*@model SearchViewModel<PaginatedViewModel<SongListingViewModel>>*@
+
 @inject IUserService userService
 
 @using Mp3MusicZone.Common.Constants
 
 
-<ul class="list-group">
-    @foreach (var song in Model)
-    {
-        string urlPath = Url.Action(
-            controller: "Songs",
-            action: "Play",
-            values: new { id = song.Id });
+<div id="songs">
+    <ul class="list-group">
+        @foreach (var song in Model)
+        {
+            string urlPath = Url.Action(
+                controller: "Songs",
+                action: "Play",
+                values: new { id = song.Id });
 
-        string audioId = $"audio{song.Id}";
+            string audioId = $"audio{song.Id}";
 
-        <li class="list-group-item
+            <li class="list-group-item
                    song-listing">
-            <div class="song-heading">
-                <a href="javascript:void(0)"
-                   class="song-heading-text"
-                   title="@song.HeadingText"
-                   onclick="document.getElementById('@audioId').play()">
-                    @song.HeadingText
-                </a>
+                <div class="song-heading">
+                    <a href="javascript:void(0)"
+                       class="song-heading-text"
+                       title="@song.HeadingText"
+                       onclick="document.getElementById('@audioId').play()">
+                        @song.HeadingText
+                    </a>
 
-                <ul class="song-actions">
-                    @if (this.userService.CheckPermission(Permissions.EditSong))
-                    {
-                        <li class="song-action">
-                            <a asp-controller="Songs"
-                               asp-action="Edit"
-                               asp-route-id="@song.Id"
-                               class="edit-icon
+                    <ul class="song-actions">
+                        @if (this.userService.CheckPermission(Permissions.EditSong))
+                        {
+                            <li class="song-action">
+                                <a asp-controller="Songs"
+                                   asp-action="Edit"
+                                   asp-route-id="@song.Id"
+                                   class="edit-icon
                                       btn
                                       btn-default
                                       hvr-warning
                                       hvr-back-pulse">
-                                Edit
-                            </a>
-                        </li>
-                    }
+                                    Edit
+                                </a>
+                            </li>
+                        }
 
-                    @if (this.userService.CheckPermission(Permissions.DeleteSong))
-                    {
-                        <li class="song-action">
-                            <a asp-controller="Songs"
-                               asp-action="Delete"
-                               asp-route-id="@song.Id"
-                               class="delete-icon
+                        @if (this.userService.CheckPermission(Permissions.DeleteSong))
+                        {
+                            <li class="song-action">
+                                <a asp-controller="Songs"
+                                   asp-action="Delete"
+                                   asp-route-id="@song.Id"
+                                   class="delete-icon
                                       btn
                                       btn-default
                                       hvr-red
                                       hvr-back-pulse">
-                                Delete
-                            </a>
-                        </li>
-                    }
-                </ul>
+                                    Delete
+                                </a>
+                            </li>
+                        }
+                    </ul>
 
-                <div class="song-uploader">
-                    <small>@song.UploaderName</small>
+                    <div class="song-uploader">
+                        <small>@song.UploaderName</small>
+                    </div>
+
+                    <div class="song-metadata">
+                        <small>Published on @song.PublishedOn</small>
+                    </div>
+
+                    <div class="song-metadata">
+                        <small>
+                            @song.Listenings listenings
+                        </small>
+                    </div>
                 </div>
 
-                <div class="song-metadata">
-                    <small>Published on @song.PublishedOn</small>
-                </div> 
-
-                <div class="song-metadata">
-                    <small>
-                        @song.Listenings listenings
-                    </small>
-                </div>
-            </div>
-
-            <audio id="@audioId"
-                   controls
-                   preload="none">
-                <source src="@urlPath"
-                        type="audio/@song.FileExtension">
-                Your browser does not support the audio element.
-            </audio>
-        </li>
-    }
-</ul>
+                <audio id="@audioId"
+                       controls
+                       preload="none">
+                    <source src="@urlPath"
+                            type="audio/@song.FileExtension">
+                    Your browser does not support the audio element.
+                </audio>
+            </li>
+        }
+    </ul>
+</div>
