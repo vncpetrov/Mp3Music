@@ -1,5 +1,7 @@
 version: 1.1.{build}
 image: Visual Studio 2017 Preview
+cache:
+  - packages -> **\packages.config
 branches:
   only:
   - never-build-branch-automatically-dont-use-this-name
