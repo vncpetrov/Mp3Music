@@ -93,7 +93,7 @@
                 options.Filters.Add<CommonExceptionFilter>(1);
                 options.Filters.Add<UnhandledExceptionFilter>(0);
             })
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             var emailSettings = Configuration.GetSection("EmailSettings")
                 .Get<EmailSettings>();

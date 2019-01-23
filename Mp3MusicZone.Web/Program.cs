@@ -58,6 +58,9 @@
             WebHost.CreateDefaultBuilder(args)
                 .UseIISIntegration()
                 .UseStartup<Startup>()
+                .ConfigureKestrel((context, options) =>
+                {
+                })
                 .UseSetting(WebHostDefaults.DetailedErrorsKey, "true")
                 .CaptureStartupErrors(true);
     }
