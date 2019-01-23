@@ -77,7 +77,6 @@
             }
 
             this.contextSaveChanges.SaveChanges();
-
             await Task.CompletedTask;
         }
     }
