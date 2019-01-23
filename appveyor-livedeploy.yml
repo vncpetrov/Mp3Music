@@ -20,7 +20,7 @@ build_script:
  - msbuild /verbosity:quiet "Mp3MusicZone.sln"
  - cmd: dotnet publish ./Mp3MusicZone.Web/Mp3MusicZone.Web.csproj
 artifacts:
- - path: '.\Mp3MusicZone.Web\bin\Release\netcoreapp2.1\publish'
+ - path: '.\Mp3MusicZone.Web\bin\Release\netcoreapp2.2\publish'
    name: WebSite
    type: WebDeployPackage
 before_test:
