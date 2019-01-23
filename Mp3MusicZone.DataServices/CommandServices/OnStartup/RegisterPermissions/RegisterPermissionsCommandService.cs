@@ -8,7 +8,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using Common.Constants;
     using System.Threading.Tasks;
+
 
     public class RegisterPermissionsCommandService : ICommandService<OnStartupNullObject>
     {
@@ -35,16 +37,16 @@
                 .GetTypes()
                 .Where(t => t.GetCustomAttribute<PermissionAttribute>() != null)
                 .ToList();
-        
+
             List<Permission> existingPermissions = this.permissionRepository
                 .All()
                 .ToList();
 
-           List<Type> commands = Assembly.GetExecutingAssembly()
-                .GetTypes()
-                .Where(t => t.Namespace.Contains("CommandService")
-                            && t.GetCustomAttribute<PermissionAttribute>() != null)
-                .ToList();
+            List<Type> commands = Assembly.GetExecutingAssembly()
+                 .GetTypes()
+                 .Where(t => t.Namespace.Contains("CommandService")
+                             && t.GetCustomAttribute<PermissionAttribute>() != null)
+                 .ToList();
 
             foreach (var type in types)
             {
@@ -52,8 +54,8 @@
                 if (type.GetInterfaces()
                         .Any(i => i.IsGenericType
                                   && i.GetGenericTypeDefinition() == typeof(IQuery<>))
-                    && commands.Any(c => 
-                        c.GetCustomAttribute<PermissionAttribute>().PermissionId == 
+                    && commands.Any(c =>
+                        c.GetCustomAttribute<PermissionAttribute>().PermissionId ==
                         type.GetCustomAttribute<PermissionAttribute>().PermissionId))
                 {
                     continue;
@@ -66,6 +68,9 @@
                     this.permissionRepository.Add(
                         new Permission()
                         {
+                            Id = (string)typeof(Permissions)
+                                    .GetField(permissionName)
+                                    .GetValue(null),
                             Name = permissionName
                         });
                 }

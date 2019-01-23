@@ -73,7 +73,7 @@
 
             adminRole.Permissions = permissions;
 
-            this.roleRepository.Update(adminRole);
+            this.roleRepository.Update(adminRole); 
         }
 
         private async Task AddUploaderRolePermissionsAsync()
@@ -95,8 +95,8 @@
             uploaderRole.Permissions.Add(new Permission() { Id = ApproveSong });
             uploaderRole.Permissions.Add(new Permission() { Id = RejectSong });
             uploaderRole.Permissions.Add(new Permission() { Id = UploadSong });
-            
-            this.roleRepository.Update(uploaderRole);
+
+            this.roleRepository.Update(uploaderRole);  
         }
 
         private async Task AddRegularUserRolePermissionsAsync()

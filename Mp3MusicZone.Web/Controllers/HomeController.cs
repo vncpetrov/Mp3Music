@@ -9,10 +9,12 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
+    using Mp3MusicZone.EfDataAccess.Models;
     using Mp3MusicZone.Web.ViewModels.Shared;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Linq;
     using System.Threading.Tasks;
     using ViewModels.Songs;
     using Web.ViewModels;
@@ -47,9 +49,10 @@
             return View(model);
         }
 
-        public IActionResult About()
+        public IActionResult About([FromServices]MusicZoneDbContext context)
         {
-            return View();
+            List<string> list = context.Permissions.Select(p=>$"{p.Name} - {p.Id}").ToList();
+            return View(list);
         }
 
         public IActionResult Contact()

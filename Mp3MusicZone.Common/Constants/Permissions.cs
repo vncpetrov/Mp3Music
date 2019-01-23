@@ -4,18 +4,18 @@
 
     public static class Permissions
     {
-        public const string DeleteSong = "e5ef4e11-669b-4e50-8237-165ca2f7c28c";
-        public const string EditSong = "ad9dd308-03d5-4b4e-9b99-f82bc86614ed";
-        public const string UploadSong = "fdba5dbe-62d1-425e-8527-9ae324a8e29f";
+        // Admin
+        public const string GetUsers = "8504f823-16f2-450d-8075-99f1f207129d";
+        public const string PromoteUserToRole = "13fed190-b1bb-48ff-ad81-310a653c4ce7";
+        public const string DemoteUserFromRole = "f2c2d018-b954-4353-8007-b1b1d40aab31";
 
         // Uploader
-        public const string GetUnapprovedSongs = "34346c1f-5974-4c50-8dd4-a108625d8d4e";
-        public const string ApproveSong = "ca516131-965c-43b7-8341-c2c7b0ff0ba2";
-        public const string RejectSong = "e3c5cfda-c058-45ac-9653-ba363c5bebf7";
+        public const string GetUnapprovedSongs = "b3fef7df-7f10-4db3-b56a-c6789c688fc6";
+        public const string ApproveSong = "f821861b-4e65-4368-b012-7379cf396a7c";
+        public const string RejectSong = "e537c433-4142-4600-9a0e-3501ed7b3912";
 
-        // Admin
-        public const string GetUsers = "7cc1d750-6226-4aa7-b0bb-0796f03951df";
-        public const string PromoteUserToRole = "22fa81b1-6dd1-4524-81ab-78e22e211ba9";
-        public const string DemoteUserFromRole = "a44d5791-7fda-4a2f-8749-347435890281";
+        public const string DeleteSong = "c1d64461-9101-4d34-be73-646bf7b04d8c";
+        public const string EditSong = "99bebebd-7a72-4565-b7bd-a74e4ba5b7c1";
+        public const string UploadSong = "32ee5347-6bce-4c3e-baf7-15c1d4118b4d";
     }
 }
