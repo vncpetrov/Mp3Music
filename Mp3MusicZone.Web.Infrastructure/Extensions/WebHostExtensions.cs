@@ -30,7 +30,7 @@
                     .GetConnectionString(ConnectionStringSectionName);
 
                 MusicZoneDbContext efDbContext = new MusicZoneDbContext(connectionString);
-                //efDbContext.Database.EnsureDeleted();
+                efDbContext.Database.EnsureDeleted();
                 EfDbContextUtils.UseDatabaseMigration(efDbContext);
                 //efDbContext.Database.Migrate();
             }
