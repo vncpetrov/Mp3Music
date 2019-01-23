@@ -35,7 +35,6 @@
 
         public async Task ExecuteAsync(DemoteUserFromRole command)
         {
-            throw new ArgumentNullException("asd");
             User user = await this.userRepository.All(eagerLoading: true)
                 .FirstOrDefaultAsync(u => u.Id == command.UserId);
             

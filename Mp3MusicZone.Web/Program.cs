@@ -3,11 +3,8 @@
     using Infrastructure.Extensions;
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
-    using NLog.Web;
     using System;
-
-    using static Common.Constants.WebConstants;
-
+   
     public class Program
     {
         public static void Main(string[] args)
@@ -61,8 +58,7 @@
             WebHost.CreateDefaultBuilder(args)
                 .UseIISIntegration()
                 .UseStartup<Startup>()
-                //.UseSetting(WebHostDefaults.DetailedErrorsKey, "true")
-                //.CaptureStartupErrors(true)
-                .UseNLog();
+                .UseSetting(WebHostDefaults.DetailedErrorsKey, "true")
+                .CaptureStartupErrors(true);
     }
 }

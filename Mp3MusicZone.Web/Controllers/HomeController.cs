@@ -32,13 +32,8 @@
             this.getSongs = getSongs;
         }
 
-        public async Task<IActionResult> Index([FromServices]IConfiguration conf,
-            [FromServices]MusicZoneDbContext context)
+        public async Task<IActionResult> Index()
         {
-            // sample admin logging
-            //var logger = LogManager.GetLogger("AdminLogger");
-            //logger.Trace("asd");
-
             GetLastApprovedSongs query = new GetLastApprovedSongs()
             {
                 Count = DefaultHomePageLastApprovedSongsCount
@@ -49,24 +44,11 @@
             IEnumerable<SongListingViewModel> model =
                 Mapper.Map<IEnumerable<SongListingViewModel>>(songs);
 
-            //SearchViewModel<PaginatedViewModel<SongListingViewModel>> model =
-            //   ViewModelFactory.CreateSearchPaginatedViewModel<SongListingViewModel>(
-            //       songsModel,
-            //       default(int),
-            //       default(int),
-            //       default(int),
-            //       null,
-            //       null);
-
             return View(model);
         }
 
         public IActionResult About()
         {
-            // Testing loggin
-            //ViewData["Message"] = "Your application description page.";
-            //throw new ArgumentException("Testing NLog db");
-
             return View();
         }
 

@@ -11,6 +11,7 @@
     using DomainServices.CommandServices.Admin.PromoteUserToRole;
     using DomainServices.CommandServices.Songs.DeleteSong;
     using DomainServices.CommandServices.Songs.EditSong;
+    using DomainServices.CommandServices.Songs.IncrementSongListenings;
     using DomainServices.CommandServices.Songs.UploadSong;
     using DomainServices.CommandServices.Uploader.ApproveSong;
     using DomainServices.CommandServices.Uploader.RejectSong;
@@ -28,21 +29,20 @@
     using DomainServices.QueryServicesAspects;
     using EfDataAccess;
     using EfDataAccess.EfRepositories;
+    using FacadeServices;
     using FileAccess;
     using Infrastructure;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.Extensions.Logging;
-    using Mp3MusicZone.DomainServices.CommandServices.Songs.IncrementSongListenings;
-    using Mp3MusicZone.Web.FacadeServices;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.Encodings.Web;
     using Web.Areas.Admin.Controllers;
 
-    public class Mp3MusicZoneControllerActivator : IControllerActivator
+    public class MusicZoneControllerActivator : IControllerActivator
     {
         private readonly string connectionString;
         private readonly IHttpContextAccessor accessor;
@@ -52,7 +52,7 @@
         private readonly IEmailSenderService emailSender;
         private readonly IDateTimeProvider dateTimeProvider;
 
-        public Mp3MusicZoneControllerActivator(
+        public MusicZoneControllerActivator(
             string connectionString,
             IHttpContextAccessor accessor,
             EmailSettings emailSettings)
@@ -136,9 +136,11 @@
                 this.CreatePermissionCommandService<ApproveSong>(
                     this.CreateTransactionCommandService<ApproveSong>(
                         this.CreateAuditingCommandService<ApproveSong>(
-                            new ApproveSongCommandService(
-                                this.CreateSongRepository(scope),
-                                this.CreateContext(scope)),
+                            this.CreatePerformanceCommandService<ApproveSong>(
+                                new ApproveSongCommandService(
+                                    this.CreateSongRepository(scope),
+                                    this.CreateContext(scope)),
+                                scope),
                             scope),
                         scope),
                     scope),
@@ -146,21 +148,27 @@
                 this.CreatePermissionCommandService<RejectSong>(
                     this.CreateTransactionCommandService<RejectSong>(
                         this.CreateAuditingCommandService<RejectSong>(
-                            new RejectSongCommandService(
-                                this.CreateSongRepository(scope),
-                                this.CreateSongProvider(scope),
-                                this.CreateContext(scope)),
+                            this.CreatePerformanceCommandService<RejectSong>(
+                                new RejectSongCommandService(
+                                    this.CreateSongRepository(scope),
+                                    this.CreateSongProvider(scope),
+                                    this.CreateContext(scope)),
+                                scope),
                             scope),
                         scope),
                     scope),
 
                 this.CreatePermissionQueryService<GetUnapprovedSongs, IEnumerable<Song>>(
-                    new GetUnapprovedSongsQueryService(
-                        this.CreateSongRepository(scope)),
+                    this.CreatePerformanceQueryService<GetUnapprovedSongs, IEnumerable<Song>>(
+                        new GetUnapprovedSongsQueryService(
+                            this.CreateSongRepository(scope)),
+                        scope),
                     scope),
 
-                new GetSongsCountQueryService(
-                    this.CreateSongRepository(scope)));
+                this.CreatePerformanceQueryService<GetSongsCount, int>(
+                    new GetSongsCountQueryService(
+                        this.CreateSongRepository(scope)),
+                scope));
         }
 
         private Controller CreateAdminUsersController(Scope scope)
@@ -169,10 +177,12 @@
                 this.CreatePermissionCommandService<PromoteUserToRole>(
                     this.CreateTransactionCommandService<PromoteUserToRole>(
                         this.CreateAuditingCommandService<PromoteUserToRole>(
-                            new PromoteUserToRoleCommandService(
-                                 this.CreateUserRepository(scope),
-                                 this.CreateRoleRepository(scope),
-                                 this.CreateContext(scope)),
+                            this.CreatePerformanceCommandService<PromoteUserToRole>(
+                                new PromoteUserToRoleCommandService(
+                                     this.CreateUserRepository(scope),
+                                     this.CreateRoleRepository(scope),
+                                     this.CreateContext(scope)),
+                                scope),
                             scope),
                         scope),
                     scope),
@@ -180,21 +190,27 @@
                 this.CreatePermissionCommandService<DemoteUserFromRole>(
                     this.CreateTransactionCommandService<DemoteUserFromRole>(
                         this.CreateAuditingCommandService<DemoteUserFromRole>(
-                            new DemoteUserFromRoleCommandService(
-                                 this.CreateUserRepository(scope),
-                                 this.CreateRoleRepository(scope),
-                                 this.CreateContext(scope)),
+                            this.CreatePerformanceCommandService<DemoteUserFromRole>(
+                                new DemoteUserFromRoleCommandService(
+                                     this.CreateUserRepository(scope),
+                                     this.CreateRoleRepository(scope),
+                                     this.CreateContext(scope)),
+                                scope),
                             scope),
                         scope),
                     scope),
-                
+
                 this.CreatePermissionQueryService<GetUsers, IEnumerable<User>>(
-                    new GetUsersQueryService(
-                        this.CreateUserRepository(scope)),
+                    this.CreatePerformanceQueryService<GetUsers, IEnumerable<User>>(
+                        new GetUsersQueryService(
+                            this.CreateUserRepository(scope)),
+                        scope),
                     scope),
 
-                new GetUsersCountQueryService(
-                    this.CreateUserRepository(scope)));
+                this.CreatePerformanceQueryService<GetUsersCount, int>(
+                    new GetUsersCountQueryService(
+                        this.CreateUserRepository(scope)),
+                scope));
         }
 
         private Controller CreateSongsController(Scope scope)
@@ -203,10 +219,12 @@
                 this.CreatePermissionCommandService<EditSong>(
                      this.CreateTransactionCommandService<EditSong>(
                          this.CreateAuditingCommandService<EditSong>(
-                             new EditSongCommandService(
-                                 this.CreateSongRepository(scope),
-                                 this.CreateSongProvider(scope),
-                                 this.CreateContext(scope)),
+                             this.CreatePerformanceCommandService<EditSong>(
+                                 new EditSongCommandService(
+                                     this.CreateSongRepository(scope),
+                                     this.CreateSongProvider(scope),
+                                     this.CreateContext(scope)),
+                                 scope),
                              scope),
                          scope),
                      scope),
@@ -215,11 +233,13 @@
                 this.CreatePermissionCommandService<UploadSong>(
                      this.CreateTransactionCommandService<UploadSong>(
                          this.CreateAuditingCommandService<UploadSong>(
-                             new UploadSongCommandService(
-                                 this.CreateSongRepository(scope),
-                                 this.CreateSongProvider(scope),
-                                 this.dateTimeProvider,
-                                 this.CreateContext(scope)),
+                             this.CreatePerformanceCommandService<UploadSong>(
+                                 new UploadSongCommandService(
+                                     this.CreateSongRepository(scope),
+                                     this.CreateSongProvider(scope),
+                                     this.dateTimeProvider,
+                                     this.CreateContext(scope)),
+                                 scope),
                              scope),
                          scope),
                      scope),
@@ -227,38 +247,51 @@
                 this.CreatePermissionCommandService<DeleteSong>(
                      this.CreateTransactionCommandService<DeleteSong>(
                          this.CreateAuditingCommandService<DeleteSong>(
-                             new DeleteSongCommandService(
-                                 this.CreateSongRepository(scope),
-                                 this.CreateSongProvider(scope),
-                                 this.CreateContext(scope)),
-                             scope), 
-                         scope), 
+                             this.CreatePerformanceCommandService<DeleteSong>(
+                                 new DeleteSongCommandService(
+                                     this.CreateSongRepository(scope),
+                                     this.CreateSongProvider(scope),
+                                     this.CreateContext(scope)),
+                                 scope),
+                             scope),
+                         scope),
                      scope),
 
-
                 this.CreatePermissionQueryService<GetSongForEditById, Song>(
-                    new GetSongForEditByIdQueryService(
-                        this.CreateSongRepository(scope)),
+                    this.CreatePerformanceQueryService<GetSongForEditById, Song>(
+                        new GetSongForEditByIdQueryService(
+                            this.CreateSongRepository(scope)),
+                        scope),
                     scope),
 
                 this.CreatePermissionQueryService<GetSongForDeleteById, Song>(
-                    new GetSongForDeleteByIdQueryService(
-                        this.CreateSongRepository(scope)),
+                    this.CreatePerformanceQueryService<GetSongForDeleteById, Song>(
+                        new GetSongForDeleteByIdQueryService(
+                            this.CreateSongRepository(scope)),
+                        scope),
                     scope),
 
-                new GetSongsCountQueryService(
-                    this.CreateSongRepository(scope)),
-
-                new GetSongsQueryService(
+                this.CreatePerformanceQueryService<GetSongsCount, int>(
+                    new GetSongsCountQueryService(
                         this.CreateSongRepository(scope)),
+                scope),
+
+                this.CreatePerformanceQueryService<GetSongs, IEnumerable<Song>>(
+                    new GetSongsQueryService(
+                            this.CreateSongRepository(scope)),
+                    scope),
 
                 new SongPlayer(
-                    new IncrementSongListeningsCommandService(
-                        this.CreateSongRepository(scope),
-                        this.CreateContext(scope)),
-                    new GetSongForPlayingQueryService(
-                        this.CreateSongProvider(scope),
-                        this.CreateSongRepository(scope))));
+                    this.CreatePerformanceCommandService<IncrementSongListenings>(
+                        new IncrementSongListeningsCommandService(
+                            this.CreateSongRepository(scope),
+                            this.CreateContext(scope)),
+                        scope),
+                    this.CreatePerformanceQueryService<GetSongForPlaying, SongForPlayingDTO>(
+                        new GetSongForPlayingQueryService(
+                            this.CreateSongProvider(scope),
+                            this.CreateSongRepository(scope)),
+                        scope)));
         }
 
         private ManageController CreateManageController(Scope scope)
@@ -301,6 +334,18 @@
                 this.CreateUserRepository(scope),
                 this.CreateUserContext(scope));
 
+        private PerformanceQueryServiceDecorator<TQuery, TResult>
+            CreatePerformanceQueryService<TQuery, TResult>(
+                IQueryService<TQuery, TResult> queryService,
+                Scope scope)
+            where TQuery : IQuery<TResult>
+            => scope.Get(_ =>
+                  new PerformanceQueryServiceDecorator<TQuery, TResult>(
+                      this.CreateRepository<PerformanceEntryEfRepository>(scope),
+                      this.CreateContext(scope),
+                      this.dateTimeProvider,
+                      queryService));
+
         private PermissionQueryServiceDecorator<TQuery, TResult>
             CreatePermissionQueryService<TQuery, TResult>(
                 IQueryService<TQuery, TResult> queryService,
@@ -310,6 +355,18 @@
                   new PermissionQueryServiceDecorator<TQuery, TResult>(
                       this.CreateServicePermissionChecker<TQuery>(scope),
                       queryService));
+
+        private PerformanceCommandServiceDecorator<TCommand>
+            CreatePerformanceCommandService<TCommand>(
+                ICommandService<TCommand> commandService,
+                Scope scope)
+            => scope.Get(_ =>
+                  new PerformanceCommandServiceDecorator<TCommand>(
+                      this.CreateRepository<PerformanceEntryEfRepository>(scope),
+                      this.CreateContext(scope),
+                      this.dateTimeProvider,
+                      commandService));
+
 
         private PermissionCommandServiceDecorator<TCommand>
             CreatePermissionCommandService<TCommand>(

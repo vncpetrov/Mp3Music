@@ -21,7 +21,6 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
-    using NLog;
     using Web.Infrastructure;
     using System;
 
@@ -99,7 +98,7 @@
             var emailSettings = Configuration.GetSection("EmailSettings")
                 .Get<EmailSettings>();
 
-            IControllerActivator activator = new Mp3MusicZoneControllerActivator(
+            IControllerActivator activator = new MusicZoneControllerActivator(
                     connectionString,
                     new HttpContextAccessor(),
                     emailSettings);
@@ -109,11 +108,6 @@
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            GlobalDiagnosticsContext.Set("connectionString",
-                Configuration.GetConnectionString(ConnectionStringSectionName));
-
-            LogManager.ThrowExceptions = true;
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

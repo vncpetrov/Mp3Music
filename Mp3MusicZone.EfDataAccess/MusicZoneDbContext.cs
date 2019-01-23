@@ -51,7 +51,8 @@
         public DbSet<RolePermission> RolePermissions { get; set; }
         public DbSet<AuditEntryEf> AuditEntries { get; set; }
         public DbSet<UnhandledExceptionEntryEf> UnhandledExceptionEntries { get; set; }
-         
+        public DbSet<PerformanceEntryEf> PerformanceEntries { get; set; }
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
