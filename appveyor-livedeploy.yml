@@ -46,7 +46,7 @@ deploy:
  server: https://mp3musiczone.scm.azurewebsites.net:443/msdeploy.axd?site=mp3musiczone
  website: mp3musiczone
  username: $mp3musiczone
- password: gbny4e59rQPGSql3fRFDgznoKfaFr2xSch1cdoRx64zvbs6Ea3e7edt9bZH6
+ password: gbny4e59rQPGSql3fRFDgznoKfaFr2xSch1cdoRx64zvbs6Ea3e7edt9bZH6 
  name: "Mp3MusicZone-Live"
  artifact: WebSite
  aspnet_core: true 
