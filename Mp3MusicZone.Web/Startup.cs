@@ -4,16 +4,19 @@
     using Auth.Contracts;
     using Auth.Identity;
     using AutoMapper;
+    using Common.Providers;
     using Domain.Contracts;
     using Domain.Models;
     using DomainServices;
     using EfDataAccess;
     using EfDataAccess.EfRepositories;
     using EfDataAccess.Models;
+    using Infrastructure.Filters;
     using Infrastructure.Mappings;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Http.Headers;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Controllers;
@@ -21,12 +24,12 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
-    using Web.Infrastructure;
+    using Microsoft.Extensions.Primitives;
+    using Microsoft.Net.Http.Headers;
     using System;
+    using Web.Infrastructure;
 
     using static Common.Constants.WebConstants;
-    using Mp3MusicZone.Web.Infrastructure.Filters;
-    using Mp3MusicZone.Common.Providers;
 
     public class Startup
     {
@@ -44,7 +47,8 @@
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.MinimumSameSitePolicy =
+                    Microsoft.AspNetCore.Http.SameSiteMode.None;
             });
 
             string connectionString = Configuration.GetConnectionString(ConnectionStringSectionName);
@@ -119,7 +123,20 @@
                 app.UseHsts();
             }
 
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                OnPrepareResponse = (context) =>
+                {
+                    const int dayInSeconds = 60 * 60 * 24;
+                    const int cacheDurationInSeconds = dayInSeconds * 30;
+
+                    context.Context
+                    .Response
+                    .Headers
+                    .Add(HeaderNames.CacheControl,
+                         "public,max-age=" + cacheDurationInSeconds);
+                }
+            });
 
             app.UseAuthentication();
 

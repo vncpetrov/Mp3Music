@@ -27,8 +27,8 @@
                     {
                         string urlPath = Url.Action(
                             controller: "Songs",
-                            action: "Play",
-                            values: new { id = song.Id, area = "" });
+                            action: "PlayUnapproved",
+                            values: new { id = song.Id, area = "Uploader" });
 
                         string audioId = $"audio{song.Id}";
 
@@ -57,8 +57,8 @@
                                 <div class="col-md-6 audio-table">
                                     <audio id="@audioId"
                                            controls
-                                           controlsList="nodownload"
-                                           preload="metadata">
+                                           preload="none"
+                                           controlsList="nodownload">
                                         <source src="@urlPath"
                                                 type="audio/@song.FileExtension">
                                         Your browser does not support the audio element.

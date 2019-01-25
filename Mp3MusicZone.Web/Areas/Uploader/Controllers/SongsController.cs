@@ -11,9 +11,13 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Mp3MusicZone.DomainServices.QueryServices;
+    using Mp3MusicZone.DomainServices.QueryServices.Songs.GetSongForPlaying;
+    using Mp3MusicZone.DomainServices.QueryServices.Uploader.GetUnapprovedSongForPlaying;
+    using Mp3MusicZone.Web.FacadeServices;
     using Mp3MusicZone.Web.ViewModels;
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Threading.Tasks;
     using Web.Controllers;
     using Web.ViewModels.Shared;
@@ -30,14 +34,15 @@
 
         private readonly IQueryService<GetUnapprovedSongs, IEnumerable<Song>> getUnapprovedSongs;
         private readonly IQueryService<GetSongsCount, int> getSongsCount;
-
-
+        IQueryService<GetUnapprovedSongForPlaying, UnapprovedSongForPlayingDTO> getUnapprovedSong;
+        
         public SongsController(
             ICommandService<ApproveSong> approveSong,
             ICommandService<RejectSong> rejectSong,
 
             IQueryService<GetUnapprovedSongs, IEnumerable<Song>> getUnapprovedSongs,
-            IQueryService<GetSongsCount, int> getSongsCount)
+            IQueryService<GetSongsCount, int> getSongsCount,
+            IQueryService<GetUnapprovedSongForPlaying, UnapprovedSongForPlayingDTO> getUnapprovedSong)
         {
             if (approveSong is null)
                 throw new ArgumentNullException(nameof(approveSong));
@@ -51,10 +56,14 @@
             if (getSongsCount is null)
                 throw new ArgumentNullException(nameof(getSongsCount));
 
+            if (getUnapprovedSong is null)
+                throw new ArgumentNullException(nameof(getUnapprovedSong));
+            
             this.approveSong = approveSong;
             this.rejectSong = rejectSong;
             this.getUnapprovedSongs = getUnapprovedSongs;
             this.getSongsCount = getSongsCount;
+            this.getUnapprovedSong = getUnapprovedSong;
         }
 
         public async Task<IActionResult> UnapprovedSongs(int page = 1)
@@ -85,6 +94,28 @@
                     songsCount);
 
             return View(model);
+        }
+
+        public async Task<IActionResult> PlayUnapproved(string id)
+        {
+            UnapprovedSongForPlayingDTO song = null;
+            GetUnapprovedSongForPlaying query = new GetUnapprovedSongForPlaying()
+            {
+                SongId = id
+            };
+
+            string message = await this.CallServiceAsync(
+                async () => song = await this.getUnapprovedSong.ExecuteAsync(query));
+
+            if (message != null)
+            {
+                return View()
+                    .WithErrorMessage(message);
+            }
+
+            MemoryStream ms = new MemoryStream(song.File);
+
+            return File(ms, $"audio/{song.FileExtension}");
         }
 
         public async Task<IActionResult> Approve(string id)

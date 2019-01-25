@@ -44,8 +44,7 @@
         private readonly IQueryService<GetSongs, IEnumerable<Song>> getSongs;
 
         private readonly ISongPlayer songPlayer;
-
-
+        
         public SongsController(
             ICommandService<EditSong> editSong,
             ICommandService<UploadSong> uploadSong,

@@ -36,6 +36,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.Extensions.Logging;
+    using Mp3MusicZone.DomainServices.QueryServices.Uploader.GetUnapprovedSongForPlaying;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -168,7 +169,17 @@
                 this.CreatePerformanceQueryService<GetSongsCount, int>(
                     new GetSongsCountQueryService(
                         this.CreateSongRepository(scope)),
-                scope));
+                scope),
+
+                this.CreatePermissionQueryService<
+                    GetUnapprovedSongForPlaying, UnapprovedSongForPlayingDTO>(
+                    this.CreatePerformanceQueryService<
+                        GetUnapprovedSongForPlaying, UnapprovedSongForPlayingDTO>(
+                        new GetUnapprovedSongForPlayingQueryService(
+                            this.CreateSongProvider(scope),
+                            this.CreateSongRepository(scope))
+                       ,scope),
+                    scope));
         }
 
         private Controller CreateAdminUsersController(Scope scope)
