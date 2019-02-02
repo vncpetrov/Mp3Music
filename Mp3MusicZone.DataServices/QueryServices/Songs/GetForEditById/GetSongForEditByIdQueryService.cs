@@ -2,6 +2,7 @@
 {
     using Contracts;
     using Domain.Contracts;
+    using Domain.Exceptions;
     using Domain.Models;
     using System;
     using System.Threading.Tasks;
@@ -24,7 +25,7 @@
 
             if (song is null)
             {
-                throw new InvalidOperationException(
+                throw new NotFoundException(
                     $"Song with id {query.SongId} does not exists!");
             }
 

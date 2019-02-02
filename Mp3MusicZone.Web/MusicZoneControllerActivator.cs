@@ -18,15 +18,18 @@
     using DomainServices.CommandServicesAspects;
     using DomainServices.Contracts;
     using DomainServices.QueryServices.Admin.GetUsers;
+    using DomainServices.QueryServices.Songs.GetApprovedSongsByUser;
     using DomainServices.QueryServices.Songs.GetForDeleteById;
     using DomainServices.QueryServices.Songs.GetForEditById;
     using DomainServices.QueryServices.Songs.GetLastApproved;
     using DomainServices.QueryServices.Songs.GetSongForPlaying;
     using DomainServices.QueryServices.Songs.GetSongs;
     using DomainServices.QueryServices.Songs.GetSongsCount;
+    using DomainServices.QueryServices.Uploader.GetUnapprovedSongForPlaying;
     using DomainServices.QueryServices.Uploader.GetUnapprovedSongs;
     using DomainServices.QueryServices.Users.GetUsersCount;
     using DomainServices.QueryServicesAspects;
+    using DomainServices.QueryServicesAspects.Caching;
     using EfDataAccess;
     using EfDataAccess.EfRepositories;
     using FacadeServices;
@@ -35,13 +38,15 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Controllers;
+    using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.Logging;
-    using Mp3MusicZone.DomainServices.QueryServices.Uploader.GetUnapprovedSongForPlaying;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.Encodings.Web;
     using Web.Areas.Admin.Controllers;
+
+    using static Common.Constants.WebConstants;
 
     public class MusicZoneControllerActivator : IControllerActivator
     {
@@ -52,6 +57,7 @@
         // Singletons
         private readonly IEmailSenderService emailSender;
         private readonly IDateTimeProvider dateTimeProvider;
+        private readonly ICacheManager cacheManager;
 
         public MusicZoneControllerActivator(
             string connectionString,
@@ -71,8 +77,13 @@
             this.accessor = accessor;
             this.emailSettings = emailSettings;
 
+            // Singletons
             this.emailSender = new EmailSenderService(this.emailSettings);
             this.dateTimeProvider = new SystemDateTimeProvider();
+            this.cacheManager =
+                new AspNetMemoryCacheManager(
+                    new MemoryCache(
+                        new MemoryCacheOptions()));
         }
 
         public object Create(ControllerContext controllerContext)
@@ -178,7 +189,7 @@
                         new GetUnapprovedSongForPlayingQueryService(
                             this.CreateSongProvider(scope),
                             this.CreateSongRepository(scope))
-                       ,scope),
+                       , scope),
                     scope));
         }
 
@@ -292,6 +303,15 @@
                             this.CreateSongRepository(scope)),
                     scope),
 
+                this.CreateCachingQueryServiceProxy<GetApprovedSongsByUser, IEnumerable<Song>>(
+                    this.CreatePerformanceQueryService<GetApprovedSongsByUser, IEnumerable<Song>>(
+                        new GetApprovedSongsByUserQueryService(
+                                this.CreateSongRepository(scope),
+                                this.CreateUserRepository(scope)),
+                        scope),
+                    new CacheOptions(varyByUser: true, absoluteDurationInSeconds: 15 * Minute),
+                    scope),
+
                 new SongPlayer(
                     this.CreatePerformanceCommandService<IncrementSongListenings>(
                         new IncrementSongListeningsCommandService(
@@ -344,6 +364,20 @@
             => new UserPermissionChecker(
                 this.CreateUserRepository(scope),
                 this.CreateUserContext(scope));
+
+        private CacheQueryServiceProxy<TQuery, TResult>
+            CreateCachingQueryServiceProxy<TQuery, TResult>(
+                IQueryService<TQuery, TResult> queryService,
+                CacheOptions options,
+                Scope scope)
+            where TQuery : IQuery<TResult>
+            where TResult : class
+            => scope.Get(_ =>
+                  new CacheQueryServiceProxy<TQuery, TResult>(
+                      queryService,
+                      this.cacheManager,
+                      this.CreateUserContext(scope),
+                      options));
 
         private PerformanceQueryServiceDecorator<TQuery, TResult>
             CreatePerformanceQueryService<TQuery, TResult>(

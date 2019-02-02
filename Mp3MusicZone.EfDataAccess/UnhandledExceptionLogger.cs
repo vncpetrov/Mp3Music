@@ -31,14 +31,24 @@
 
         public void Log(Exception exception, string additionalInfo = null)
         {
-            string exceptionMessage =
-                exception.Message ?? exception.InnerException.Message;
+            string exceptionMessage = exception.Message;
+            string exceptionType = exception.GetType().Name;
+
+            if (exception.InnerException != null)
+            {
+                exceptionMessage += 
+                    Environment.NewLine 
+                    + "Inner Exception: " 
+                    + exception.InnerException.Message;
+
+                exceptionType += ", " + exception.InnerException.GetType().Name;
+            }
 
             UnhandledExceptionEntry entry = new UnhandledExceptionEntry()
             {
                 ExceptionMessage = exceptionMessage,
                 TimeOfExecution = this.timeProvider.UtcNow,
-                ExceptionType = exception.GetType().Name,
+                ExceptionType = exceptionType,
                 StackTrace = exception.StackTrace,
                 AdditionalInfo = additionalInfo
             };

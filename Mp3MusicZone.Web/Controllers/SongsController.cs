@@ -15,6 +15,7 @@
     using Infrastructure.Filters;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Mp3MusicZone.DomainServices.QueryServices.Songs.GetApprovedSongsByUser;
     using Mp3MusicZone.DomainServices.QueryServices.Songs.GetSongs;
     using Mp3MusicZone.DomainServices.QueryServices.Songs.GetSongsCount;
     using Mp3MusicZone.Web.Components;
@@ -42,9 +43,11 @@
         private readonly IQueryService<GetSongForDeleteById, Song> getSongForDelete;
         private readonly IQueryService<GetSongsCount, int> getSongsCount;
         private readonly IQueryService<GetSongs, IEnumerable<Song>> getSongs;
+        private readonly IQueryService<GetApprovedSongsByUser, IEnumerable<Song>> getSongsByUser;
+
 
         private readonly ISongPlayer songPlayer;
-        
+
         public SongsController(
             ICommandService<EditSong> editSong,
             ICommandService<UploadSong> uploadSong,
@@ -54,6 +57,7 @@
             IQueryService<GetSongForDeleteById, Song> getSongForDelete,
             IQueryService<GetSongsCount, int> getSongsCount,
             IQueryService<GetSongs, IEnumerable<Song>> getSongs,
+            IQueryService<GetApprovedSongsByUser, IEnumerable<Song>> getSongsByUser,
 
             ISongPlayer songPlayer)
         {
@@ -79,6 +83,9 @@
             if (getSongs is null)
                 throw new ArgumentException(nameof(getSongs));
 
+            if (getSongsByUser is null)
+                throw new ArgumentException(nameof(getSongsByUser));
+
             if (songPlayer is null)
                 throw new ArgumentException(nameof(songPlayer));
 
@@ -90,6 +97,7 @@
             this.getSongForDelete = getSongForDelete;
             this.getSongsCount = getSongsCount;
             this.getSongs = getSongs;
+            this.getSongsByUser = getSongsByUser;
 
             this.songPlayer = songPlayer;
         }
@@ -139,6 +147,25 @@
         }
 
         [AjaxOnly]
+        [ResponseCache(Duration = 300, VaryByQueryKeys = new[] { "userId" })]
+        public async Task<IActionResult> UserUploadedSongsAjax(string userId)
+        {
+            IEnumerable<Song> songs = null;
+
+            GetApprovedSongsByUser query = new GetApprovedSongsByUser()
+            {
+                UserId = userId
+            };
+
+            string message = await this.CallServiceAsync(
+                async () => songs = await this.getSongsByUser.ExecuteAsync(query));
+
+            IEnumerable<UserSongListingViewModel> model = Mapper.Map<IEnumerable<UserSongListingViewModel>>(songs);
+
+            return PartialView("_UserSongListing", model);
+        }
+
+        [AjaxOnly]
         [AllowAnonymous]
         public async Task<IActionResult> FilteredSongsAjax(string searchTerm)
         {
@@ -152,7 +179,6 @@
 
             string message = await this.CallServiceAsync(
                 async () => songs = await this.getSongs.ExecuteAsync(songsQuery));
-
 
             IEnumerable<SongListingViewModel> model =
                 Mapper.Map<IEnumerable<SongListingViewModel>>(songs);

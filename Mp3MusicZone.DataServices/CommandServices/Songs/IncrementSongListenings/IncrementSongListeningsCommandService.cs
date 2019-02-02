@@ -3,6 +3,7 @@
     using Contracts;
     using Domain.Contracts;
     using Domain.Models;
+    using Mp3MusicZone.Domain.Exceptions;
     using System;
     using System.Threading.Tasks;
 
@@ -32,7 +33,7 @@
 
             if (song is null || !song.IsApproved)
             {
-                throw new InvalidOperationException(
+                throw new NotFoundException(
                     $"Song with id {command.SongId} does not exists or is not approved yet!");
             }
 

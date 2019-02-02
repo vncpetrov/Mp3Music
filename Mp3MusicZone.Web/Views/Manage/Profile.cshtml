@@ -124,9 +124,37 @@
             </ul>
         </section>
     </div>
+
+
+
+    <div class="uploaded-songs col-md-10 col-md-offset-1" id="uploaded-songs">
+        <button class="btn btn-default manage-btn col-md-5" id="uploaded-songs-button">Load your uploaded songs</button>
+    </div>
 </div>
 
-
 @section Scripts {
+    <script type="text/javascript">
+        function scriptToExecute() {
+            $('#uploaded-songs-button').click(function () {
+                $.ajax({
+                    url: '/Songs/UserUploadedSongsAjax',
+                    data: { 'userId': '@Model.Id' },
+                    type: 'GET',
+                    success: function (result) {
+                        $('#uploaded-songs').html(result);
+                    }
+                })
+            });
+        }
+
+        function runWhenReady() {
+            if (window.$)
+                scriptToExecute();
+            else
+                setTimeout(runWhenReady, 100);
+        }
+        runWhenReady();
+    </script>
+
     @await Html.PartialAsync("_ValidationScriptsPartial")
 }

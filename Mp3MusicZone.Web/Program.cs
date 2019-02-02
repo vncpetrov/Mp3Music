@@ -3,8 +3,10 @@
     using Infrastructure.Extensions;
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Server.Kestrel.Core;
     using System;
-   
+    using System.Net;
+
     public class Program
     {
         public static void Main(string[] args)

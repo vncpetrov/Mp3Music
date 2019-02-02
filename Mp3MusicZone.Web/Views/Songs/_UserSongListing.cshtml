@@ -1,0 +1,44 @@
+﻿@model IEnumerable<UserSongListingViewModel>
+
+@{
+    int currentIteration = 1;
+}
+<table class="user-songs table table-responsive table-hover">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Singer</th>
+            <th>Upload date</th>
+            <th>Listenings</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var song in Model)
+        {
+            <tr>
+                <td class="col-md-1">
+                    @currentIteration.ToString().PadLeft(2, '0')
+                </td>
+                <td class="col-md-4">
+                    @song.Title
+                </td>
+
+                <td class="col-md-2">
+                    @song.Singer
+                </td>
+
+                <td class="col-md-2">
+                    @song.PublishedOn
+                </td>
+
+                <td class="col-md-2">
+                    @song.Listenings
+                </td>
+            </tr>
+
+            currentIteration++;
+        }
+    </tbody>
+</table>

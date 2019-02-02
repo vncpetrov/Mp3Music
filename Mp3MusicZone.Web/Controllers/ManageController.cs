@@ -2,6 +2,7 @@
 {
     using Auth.Contracts;
     using Domain.Contracts;
+    using Domain.Models;
     using Domain.Models.Enums;
     using EfDataAccess.Models;
     using Infrastructure.Filters;
@@ -10,17 +11,16 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
-    using ViewModels.Manage;
     using System;
+    using System.Security.Claims;
     using System.Text;
     using System.Text.Encodings.Web;
     using System.Threading.Tasks;
+    using ViewModels.Manage;
     using Web.Infrastructure.Extensions;
 
     using static Common.Constants.ModelConstants;
     using static Common.Constants.WebConstants;
-    using Mp3MusicZone.Domain.Models;
-    using System.Security.Claims;
 
     [Authorize]
     [Route("[controller]/[action]")]
@@ -184,6 +184,7 @@
 
             ProfileViewModel model = new ProfileViewModel
             {
+                Id = user.Id,
                 Username = user.UserName,
                 Email = user.Email,
                 StatusMessage = StatusMessage,

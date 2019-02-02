@@ -2,7 +2,8 @@
 {
     using Contracts;
     using Domain.Contracts;
-    using Mp3MusicZone.Domain.Models;
+    using Domain.Exceptions;
+    using Domain.Models;
     using System;
     using System.Threading.Tasks;
 
@@ -38,7 +39,7 @@
 
             if (song is null)
             {
-                throw new InvalidOperationException(
+                throw new NotFoundException(
                     $"Song with id {command.SongId} does not exists!");
             }
 

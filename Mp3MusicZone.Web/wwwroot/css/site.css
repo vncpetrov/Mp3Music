@@ -533,7 +533,7 @@ div.song-heading {
 
 .song-metadata small {
     color: #707070;
-    position: relative; 
+    position: relative;
 }
 
 li.list-group-item.song-listing {
@@ -822,6 +822,22 @@ div.in .open .dropdown-menu > li > a:hover {
     pointer-events: none;
 }
 
+div.uploaded-songs {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+}
+
+    div.uploaded-songs button {
+        background-color: #F0F0F0;
+        font-size: 1.2em;
+    }
+
+    table.user-songs > thead > tr > th,
+    table.user-songs > thead > tr > td {
+        text-align: left;
+    }
+
 @media all and (max-width: 1200px) {
     table .songs td.col-md-9 {
         width: 70%;
@@ -987,13 +1003,13 @@ div.in .open .dropdown-menu > li > a:hover {
         width: 250px;
     }
 
-    form.search-page-item  {
+    form.search-page-item {
         max-width: 95%;
     }
 
-    form.search-page-item button {
-        left: calc(100% - 45px);
-    }
+        form.search-page-item button {
+            left: calc(100% - 45px);
+        }
 }
 
 @media all and (max-width: 530px) {
@@ -1054,6 +1070,10 @@ div.in .open .dropdown-menu > li > a:hover {
 
     li.song-action a {
         width: 75px;
+    }
+
+    div.uploaded-songs {
+        display: none;
     }
 }
 

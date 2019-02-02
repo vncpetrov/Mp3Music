@@ -4,6 +4,7 @@
     using Domain.Contracts;
     using Domain.Models;
     using Microsoft.EntityFrameworkCore;
+    using Mp3MusicZone.Domain.Exceptions;
     using System;
     using System.Linq;
     using System.Threading.Tasks;
@@ -40,7 +41,7 @@
             
             if (user is null)
             {
-                throw new InvalidOperationException(
+                throw new NotFoundException(
                     $"User with id {command.UserId} does not exists!");
             }
 
@@ -62,7 +63,7 @@
 
             if (!roleExists)
             {
-                throw new InvalidOperationException(
+                throw new NotFoundException(
                     $"{command.RoleName} role does not exists!");
             }
 

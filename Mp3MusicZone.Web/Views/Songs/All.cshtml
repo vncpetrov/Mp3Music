@@ -24,8 +24,6 @@
                 {
                         <partial name="~/Views/Songs/_SongListing.cshtml"
                                  model="Model.DecoratedModel.Items" />
-                        @*<partial name="~/Views/Songs/_SongListing.cshtml"
-                            model="Model" />*@
 
                     <div class="pagination-menu">
                         @(await Component.InvokeAsync<PaginationComponent>(

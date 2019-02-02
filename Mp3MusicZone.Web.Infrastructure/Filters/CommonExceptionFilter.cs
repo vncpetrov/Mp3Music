@@ -18,6 +18,7 @@
                         .WithErrorMessage("You do not have permissions to perform this action.");
                     break;
 
+                case nameof(NotFoundException):
                 case nameof(InvalidOperationException):
                     IActionResult result = new RedirectToActionResult(
                         "Index", "Home", new { area = "" });

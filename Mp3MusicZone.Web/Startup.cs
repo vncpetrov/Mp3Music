@@ -16,17 +16,17 @@
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Http.Headers;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Controllers;
+    using Microsoft.AspNetCore.ResponseCompression;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
-    using Microsoft.Extensions.Primitives;
     using Microsoft.Net.Http.Headers;
     using System;
+    using System.IO.Compression;
     using Web.Infrastructure;
 
     using static Common.Constants.WebConstants;
@@ -91,6 +91,9 @@
 
             services.AddRouting(options => options.LowercaseUrls = true);
 
+            // Caching
+            services.AddResponseCaching();
+
             services.AddMvc(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
@@ -99,6 +102,29 @@
             })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            // GZIP Compression
+            services.Configure<GzipCompressionProviderOptions>(
+                opt => opt.Level = CompressionLevel.Optimal);
+
+            services.AddResponseCompression(opt =>
+            {
+                opt.MimeTypes = new[]
+                {
+                    "text/plain",
+                    "text/css",
+                    "application/javascript",
+                    "text/html",
+                    "application/xml",
+                    "text/xml",
+                    "application/json",
+                    "text/json",
+                    "text/javascript",
+                    "image/*"
+                };
+            });
+
+
+            // Custom ControllerActivator
             var emailSettings = Configuration.GetSection("EmailSettings")
                 .Get<EmailSettings>();
 
@@ -123,6 +149,10 @@
                 app.UseHsts();
             }
 
+            app.UseHttpsRedirection();
+
+            app.UseResponseCompression();
+
             app.UseStaticFiles(new StaticFileOptions()
             {
                 OnPrepareResponse = (context) =>
@@ -139,6 +169,8 @@
             });
 
             app.UseAuthentication();
+
+            app.UseResponseCaching();
 
             app.UseMvc(routes =>
             {
