@@ -1,16 +1,13 @@
 ﻿namespace Mp3MusicZone.Web.Controllers
 {
     using AutoMapper;
+    using Domain.Contracts;
     using Domain.Models;
     using DomainServices.Contracts;
-    using DomainServices.QueryServices;
     using DomainServices.QueryServices.Songs.GetLastApproved;
     using EfDataAccess;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Configuration;
-    using Mp3MusicZone.EfDataAccess.Models;
-    using Mp3MusicZone.Web.ViewModels.Shared;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
@@ -25,13 +22,17 @@
     {
         private readonly IQueryService<GetLastApprovedSongs, IEnumerable<Song>> getSongs;
 
+        private readonly ICacheManager cacheManager;
+
         public HomeController(
-            IQueryService<GetLastApprovedSongs, IEnumerable<Song>> getSongs)
+            IQueryService<GetLastApprovedSongs, IEnumerable<Song>> getSongs,
+            ICacheManager cacheManager)
         {
             if (getSongs is null)
                 throw new ArgumentNullException(nameof(getSongs));
 
             this.getSongs = getSongs;
+            this.cacheManager = cacheManager;
         }
 
         public async Task<IActionResult> Index()
@@ -49,10 +50,9 @@
             return View(model);
         }
 
-        public IActionResult About([FromServices]MusicZoneDbContext context)
+        public IActionResult About()
         {
-            List<string> list = context.Permissions.Select(p=>$"{p.Name} - {p.Id}").ToList();
-            return View(list);
+            return View();
         }
 
         public IActionResult Contact()

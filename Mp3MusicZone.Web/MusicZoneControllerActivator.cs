@@ -146,12 +146,14 @@
         {
             return new Areas.Uploader.Controllers.SongsController(
                 this.CreatePermissionCommandService<ApproveSong>(
-                    this.CreateTransactionCommandService<ApproveSong>(
-                        this.CreateAuditingCommandService<ApproveSong>(
-                            this.CreatePerformanceCommandService<ApproveSong>(
-                                new ApproveSongCommandService(
-                                    this.CreateSongRepository(scope),
-                                    this.CreateContext(scope)),
+                    this.CreateInvalidateCacheCommandService<ApproveSong>(
+                        this.CreateTransactionCommandService<ApproveSong>(
+                            this.CreateAuditingCommandService<ApproveSong>(
+                                this.CreatePerformanceCommandService<ApproveSong>(
+                                    new ApproveSongCommandService(
+                                        this.CreateSongRepository(scope),
+                                        this.CreateContext(scope)),
+                                    scope),
                                 scope),
                             scope),
                         scope),
@@ -239,18 +241,19 @@
         {
             return new SongsController(
                 this.CreatePermissionCommandService<EditSong>(
-                     this.CreateTransactionCommandService<EditSong>(
-                         this.CreateAuditingCommandService<EditSong>(
-                             this.CreatePerformanceCommandService<EditSong>(
-                                 new EditSongCommandService(
-                                     this.CreateSongRepository(scope),
-                                     this.CreateSongProvider(scope),
-                                     this.CreateContext(scope)),
+                    this.CreateInvalidateCacheCommandService<EditSong>(
+                        this.CreateTransactionCommandService<EditSong>(
+                             this.CreateAuditingCommandService<EditSong>(
+                                 this.CreatePerformanceCommandService<EditSong>(
+                                     new EditSongCommandService(
+                                         this.CreateSongRepository(scope),
+                                         this.CreateSongProvider(scope),
+                                         this.CreateContext(scope)),
+                                     scope),
                                  scope),
                              scope),
-                         scope),
-                     scope),
-
+                        scope),
+                    scope),
 
                 this.CreatePermissionCommandService<UploadSong>(
                      this.CreateTransactionCommandService<UploadSong>(
@@ -267,17 +270,19 @@
                      scope),
 
                 this.CreatePermissionCommandService<DeleteSong>(
-                     this.CreateTransactionCommandService<DeleteSong>(
-                         this.CreateAuditingCommandService<DeleteSong>(
-                             this.CreatePerformanceCommandService<DeleteSong>(
-                                 new DeleteSongCommandService(
-                                     this.CreateSongRepository(scope),
-                                     this.CreateSongProvider(scope),
-                                     this.CreateContext(scope)),
+                    this.CreateInvalidateCacheCommandService<DeleteSong>(
+                         this.CreateTransactionCommandService<DeleteSong>(
+                             this.CreateAuditingCommandService<DeleteSong>(
+                                 this.CreatePerformanceCommandService<DeleteSong>(
+                                     new DeleteSongCommandService(
+                                         this.CreateSongRepository(scope),
+                                         this.CreateSongProvider(scope),
+                                         this.CreateContext(scope)),
+                                     scope),
                                  scope),
                              scope),
                          scope),
-                     scope),
+                    scope),
 
                 this.CreatePermissionQueryService<GetSongForEditById, Song>(
                     this.CreatePerformanceQueryService<GetSongForEditById, Song>(
@@ -357,8 +362,14 @@
 
         private HomeController CreateHomeController(Scope scope)
             => new HomeController(
-                    new GetLastApprovedSongsQueryService(
-                        this.CreateSongRepository(scope)));
+                this.CreateCachingQueryServiceProxy<GetLastApprovedSongs, IEnumerable<Song>>(
+                    this.CreatePerformanceQueryService<GetLastApprovedSongs, IEnumerable<Song>>(
+                        new GetLastApprovedSongsQueryService(
+                                this.CreateSongRepository(scope)),
+                        scope),
+                    new CacheOptions(varyByUser: false, absoluteDurationInSeconds: 5 * Minute),
+                    scope),
+                this.cacheManager);
 
         private IUserPermissionChecker CreateUserPermissionChecker(Scope scope)
             => new UserPermissionChecker(
@@ -410,6 +421,15 @@
                       this.CreateRepository<PerformanceEntryEfRepository>(scope),
                       this.CreateContext(scope),
                       this.dateTimeProvider,
+                      commandService));
+
+        private InvalidateCacheCommandServiceDecorator<TCommand>
+            CreateInvalidateCacheCommandService<TCommand>(
+                ICommandService<TCommand> commandService,
+                Scope scope)
+            => scope.Get(_ =>
+                  new InvalidateCacheCommandServiceDecorator<TCommand>(
+                      this.cacheManager,
                       commandService));
 
 

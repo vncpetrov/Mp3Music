@@ -1,8 +1,9 @@
 ﻿namespace Mp3MusicZone.Web.Infrastructure
 {
+    using Domain.Contracts;
     using Microsoft.Extensions.Caching.Memory;
-    using Mp3MusicZone.Domain.Contracts;
     using System;
+    using System.Collections.Generic;
 
     public class AspNetMemoryCacheManager : ICacheManager
     {

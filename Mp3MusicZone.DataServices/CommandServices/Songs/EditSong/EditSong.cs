@@ -2,9 +2,11 @@
 {
     using Common.Constants;
     using Domain.Attributes;
+    using QueryServices.Songs.GetLastApproved;
     using System;
 
     [Permission(Permissions.EditSong)]
+    [InvalidateCacheFor(nameof(GetLastApprovedSongs))] 
     public class EditSong
     {
         public string SongId { get; set; }

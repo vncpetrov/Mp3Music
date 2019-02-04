@@ -119,7 +119,8 @@
                     "application/json",
                     "text/json",
                     "text/javascript",
-                    "image/*"
+                    "image/*",
+                    "image/png"
                 };
             });
 
