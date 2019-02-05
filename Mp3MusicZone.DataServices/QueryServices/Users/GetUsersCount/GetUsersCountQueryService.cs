@@ -1,9 +1,9 @@
 ﻿namespace Mp3MusicZone.DomainServices.QueryServices.Users.GetUsersCount
 {
     using Contracts;
+    using Domain.Contracts;
+    using Domain.Models;
     using Microsoft.EntityFrameworkCore;
-    using Mp3MusicZone.Domain.Contracts;
-    using Mp3MusicZone.Domain.Models;
     using System;
     using System.Linq;
     using System.Threading.Tasks;

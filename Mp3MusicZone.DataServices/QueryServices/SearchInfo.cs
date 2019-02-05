@@ -1,6 +1,5 @@
 ﻿namespace Mp3MusicZone.DomainServices.QueryServices
 {
-    using Contracts;
     using System;
 
     public class SearchInfo

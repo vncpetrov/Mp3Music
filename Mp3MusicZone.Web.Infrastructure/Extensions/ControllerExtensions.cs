@@ -43,6 +43,10 @@
             {
                 await func();
             }
+            catch (NotFoundException ex)
+            {
+                message = ex.Message;
+            }
             catch (InvalidOperationException ex)
             {
                 message = ex.Message;
@@ -55,30 +59,6 @@
             //{
             //    message = "We're sorry, something went wrong. Please try again later.";
             //}
-
-            return message;
-        }
-
-        public static string CallService(this Controller controller, Action action)
-        {
-            string message = null;
-
-            try
-            {
-                action();
-            }
-            catch (InvalidOperationException ex)
-            {
-                message = ex.Message;
-            }
-            catch (NotAuthorizedException ex)
-            {
-                message = "You do not have permissions to perform this action.";
-            }
-            catch (Exception)
-            {
-                message = "We're sorry, something went wrong. Please try again later.";
-            }
 
             return message;
         }

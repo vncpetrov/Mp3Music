@@ -1,5 +1,4 @@
-﻿
-namespace Mp3MusicZone.DomainServices.QueryServices
+﻿namespace Mp3MusicZone.DomainServices.QueryServices
 {
     using System;
 
