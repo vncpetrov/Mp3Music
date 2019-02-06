@@ -10,7 +10,6 @@
     public class GetUnapprovedSongForPlayingQueryService
         : IQueryService<GetUnapprovedSongForPlaying, UnapprovedSongForPlayingDTO>
     {
-
         private readonly ISongProvider songProvider;
         private readonly IEfRepository<Song> songRepository;
 

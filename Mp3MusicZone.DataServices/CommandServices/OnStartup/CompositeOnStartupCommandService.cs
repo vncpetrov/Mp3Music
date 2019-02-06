@@ -22,15 +22,7 @@
         {
             foreach (var service in this.commandServices)
             {
-                try
-                {
-                    await service.ExecuteAsync(command);
-                }
-                catch (Exception ex)
-                {
-
-                    throw;
-                }
+                await service.ExecuteAsync(command);
             }
         }
     }

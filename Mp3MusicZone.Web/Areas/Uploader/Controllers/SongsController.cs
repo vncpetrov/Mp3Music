@@ -70,7 +70,7 @@
         {
             GetUnapprovedSongs getSongsQuery = new GetUnapprovedSongs()
             {
-                Page = page
+                PageInfo = new PageInfo(page, DefaultPageSize)
             };
 
             IEnumerable<Song> unapprovedSongs = await this.getUnapprovedSongs.ExecuteAsync(getSongsQuery);

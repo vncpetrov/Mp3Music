@@ -14,7 +14,6 @@
     using Mp3MusicZone.DomainServices.QueryServices.Users.GetUsersCount;
     using NUnit.Framework;
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -65,7 +64,9 @@
             .BuildMock();
 
             var userRepositoryStub = new Mock<IEfRepository<User>>();
-            userRepositoryStub.Setup(x => x.All(It.IsAny<bool>())).Returns(users.Object);
+            userRepositoryStub
+                .Setup(x => x.All(It.IsAny<bool>()))
+                .Returns(users.Object);
 
             int expectedUsersCount = 3;
 
@@ -98,7 +99,9 @@
             .BuildMock();
 
             var userRepositoryStub = new Mock<IEfRepository<User>>();
-            userRepositoryStub.Setup(x => x.All(It.IsAny<bool>())).Returns(users.Object);
+            userRepositoryStub
+                .Setup(x => x.All(It.IsAny<bool>()))
+                .Returns(users.Object);
 
             int expectedUsersCount = 2;
 

@@ -27,9 +27,8 @@
         public async Task<IEnumerable<Song>> ExecuteAsync(GetUnapprovedSongs query)
              => await this.songRepository.All()
                    .Where(s => s.IsApproved == false)
-                   .Skip((query.Page - 1) * 2)
-                   .Take(2)
+                   .Skip((query.PageInfo.Page - 1) * query.PageInfo.PageSize)
+                   .Take(query.PageInfo.PageSize)
                    .ToListAsync();
-
     }
 }

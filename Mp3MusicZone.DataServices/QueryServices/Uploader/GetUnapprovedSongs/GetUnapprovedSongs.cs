@@ -10,6 +10,6 @@
     [Permission(Permissions.GetUnapprovedSongs)]
     public class GetUnapprovedSongs : IQuery<IEnumerable<Song>>
     {
-        public int Page { get; set; }
+        public PageInfo PageInfo { get; set; }
     }
 }
