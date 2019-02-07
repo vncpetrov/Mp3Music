@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<SongListingViewModel>
 
 @inject IUserService userService
- 
+
 <div id="songs">
     <ul class="list-group">
         @foreach (var song in Model)
@@ -14,7 +14,7 @@
             string audioId = $"audio{song.Id}";
 
             <li class="list-group-item
-                   song-listing">
+                       song-listing">
                 <div class="song-heading">
                     <a href="javascript:void(0)"
                        class="song-heading-text"
@@ -56,7 +56,9 @@
                             </li>
                         }
                     </ul>
+                </div>
 
+                <div class="song-info">
                     <div class="song-uploader">
                         <small>@song.UploaderName</small>
                     </div>
