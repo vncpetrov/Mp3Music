@@ -5,7 +5,7 @@
     using System;
     using System.Collections.Generic;
 
-    public class GetSongs:IQuery<IEnumerable<Song>>
+    public class GetSongs : IQuery<IEnumerable<Song>>
     {
         public PageInfo PageInfo { get; set; }
 

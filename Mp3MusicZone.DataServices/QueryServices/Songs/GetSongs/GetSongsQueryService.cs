@@ -26,7 +26,7 @@
                          .Where(s => s.IsApproved == true
                                      && s.Title.ToLower().Contains(
                                          query.SearchInfo.SearchTerm.ToLower()))
-                         .OrderByDescending(s => s.Id)
+                         .OrderByDescending(s => s.PublishedOn)
                          .Skip((query.PageInfo.Page - 1) * query.PageInfo.PageSize)
                          .Take(query.PageInfo.PageSize)
                          .ToListAsync();

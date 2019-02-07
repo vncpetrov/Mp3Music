@@ -1,31 +1,30 @@
 ﻿namespace Mp3MusicZone.Web.Controllers
 {
     using AutoMapper;
-    using Domain.Exceptions;
+    using Components;
     using Domain.Models;
     using DomainServices.CommandServices.Songs.DeleteSong;
     using DomainServices.CommandServices.Songs.EditSong;
     using DomainServices.CommandServices.Songs.UploadSong;
     using DomainServices.Contracts;
     using DomainServices.QueryServices;
+    using DomainServices.QueryServices.Songs.GetApprovedSongsByUser;
     using DomainServices.QueryServices.Songs.GetForDeleteById;
     using DomainServices.QueryServices.Songs.GetForEditById;
     using DomainServices.QueryServices.Songs.GetSongForPlaying;
+    using DomainServices.QueryServices.Songs.GetSongs;
+    using DomainServices.QueryServices.Songs.GetSongsCount;
+    using FacadeServices;
     using Infrastructure.Extensions;
     using Infrastructure.Filters;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Mp3MusicZone.DomainServices.QueryServices.Songs.GetApprovedSongsByUser;
-    using Mp3MusicZone.DomainServices.QueryServices.Songs.GetSongs;
-    using Mp3MusicZone.DomainServices.QueryServices.Songs.GetSongsCount;
-    using Mp3MusicZone.Web.Components;
-    using Mp3MusicZone.Web.FacadeServices;
-    using Mp3MusicZone.Web.ViewModels;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Security.Claims;
     using System.Threading.Tasks;
+    using ViewModels;
     using ViewModels.Songs;
     using Web.ViewModels.Shared;
 
@@ -44,8 +43,7 @@
         private readonly IQueryService<GetSongsCount, int> getSongsCount;
         private readonly IQueryService<GetSongs, IEnumerable<Song>> getSongs;
         private readonly IQueryService<GetApprovedSongsByUser, IEnumerable<Song>> getSongsByUser;
-
-
+        
         private readonly ISongPlayer songPlayer;
 
         public SongsController(

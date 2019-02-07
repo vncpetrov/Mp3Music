@@ -1,10 +1,10 @@
-﻿namespace Mp3MusicZone.UnitTests.DomainServices.QueryServices.Uploader
-    .GetUnapprovedSongs.GetUnapprovedSongsQueryServiceTests
+﻿namespace Mp3MusicZone.UnitTests.DomainServices.QueryServices.
+    Songs.GetSongs.GetSongsQueryServiceTests
 {
     using Moq;
     using Mp3MusicZone.Domain.Contracts;
     using Mp3MusicZone.Domain.Models;
-    using Mp3MusicZone.DomainServices.QueryServices.Uploader.GetUnapprovedSongs;
+    using Mp3MusicZone.DomainServices.QueryServices.Songs.GetSongs;
     using NUnit.Framework;
     using System;
     using System.Linq;
@@ -18,7 +18,7 @@
         {
             // Arrange && Act && Assert
             Assert.Throws<ArgumentNullException>(
-                () => new GetUnapprovedSongsQueryService(
+                () => new GetSongsQueryService(
                     songRepository: null));
         }
 
@@ -28,8 +28,8 @@
             var songRepositoryStub = new Mock<IEfRepository<Song>>();
 
             // Arrange && Act
-            GetUnapprovedSongsQueryService sut =
-                new GetUnapprovedSongsQueryService( 
+            GetSongsQueryService sut =
+                new GetSongsQueryService(
                     songRepository: songRepositoryStub.Object);
 
             // Assert
