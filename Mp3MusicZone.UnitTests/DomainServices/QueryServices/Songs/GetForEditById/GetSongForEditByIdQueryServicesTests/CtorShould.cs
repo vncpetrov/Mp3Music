@@ -1,10 +1,10 @@
 ﻿namespace Mp3MusicZone.UnitTests.DomainServices.QueryServices.
-    Songs.GetSongs.GetSongsQueryServiceTests
+    Songs.GetForEditById.GetSongForEditByIdQueryServicesTests
 {
     using Moq;
     using Mp3MusicZone.Domain.Contracts;
     using Mp3MusicZone.Domain.Models;
-    using Mp3MusicZone.DomainServices.QueryServices.Songs.GetSongs;
+    using Mp3MusicZone.DomainServices.QueryServices.Songs.GetForEditById;
     using NUnit.Framework;
     using System;
     using System.Linq;
@@ -18,7 +18,7 @@
         {
             // Arrange && Act && Assert
             Assert.Throws<ArgumentNullException>(
-                () => new GetSongsQueryService(
+                () => new GetSongForEditByIdQueryService( 
                     songRepository: null));
         }
 
@@ -28,8 +28,8 @@
             var songRepositoryStub = new Mock<IEfRepository<Song>>();
 
             // Arrange && Act
-            GetSongsQueryService sut =
-                new GetSongsQueryService(
+            GetSongForEditByIdQueryService sut =
+                new GetSongForEditByIdQueryService( 
                     songRepository: songRepositoryStub.Object);
 
             // Assert
