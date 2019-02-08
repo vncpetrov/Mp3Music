@@ -42,12 +42,12 @@
 
             if (command.SongFile is null && song.Title != command.Title)
             {
-                this.songProvider.Rename(song.Title, command.Title, command.FileExtension);
+                this.songProvider.Update(song.Title, command.Title, command.FileExtension);
             }
             else if (command.SongFile != null)
             {
                 this.songProvider.Delete(song.Title, command.FileExtension);
-                await this.songProvider.WriteAsync(command.Title, command.FileExtension, command.SongFile);
+                await this.songProvider.AddAsync(command.Title, command.FileExtension, command.SongFile);
             }
 
             song.Title = command.Title;

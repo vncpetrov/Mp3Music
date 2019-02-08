@@ -25,8 +25,8 @@
             => await this.userRepository.All(eagerLoading: true)
                          .Where(u => u.UserName.ToLower().Contains(
                              query.SearchInfo.SearchTerm.ToLower()))
-                        .Skip((query.PageInfo.Page - 1) * query.PageInfo.PageSize)
-                        .Take(query.PageInfo.PageSize)
-                        .ToListAsync();
+                         .Skip((query.PageInfo.Page - 1) * query.PageInfo.PageSize)
+                         .Take(query.PageInfo.PageSize)
+                         .ToListAsync();
     }
 }

@@ -58,7 +58,7 @@
 
             this.songRepository.Add(song);
 
-            await this.songProvider.WriteAsync(
+            await this.songProvider.AddAsync(
                 command.Title,
                 command.FileExtension,
                 command.SongFile);

@@ -26,9 +26,9 @@
             // Arrange
             var users = new[]
             {
-                new User{ UserName = "Alex" },
-                new User{ UserName = "Peter" },
-                new User{ UserName = "Johnny" }
+                new User { UserName = "Alex" },
+                new User { UserName = "Peter" },
+                new User { UserName = "Johnny" }
             }
             .AsQueryable()
             .BuildMock();
@@ -56,9 +56,9 @@
         {
             var users = new[]
             {
-                new User{ UserName = "Alex" },
-                new User{ UserName = "Peter" },
-                new User{ UserName = "Johnny" }
+                new User { UserName = "Alex" },
+                new User { UserName = "Peter" },
+                new User { UserName = "Johnny" }
             }
             .AsQueryable()
             .BuildMock();

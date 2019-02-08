@@ -8,7 +8,7 @@
         public string Id { get; set; }
 
         public string UserId { get; set; }
-        public User User { get; set; }
+        public Song User { get; set; }
 
         public DateTime TimeOfExecution { get; set; }
 

@@ -46,10 +46,10 @@
 
             var songs = new[]
             {
-                new Song(){ IsApproved = false, UploaderId = SomeId },
-                new Song(){ IsApproved = true, UploaderId = SomeId },
-                new Song(){ IsApproved = true, UploaderId = SomeId },
-                new Song(){ IsApproved = true, UploaderId = SomeId },
+                new Song() { IsApproved = false, UploaderId = SomeId },
+                new Song() { IsApproved = true, UploaderId = SomeId },
+                new Song() { IsApproved = true, UploaderId = SomeId },
+                new Song() { IsApproved = true, UploaderId = SomeId },
             }
            .AsQueryable()
            .BuildMock();
@@ -123,6 +123,48 @@
 
             // Assert
             Assert.That(actualSongs.All(s => s.UploaderId == SomeId));
+        }
+
+        [Test]
+        public async Task ReturnTheSongsOrderedByPublishDateDescendingWhenInvoked()
+        {
+            var songs = new[]
+            {
+                new Song(){ IsApproved = true, PublishedOn = new DateTime(2000, 1, 3) },
+                new Song(){ IsApproved = true, PublishedOn = new DateTime(2000, 1, 2) },
+                new Song(){ IsApproved = true, PublishedOn = new DateTime(2000, 1, 1) },
+                new Song(){ IsApproved = true, PublishedOn = new DateTime(2000, 1, 21) }
+            }
+            .AsQueryable()
+            .BuildMock();
+
+            var songRepositoryStub = new Mock<IEfRepository<Song>>();
+            songRepositoryStub
+                .Setup(x => x.All(It.IsAny<bool>()))
+                .Returns(songs.Object);
+
+            var userRepositoryStub = new Mock<IEfRepository<User>>();
+
+            userRepositoryStub
+                .Setup(x => x.GetByIdAsync(It.IsAny<string>()))
+                .ReturnsAsync(new User());
+
+            GetApprovedSongsByUser query = new GetApprovedSongsByUser();
+
+            // Arrange
+            GetApprovedSongsByUserQueryService sut =
+                new GetApprovedSongsByUserQueryService(
+                    songRepository: songRepositoryStub.Object,
+                    userRepository: userRepositoryStub.Object);
+
+            // Act
+            IEnumerable<Song> actualSongs = await sut.ExecuteAsync(query); 
+
+            // Assert
+            Assert.That(
+                actualSongs
+                    .Zip(actualSongs.Skip(1), (a, b) => new { a, b })
+                        .All(s => s.a.PublishedOn > s.b.PublishedOn));
         }
     }
 }

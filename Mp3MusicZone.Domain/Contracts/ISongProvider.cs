@@ -3,11 +3,12 @@
     using System;
     using System.Threading.Tasks;
 
+    // Async shouldn't be part of the abstraction
     public interface ISongProvider
     {
-        Task WriteAsync(string songTitle, string extension, byte[] song);
+        Task AddAsync(string songTitle, string extension, byte[] song);
 
-        void Rename(string oldSongTitle, string newSongTitle, string extension);
+        void Update(string oldSongTitle, string newSongTitle, string extension);
 
         void Delete(string songTitle, string extension);
 
