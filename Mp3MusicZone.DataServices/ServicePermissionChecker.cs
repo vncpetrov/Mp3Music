@@ -4,7 +4,8 @@
     using Domain.Contracts;
     using System;
     using System.Reflection;
-
+    
+    //Generic Type(T): command or query
     public class ServicePermissionChecker<T>
     {
         private static readonly string permissionId;

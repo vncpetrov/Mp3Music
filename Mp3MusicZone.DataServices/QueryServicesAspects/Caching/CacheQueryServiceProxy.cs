@@ -29,6 +29,9 @@
             if (queryService is null)
                 throw new ArgumentNullException(nameof(queryService));
 
+            if (options is null)
+                throw new ArgumentNullException(nameof(options));
+
             this.queryService = queryService;
             this.cacheManager = cacheManager;
             this.userContext = userContext;
