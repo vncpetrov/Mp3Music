@@ -53,7 +53,7 @@
 
             if (command.RoleName != "Administrator"
                 && user.Roles.Any(r => r.Name == "Administrator")) 
-            {
+            { 
                 throw new InvalidOperationException(
                     $"User with Administrator role cannot be demoted from {command.RoleName} role!");
             }
@@ -68,7 +68,7 @@
             }
 
             Role role = user.Roles.FirstOrDefault(r => r.Name == command.RoleName);
-            bool removed = user.Roles.Remove(role);
+            user.Roles.Remove(role);
             this.userRepository.Update(user);
             this.contextSaveChanges.SaveChanges();
         }

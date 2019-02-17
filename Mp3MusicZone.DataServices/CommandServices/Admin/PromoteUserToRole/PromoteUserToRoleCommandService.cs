@@ -45,7 +45,7 @@
             }
 
             Role role = await this.roleRepository.All()
-                .FirstAsync(r => r.Name == command.RoleName);
+                .FirstOrDefaultAsync(r => r.Name == command.RoleName);
 
             if (role is null)
             {
