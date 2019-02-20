@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="7.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
     <PackageReference Include="MockQueryable.Moq" Version="1.0.4" />
     <PackageReference Include="Moq" Version="4.10.1" />
@@ -20,6 +21,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Mp3MusicZone.Auth\Mp3MusicZone.Auth.csproj" />
     <ProjectReference Include="..\Mp3MusicZone.DataServices\Mp3MusicZone.DomainServices.csproj" />
+    <ProjectReference Include="..\Mp3MusicZone.Web.Infrastructure\Mp3MusicZone.Web.Infrastructure.csproj" />
+    <ProjectReference Include="..\Mp3MusicZone.Web\Mp3MusicZone.Web.csproj" />
   </ItemGroup>
 
 </Project>

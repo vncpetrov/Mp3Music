@@ -1,6 +1,6 @@
 ﻿namespace Mp3MusicZone.Web.Infrastructure
 {
-    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc; 
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.Extensions.DependencyInjection;
     using System;
@@ -24,7 +24,13 @@
             this.action = action;
             this.type = type;
             this.message = message;
+            
         }
+
+        public string Type => this.type; 
+        public string Message => this.message; 
+        public IActionResult Action => this.action;
+
 
         public async Task ExecuteResultAsync(ActionContext context)
         {

@@ -227,30 +227,28 @@
                     .WithErrorMessage($"Your submission should be an audio file and no more than {SongMaxMBs} MBs in size!");
             }
 
-            string message = await this.CallServiceAsync(async () =>
+            string fileExtension = model.File
+                .GetFileExtension();
+
+            UploadSong command = new UploadSong()
             {
-                string fileExtension = model.File
-                    .GetFileExtension();
+                UploaderId = this.User?.FindFirst(ClaimTypes.NameIdentifier).Value,
+                Title = model.Title,
+                FileExtension = fileExtension,
+                ReleasedYear = model.ReleasedYear,
+                Singer = model.Singer,
+                SongFile = model.File.ToByteArray()
+            };
 
-                UploadSong command = new UploadSong()
-                {
-                    UploaderId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value,
-                    Title = model.Title,
-                    FileExtension = fileExtension,
-                    ReleasedYear = model.ReleasedYear,
-                    Singer = model.Singer,
-                    SongFile = model.File.ToByteArray()
-                };
-
-                await this.uploadSong.ExecuteAsync(command);
-            });
+            string message = await this.CallServiceAsync(
+                async () => await this.uploadSong.ExecuteAsync(command));
 
             if (message != null)
             {
                 return View(model)
                     .WithErrorMessage(message);
             }
-
+            
             return View()
                 .WithSuccessMessage("Song uploaded successfully.");
         }
