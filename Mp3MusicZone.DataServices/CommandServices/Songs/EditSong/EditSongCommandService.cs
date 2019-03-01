@@ -3,6 +3,7 @@
     using Contracts;
     using Domain.Contracts;
     using Domain.Models;
+    using Mp3MusicZone.Domain.Exceptions;
     using System;
     using System.Threading.Tasks;
 
@@ -35,6 +36,12 @@
         {
             Song song = await this.songRepository
                 .GetByIdAsync(command.SongId);
+
+            if (song is null)
+            {
+                throw new NotFoundException(
+                    $"Song with id {command.SongId} does not exists!");
+            }
 
             command.FileExtension = command.FileExtension is null ?
                 song.FileExtension :

@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Moq;
+    using Mp3MusicZone.Domain.Exceptions;
     using Mp3MusicZone.Domain.Models;
     using Mp3MusicZone.DomainServices.CommandServices.Songs.DeleteSong;
     using Mp3MusicZone.DomainServices.CommandServices.Songs.EditSong;
@@ -20,12 +21,11 @@
     using Mp3MusicZone.Web.ViewModels.Songs;
     using NUnit.Framework;
     using System;
-    using System.Collections.Generic;
+    using System.Collections.Generic; 
     using System.Threading.Tasks;
 
     using static Mp3MusicZone.UnitTests.Utils.AttributesUtils;
     using static Mp3MusicZone.Common.Constants.ModelConstants;
-    using Mp3MusicZone.Domain.Exceptions;
 
     [TestFixture]
     public class UploadPostShould
@@ -100,7 +100,8 @@
             };
 
             // Arrange
-            SongsController sut = CreateSongsController(Mock.Of<ICommandService<UploadSong>>());
+            SongsController sut = CreateSongsController(
+                uploadSong: Mock.Of<ICommandService<UploadSong>>());
 
             // Act
             var result = await sut.Upload(model) as WithMessageResult;
