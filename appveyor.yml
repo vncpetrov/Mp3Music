@@ -1,10 +1,11 @@
 version: 1.0.{build}
 image: Visual Studio 2017 Preview
 cache:
-  - packages -> **\packages.config
+  - packages -> '**\packages.config'
 branches:
   only:
   - master
+clone_folder: C:\projects\MusicZone
 before_build:
  - cmd: dotnet --version
  - cmd: dotnet restore --verbosity m
