@@ -18,13 +18,16 @@ build:
 build_script:
  - msbuild /verbosity:quiet "Mp3MusicZone.sln"
  - cmd: dotnet publish ./Mp3MusicZone.Web/Mp3MusicZone.Web.csproj
+after_build:
+ - ps: | 
+    Compress-Archive -Path . -DestinationPath project.zip
 artifacts:
  - path: '.\Mp3MusicZone.Web\bin\Release\netcoreapp2.2\publish'
    name: WebSite
    type: WebDeployPackage
    
- - path: cloned.zip
-   name: Cloned
+ - path: ./project.zip
+   name: Project
 test_script:
  - OpenCover.Console.exe -target:"c:\Program Files\dotnet\dotnet.exe" -targetargs:"test C:\projects\MusicZone\Mp3MusicZone.UnitTests\Mp3MusicZone.UnitTests.csproj --logger:"trx;LogFileName=UnitTestsResults.trx"" -output:"coverage.xml" -oldStyle -filter:"+[Mp3MusicZone*]* -[*Tests*]*" -register:user
 after_test:
