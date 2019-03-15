@@ -23,7 +23,7 @@ artifacts:
    name: WebSite
    type: WebDeployPackage
    
- - path: "C:\projects\MusicZone"
+ - path: cloned.zip
    name: Cloned
 test_script:
  - OpenCover.Console.exe -target:"c:\Program Files\dotnet\dotnet.exe" -targetargs:"test C:\projects\MusicZone\Mp3MusicZone.UnitTests\Mp3MusicZone.UnitTests.csproj --logger:"trx;LogFileName=UnitTestsResults.trx"" -output:"coverage.xml" -oldStyle -filter:"+[Mp3MusicZone*]* -[*Tests*]*" -register:user
