@@ -22,7 +22,7 @@ artifacts:
    name: WebSite
    type: WebDeployPackage
    
-- path: cloned
+- path: '.'
     name: ClonedProject
     type: zip
 test_script:
